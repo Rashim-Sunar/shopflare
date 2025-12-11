@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import toast from "react-hot-toast";
+import ProductGrid from "./ProductGrid";
 
 const ProductDetails = () => {
 
@@ -29,10 +31,44 @@ const ProductDetails = () => {
         ],
     }
 
+    const similarProducts = [
+      {_id: 1, name: "Product 1",price:100, image: [{ url: "https://picsum.photos/600/750?random=1"}]},
+      {_id: 2, name: "Product 2",price:100, image: [{ url: "https://picsum.photos/600/750?random=2"}]},
+      {_id: 3, name: "Product 3",price:100, image: [{ url: "https://picsum.photos/600/750?random=3"}]},
+      {_id: 4, name: "Product 4",price:100, image: [{ url: "https://picsum.photos/600/750?random=4"}]},
+      {_id: 5, name: "Product 5",price:100, image: [{ url: "https://picsum.photos/600/750?random=5"}]},
+      {_id: 6, name: "Product 6",price:100, image: [{ url: "https://picsum.photos/600/750?random=6"}]},
+      {_id: 7, name: "Product 7",price:100, image: [{ url: "https://picsum.photos/600/750?random=7"}]},
+    ];
+
   const [selectedImage, setSelectedImage] = useState(selectedProduct.images[0]);
   const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState("black");
-  const [selectedSize, setSelectedSize] = useState("M");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+  const [ isDisabled, setIsDisabled ] = useState(false);
+
+  const handleAddTocart = () => {
+    setIsDisabled(true);
+    // Validate color
+    if (!selectedColor) {
+      toast.error("Please select a color.");
+      setIsDisabled(false);
+      return;
+    }
+    // Validate size
+    if (!selectedSize) {
+      toast.error("Please select your product size.");
+      setIsDisabled(false);
+      return;
+    }
+
+    setTimeout(() => {
+      setIsDisabled(false);
+      toast.success("Product added to cart!");
+    }, 1000);
+    return;
+  };
+
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-10">
@@ -145,8 +181,11 @@ const ProductDetails = () => {
           </div>
 
           {/* ---- Add to Cart Button ---- */}
-          <button className="w-full cursor-pointer bg-black mt-3 text-white py-1 rounded-md text-lg font-semibold hover:bg-gray-900 transition">
-            ADD TO CART
+          <button
+           disabled = {isDisabled}
+           className={`w-full cursor-pointer bg-black mt-3 text-white py-1 rounded-md text-lg font-semibold hover:bg-gray-900 transition ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
+           onClick={handleAddTocart}>
+            { isDisabled ? "Adding to Cart" : "ADD TO CART"}
           </button>
 
         {/* Characteristics */}
@@ -162,9 +201,12 @@ const ProductDetails = () => {
 
             </div>
         </div>
-
         </motion.div>
       </div>
+       <div className="mt-20">
+            <h2 className="text-4xl font-bold text-center">You May Also Like</h2>
+            <ProductGrid products = {similarProducts}/>
+        </div>
     </section>
   );
 };
