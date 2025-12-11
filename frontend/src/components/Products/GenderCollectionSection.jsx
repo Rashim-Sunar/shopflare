@@ -11,7 +11,7 @@ const GenderCollectionSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
+          transition={{ duration: 1, delay:0.1 }}
           viewport={{ once: true }}
           className="relative group overflow-hidden rounded-xl cursor-pointer"
         >
@@ -40,7 +40,7 @@ const GenderCollectionSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
+          transition={{ duration: 1, delay: 0.1 }}
           viewport={{ once: true }}
           className="relative group overflow-hidden rounded-xl cursor-pointer"
         >
