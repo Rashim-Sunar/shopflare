@@ -4,6 +4,7 @@ import UserLayout from './components/Layout/UserLayout'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
+import Profile from './pages/Profile'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
            <Route index element={<Home/>}/>
            <Route path="/login" element={<Login/>} />
            <Route path="/signup" element={<Signup/>} />
+           <Route path='/profile' element={<Profile/>}/>
       </Route>
       <Route>
         {/* Admin Layout */}
