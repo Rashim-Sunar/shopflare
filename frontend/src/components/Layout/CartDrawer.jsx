@@ -1,8 +1,17 @@
 import React from 'react'
 import { HiMiniXMark } from "react-icons/hi2";
 import CartContents from '../Cart/CartContents';
+import { useNavigate } from 'react-router-dom';
 
 const CartDrawer = ({ openDrawer, toggleOpenDrawer }) => {
+
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    toggleOpenDrawer();
+    navigate("/checkout");
+  }
+
   return (
     <>
       {/* Drawer */}
@@ -31,7 +40,8 @@ const CartDrawer = ({ openDrawer, toggleOpenDrawer }) => {
 
         {/* Checkout button fixed at the bottom */}
         <div className='p-4 sticky bg-white bottom-0'>
-          <button className='bg-black w-full border-lg rounded-lg p-2 font-semibold text-white hover:bg-gray-800'>
+          <button className='bg-black w-full border-lg rounded-lg p-2 font-semibold text-white hover:bg-gray-800'
+          onClick={handleCheckout}>
             Checkout
           </button>
           <p className='text-sm text-center text-gray-500 tracking-lighter mt-2'>
