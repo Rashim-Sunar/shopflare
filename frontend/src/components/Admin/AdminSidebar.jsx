@@ -17,7 +17,7 @@ const AdminSidebar = ({ isOpen, onClose }) => {
     {
       label: "Dashboard",
       icon: <FaTachometerAlt />,
-      path: "/admin/dashboard",
+      path: "/admin",
     },
     {
       label: "Users",
