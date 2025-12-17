@@ -37,7 +37,7 @@ const AdminSidebar = ({ isOpen, onClose }) => {
     {
       label: "Shop",
       icon: <FaStore />,
-      path: "/admin/shop",
+      path: "/",
     },
   ];
 

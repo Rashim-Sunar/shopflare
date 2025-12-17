@@ -13,7 +13,7 @@ const ProductGrid = ({ products }) => {
           key={product._id}
            initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2*index }}
+          transition={{ duration: 0.4, delay: 0.2*index }}
           viewport={{ once: true }}
           className="bg-white rounded-lg transition"
         >
@@ -26,7 +26,7 @@ const ProductGrid = ({ products }) => {
                 alt={product.name}
                 className="w-full h-full object-cover rounded-lg"
                 whileHover={{ scale: 1.03 }} // slight zoom only
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
               />
             </div>
 
