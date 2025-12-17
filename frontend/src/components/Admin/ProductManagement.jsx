@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 /* ---------------- MOTION VARIANTS ---------------- */
 
@@ -20,6 +21,8 @@ const listItemVariant = {
 /* ---------------- COMPONENT ---------------- */
 
 const ProductManagement = () => {
+  const navigate = useNavigate();
+
   const [products, setProducts] = useState([
     {
       id: 1,
@@ -71,7 +74,7 @@ const ProductManagement = () => {
 
   const handleEdit = (id) => {
     // Placeholder for future edit modal / page
-    alert(`Edit product with ID: ${id}`);
+    navigate(`/admin/products/${id}/edit`);
   };
 
   return (
