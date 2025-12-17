@@ -11,7 +11,7 @@ import Checkout from './components/Cart/Checkout'
 import OrderConfirmationPage from './pages/OrderConfirmationPage'
 import MyOrdersPage from './pages/MyOrdersPage'
 import OrderDetailsPage from './pages/OrderDetailsPage'
-import AdminLayout from './components/Layout/AdminLayout'
+import AdminLayout from './components/Admin/AdminLayout'
 
 function App() {
   return (
