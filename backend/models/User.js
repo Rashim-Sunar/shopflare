@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
         default: "customer"
     },
 }, 
-{ timestamps: true}
+   { timestamps: true }
 );
 
 // Password hash middleware
@@ -42,6 +42,15 @@ userSchema.pre('save', async function(next){
 // Match the password entered by user to the hashed password in db..
 userSchema.methods.matchPassword = async function(enteredPassword){
     return await bcrypt.compare(enteredPassword, this.password);
+}
+
+userSchema.methods.isPasswordChanged = async function(JWTTimeStamp){
+    if(this.passwordChangedAt){
+        // console.log(this.passwordChangedAt, JWTTimeStamp);
+        const pswdChangedTimeStamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10); //Converting data to seconds
+        return JWTTimeStamp < pswdChangedTimeStamp;
+    }
+    return false;
 }
 
 const User = mongoose.model('user', userSchema);
