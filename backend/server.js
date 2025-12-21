@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require("dotenv");
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
 const customError = require("./utils/customError");
 const globalErrorHandler = require("./controllers/globalErrorHandler");
 
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
+app.use('/api/products', productRoutes);
 
 app.all('*path', (req, res, next) => {
     const err = new customError(`Can't find ${req.originalUrl} on the server`, 404);
