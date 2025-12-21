@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require("dotenv");
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/userRoutes');
+const customError = require("./utils/customError");
+const globalErrorHandler = require("./controllers/globalErrorHandler");
 
 const app = express();
 
@@ -20,6 +22,14 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRoutes);
+
+app.all('*path', (req, res, next) => {
+    const err = new customError(`Can't find ${req.originalUrl} on the server`, 404);
+    next(err);
+})
+
+// Global error handling middleware
+app.use(globalErrorHandler);
 
 app.listen(PORT, () => {
     console.log("Server listening on port:",PORT);
