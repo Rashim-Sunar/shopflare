@@ -108,10 +108,7 @@ const productSchema = new mongoose.Schema({
         height: Number,
     },
    // Used to calculate shipping costs based on weight
-    weight: {
-        value: Number,
-        unit: { type: String, enum: ['kg', 'g', 'lb', 'oz'], default: 'kg' }
-    }
+    weight: Number
 },
 { timestamps: true}
 );
