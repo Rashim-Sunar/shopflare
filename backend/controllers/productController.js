@@ -228,3 +228,48 @@ exports.getAllProducts = asyncErrorHandler(async (req, res, next) => {
     });
 });
 
+/* ================= GET A PRODUCT BY ID================= */
+
+exports.getProductById = asyncErrorHandler(async (req, res, next) => {
+    const product = await Product.findById(req.params.id);
+
+    if (!product) {
+        return next(new customError("Product not found", 404));
+    }
+
+    res.status(200).json({
+        status: "success",
+        product,
+    });
+});
+
+/* ================= GET SIMILAR PRODUCTS ================= */
+
+exports.getSimilarProducts = asyncErrorHandler(async (req, res, next) => {
+    const productId = req.params.id;
+
+    // Get the current product
+    const product = await Product.findById(productId);
+
+    if (!product) {
+        return next(new customError("Product not found", 404));
+    }
+
+    // Find similar products
+    const similarProducts = await Product.find({
+        _id: { $ne: product._id }, // exclude current product
+        category: product.category,
+        gender: product.gender,
+        isPublished: true,
+    })
+    .limit(8)
+    .sort({ createdAt: -1 });
+
+    res.status(200).json({
+        status: "success",
+        results: similarProducts.length,
+        similarProducts,
+    });
+});
+
+
