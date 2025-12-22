@@ -272,4 +272,40 @@ exports.getSimilarProducts = asyncErrorHandler(async (req, res, next) => {
     });
 });
 
+/* ================= GET HIGHEST RATED PRODUCT (BEST SELLER) ================= */
+ 
+exports.getHighestRatedProduct = asyncErrorHandler( async(req, res, next) => {
+
+    const bestSeller = await Product.findOne({ isPublished: true }).sort({ rating: -1});
+
+    if( !bestSeller ){
+        return next(new customError("No best seller found.", 404));
+    }
+
+    res.status(200).json({
+        status: "success",
+        bestSeller
+    });
+
+});
+
+/* ================= GET NEW ARRIVALS ================= */
+
+exports.getNewArrivals = asyncErrorHandler(async (req, res, next) => {
+    const newArrivals = await Product.find({ isPublished: true })
+        .sort({ createdAt: -1 })
+        .limit(8);
+
+    if (!newArrivals || newArrivals.length === 0) {
+        return next(new customError("No new arrivals found.", 404));
+    }
+
+    res.status(200).json({
+        status: "success",
+        results: newArrivals.length,
+        newArrivals,
+    });
+});
+
+
 
