@@ -19,5 +19,11 @@ router.delete('/', cartController.deleteFromCart);
 // @access Public
 router.get('/', cartController.getCart);
 
+// @route POST /api/cart/merge
+// @desc Merge guest cart into logged-in user cart on login
+// @access Private (after login)
+router.post('/merge', protect, cartController.mergeGuestCart);
+
+
 module.exports = router;
 
