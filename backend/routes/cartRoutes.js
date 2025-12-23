@@ -9,5 +9,15 @@ const router = express.Router();
 // @access Public
 router.post('/', cartController.addToCart);
 
+// @route DELETE /api/cart
+// @desc Remove a product from cart (guest or logged-in user)
+// @access Public
+router.delete('/', cartController.deleteFromCart);
+
+// @route GET /api/cart
+// @desc Retrieve cart for the logged-in user or gues
+// @access Public
+router.get('/', cartController.getCart);
+
 module.exports = router;
 
