@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const checkoutRoutes = require('./routes/checkoutRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 const customError = require("./utils/customError");
 const globalErrorHandler = require("./controllers/globalErrorHandler");
 
@@ -28,6 +29,7 @@ app.use("/api/users", userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/checkout', checkoutRoutes);
+app.use('/api/orders', orderRoutes);
 
 app.all('*path', (req, res, next) => {
     const err = new customError(`Can't find ${req.originalUrl} on the server`, 404);
