@@ -21,6 +21,9 @@ cloudinary.config({
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+// @route POST /api/upload
+// @desc upload an image to cloudinary
+// @access PRIVATE/ADMIN    
 router.post("/", protect, upload.single("image"), asyncErrorHandler( async(req, res, next) => {
     if(!req.file){
         return next(new customError("No file uploaded!", 400));
