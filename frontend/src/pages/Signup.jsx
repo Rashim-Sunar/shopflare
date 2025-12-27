@@ -1,18 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { registerUser, clearError } from '../redux/slices/authSlice';
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+
 
 const Signup = () => {
   const [ name, setName ] = useState("");
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
 
+  const dispatch = useDispatch();
+
+  const {loading, error, user} = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if(error){
+      toast.error(error);
+      dispatch(clearError());
+    }
+
+    if(user){
+      toast.success("You are registered successfully 🎉");
+      setName("");
+      setEmail("");
+      setPassword("");
+    }
+  }, [error, user]);
+
   const handleFormSubmission = (e) => {
     e.preventDefault();
-    console.log("Name: ", name, "Email: ", email, "Password: ", password);
-    setName("");
-    setEmail("");
-    setPassword("");
+    dispatch(registerUser({name, email, password}));
   }
 
   return (
@@ -80,8 +99,9 @@ const Signup = () => {
         {/* Button */}
         <button
          type="submit"
+         disabled = {loading}
          className="bg-black text-white py-3 rounded-md hover:bg-gray-800 transition font-medium w-full">
-          Sign Up
+         {loading ? "Registering User" :  "Sign Up"}
         </button>
 
         {/* Footer Link */}
