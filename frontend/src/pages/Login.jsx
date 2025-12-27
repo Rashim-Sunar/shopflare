@@ -1,17 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { clearError, loginUser } from "../redux/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const Login = () => {
 
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
 
+  const dispatch = useDispatch();
+
+  const { loading, error, user } = useSelector(state => state.auth);
+
+  useEffect(() => {
+    if(error){
+       toast.error(error);
+       dispatch(clearError());
+    }
+    // Clear the form data only if login is successful
+    if(user){
+      setEmail("");
+      setPassword("");
+      toast.success("Login successful 🎉");
+    }
+  }, [error, user]);
+
   const handleFormSubmission = (e) => {
     e.preventDefault();
-    console.log("Email: ", email, "Password: ", password);
-    setEmail("");
-    setPassword("");
+
+    if(loading) return; // prevents double request
+
+    dispatch(loginUser({ email, password }));
   }
 
   return (
@@ -67,8 +88,14 @@ const Login = () => {
         />
 
         {/* Button */}
-        <button type = "submit" className="bg-black text-white py-3 rounded-md hover:bg-gray-800 transition font-medium w-full">
-          Sign In
+        <button
+          type="submit"
+          disabled={loading}
+          className={`py-3 rounded-md font-medium w-full transition
+            ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-black hover:bg-gray-800 text-white"}
+          `}
+        >
+          {loading ? "Signing in..." : "Sign In"}
         </button>
 
         {/* Footer Link */}

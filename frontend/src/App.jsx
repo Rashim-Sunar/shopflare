@@ -18,6 +18,8 @@ import ProductManagement from './components/Admin/ProductManagement'
 import EditProductPage from './components/Admin/EditProductPage'
 import OrderManagement from './components/Admin/OrderManagement'
 
+import { Provider } from 'react-redux';
+
 function App() {
   return (
    <BrowserRouter>

@@ -44,7 +44,7 @@ exports.login = asyncErrorHandler( async(req, res, next) => {
     //Check is user exists and password matches...
     if(!user || !(await user.matchPassword(password))){
        const err = new customError("Invalid credentials.", 400);
-       next(err);
+       return next(err);
     }
 
     const token = signToken(user._id, user.role);
