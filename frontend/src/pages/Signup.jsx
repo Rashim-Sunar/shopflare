@@ -31,6 +31,7 @@ const Signup = () => {
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
+    if(loading) return; // Prevent double form submission
     dispatch(registerUser({name, email, password}));
   }
 
