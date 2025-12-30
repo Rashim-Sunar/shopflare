@@ -23,6 +23,7 @@ export const fetchProductsByFilters = createAsyncThunk(
         `${import.meta.env.VITE_BACKEND_URL}/api/products?${query.toString()}`
       );
 
+      // console.log(response.data.products);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Failed to fetch products" });
@@ -155,7 +156,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchProductsByFilters.fulfilled, (state, action) => {
         state.loading.list = false;
-        state.products = Array.isArray(action.payload) ? action.payload : [];
+        state.products = Array.isArray(action.payload?.products) ? action.payload?.products : [];
       })
       .addCase(fetchProductsByFilters.rejected, (state, action) => {
         state.loading.list = false;

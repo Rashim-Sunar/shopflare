@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const ProductGrid = ({ products }) => {
-
+  
   return (
     <motion.div
       className="grid grid-cols-1 space-y-3 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12"
@@ -22,7 +22,7 @@ const ProductGrid = ({ products }) => {
             {/* Image */}
             <div className="w-full h-80 overflow-hidden rounded-lg">
               <motion.img
-                src={product.image[0].url}
+                src={product.images?.[0]?.url}
                 alt={product.name}
                 className="w-full h-full object-cover rounded-lg"
                 whileHover={{ scale: 1.03 }} // slight zoom only
