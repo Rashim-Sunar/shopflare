@@ -41,6 +41,7 @@ export const fetchProductDetails = createAsyncThunk(
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`
       );
+      // console.log("Selected product: ", response.data?.product);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Failed to fetch product details" });
@@ -170,7 +171,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchProductDetails.fulfilled, (state, action) => {
         state.loading.details = false;
-        state.selectedProduct = action.payload;
+        state.selectedProduct = action.payload?.product;
       })
       .addCase(fetchProductDetails.rejected, (state, action) => {
         state.loading.details = false;
@@ -211,7 +212,7 @@ const productSlice = createSlice({
       })
       .addCase(fetchSimilarProducts.fulfilled, (state, action) => {
         state.loading.similar = false;
-        state.similarProducts = action.payload || [];
+        state.similarProducts = action.payload?.similarProducts || [];
       })
       .addCase(fetchSimilarProducts.rejected, (state, action) => {
         state.loading.similar = false;

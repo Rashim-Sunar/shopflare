@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Hero from '../components/Layout/Hero'
 import GenderCollectionSection from '../components/Products/GenderCollectionSection'
 import NewArrivals from '../components/Products/NewArrivals'
@@ -13,10 +13,12 @@ import {
   fetchProductsByFilters,
   setFilters
 } from "../redux/slices/productSlice";
+import axios from 'axios'
 
 
 const Home = () => {
   const dispatch = useDispatch();
+  const [ bestSeller, setBestSeller ] =useState();
 
   const {products, loading, error} = useSelector((state) => state.products);
 
@@ -29,6 +31,18 @@ const Home = () => {
 
     dispatch(setFilters(filters));
     dispatch(fetchProductsByFilters(filters));
+
+    const fetchBestSeller = async() => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/best-seller`);
+        setBestSeller(response.data?.bestSeller);
+        // console.log("BestSeller id: ",response.data?.bestSeller._id)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchBestSeller();
   }, [dispatch]);
 
   return (
@@ -39,7 +53,9 @@ const Home = () => {
 
         {/* Best Seller */}
         <h2 className='text-4xl text-center font-bold mb-4 mt-16'>Best Seller</h2>
-        <ProductDetails/>
+        { bestSeller ? <ProductDetails productId = {bestSeller._id}/> : 
+          <h2>Loading best seller product</h2>
+        }
 
         {/* Top Wear for Women */}
         <TopWearWomenSection

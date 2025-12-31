@@ -1,51 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import toast from "react-hot-toast";
 import ProductGrid from "./ProductGrid";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-const ProductDetails = () => {
+import {
+  fetchProductDetails,
+  fetchSimilarProducts
+} from "../../redux/slices/productSlice";
 
-    const selectedProduct = {
-        name: "Slim-Fit Easy-Iron Shirt",
-        price: 120,
-        originalPrice: 150,
-        description: "A slim-fit, easy-iron shirt in woven cotton fabric with a fitted silhouette. Long sleeves, turn-down collar, classic button placket, and rounded cuffs.",
-        brand: "Urban Chic",
-        material: "Cotton",
-        sizes: ["S", "M", "L", "XL"],
-        colors: ["black", "gray"],
-        images: [
-            {
-                url: "https://picsum.photos/600/750?random=1",
-                altText: "Slim-Fit Easy-Iron Shirt 1"
-            },
-            {
-                url: "https://picsum.photos/600/750?random=2",
-                altText: "Slim-Fit Easy-Iron Shirt 2"
-            },
-            {
-                url: "https://picsum.photos/600/750?random=3",
-                altText: "Slim-Fit Easy-Iron Shirt 3"
-            },
-        ],
-    }
+const ProductDetails = ({ productId }) => {
 
-    const similarProducts = [
-      {_id: 1, name: "Product 1",price:100, image: [{ url: "https://picsum.photos/600/750?random=1"}]},
-      {_id: 2, name: "Product 2",price:100, image: [{ url: "https://picsum.photos/600/750?random=2"}]},
-      {_id: 3, name: "Product 3",price:100, image: [{ url: "https://picsum.photos/600/750?random=3"}]},
-      {_id: 4, name: "Product 4",price:100, image: [{ url: "https://picsum.photos/600/750?random=4"}]},
-      {_id: 5, name: "Product 5",price:100, image: [{ url: "https://picsum.photos/600/750?random=5"}]},
-      {_id: 6, name: "Product 6",price:100, image: [{ url: "https://picsum.photos/600/750?random=6"}]},
-      {_id: 7, name: "Product 7",price:100, image: [{ url: "https://picsum.photos/600/750?random=7"}]},
-    ];
+  const { id: paramId } = useParams();
+  const productFetchId = productId || paramId;
 
-  const [selectedImage, setSelectedImage] = useState(selectedProduct.images[0]);
+  const dispatch = useDispatch();
+  const {
+    selectedProduct,
+    similarProducts,
+    loading,
+    error,
+  } = useSelector((state) => state.products);
+
+  const [selectedImage, setSelectedImage] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [ isDisabled, setIsDisabled ] = useState(false);
+
+  /* ---------------- FETCH DATA ---------------- */
+  useEffect(() => {
+    dispatch(fetchProductDetails(productFetchId));
+    dispatch(fetchSimilarProducts({ id: productFetchId }));
+  }, [dispatch, productFetchId]);
+
+  /* ---------------- SYNC IMAGE ---------------- */
+  useEffect(() => {
+    if (selectedProduct?.images?.length) {
+      setSelectedImage(selectedProduct.images[0]);
+    }
+  }, [selectedProduct]);
 
   const handleAddTocart = () => {
     setIsDisabled(true);
@@ -69,6 +65,27 @@ const ProductDetails = () => {
     return;
   };
 
+  /* ---------------- LOADING ---------------- */
+  if (loading.details) {
+    return (
+      <p className="text-center py-20 text-gray-500">
+        Loading product...
+      </p>
+    );
+  }
+
+  /* ---------------- ERROR ---------------- */
+  if (error) {
+    return (
+      <p className="text-center py-20 text-red-500">
+        {error}
+      </p>
+    );
+  }
+
+  if (!selectedProduct) return null;
+
+  /* ========================================================= */
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-10">
@@ -79,13 +96,17 @@ const ProductDetails = () => {
 
           {/* Thumbnails (Left on desktop, bottom on mobile) */}
           <div className="flex md:flex-col gap-3 order-2 md:order-1 justify-center">
-            {selectedProduct.images.map((img, index) => (
+            {selectedProduct.images?.map((img, index) => (
               <motion.img
                 key={index}
                 src={img.url}
                 alt={img.altText}
                 className={`w-20 h-20 object-cover rounded-md cursor-pointer border 
-                ${selectedImage === img ? "border-black" : "border-gray-300"}`}
+                  ${
+                    selectedImage?.url === img.url
+                      ? "border-2 border-black"
+                      : "border-gray-300"
+                  }`}
                 whileHover={{ scale: 1.05 }}
                 onClick={() => setSelectedImage(img)}
               />
@@ -93,15 +114,23 @@ const ProductDetails = () => {
           </div>
 
           {/* Main Image */}
-          <motion.img
-            key={selectedImage.url}
-            src={selectedImage.url}
-            alt={selectedImage.altText}
-            initial={{ opacity: 0, scale: 0.7 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7}}
-            className="w-full max-h-[600px] object-cover rounded-lg order-1 md:order-2"
-          />
+          {selectedImage && (
+            <div className="w-full md:w-[450px] flex-shrink-0 order-1 md:order-2">
+              <motion.img
+                src={selectedImage.url}
+                alt={selectedImage.altText || selectedProduct.name}
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.7 }}
+                className="w-full h-[600px] object-cover rounded-lg"
+                onError={(e) => {
+                  e.currentTarget.src =
+                    "https://via.placeholder.com/600x750?text=No+Image";
+                }}
+              />
+            </div>
+          )}
+
         </div>
 
         {/* ---------- RIGHT SECTION: DETAILS ---------- */}
@@ -182,31 +211,33 @@ const ProductDetails = () => {
 
           {/* ---- Add to Cart Button ---- */}
           <button
-           disabled = {isDisabled}
-           className={`w-full cursor-pointer bg-black mt-3 text-white py-1 rounded-md text-lg font-semibold hover:bg-gray-900 transition ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
-           onClick={handleAddTocart}>
-            { isDisabled ? "Adding to Cart" : "ADD TO CART"}
+            disabled={isDisabled}
+            className={`w-full cursor-pointer bg-black mt-3 text-white py-1 rounded-md text-lg font-semibold hover:bg-gray-900 transition ${isDisabled ? "cursor-not-allowed opacity-50" : ""}`}
+            onClick={handleAddTocart}
+          >
+            { isDisabled ? "Adding to Cart" : "ADD TO CART" }
           </button>
 
-        {/* Characteristics */}
-        <div className="mt-5">
+          {/* Characteristics */}
+          <div className="mt-5">
             <h3 className="font-semibold mb-2 text-lg">Characteristics:</h3>
 
             <div className="grid grid-cols-2 gap-y-2 text-gray-700">
-                <p className="font-medium">Brand:</p>
-                <p>{selectedProduct.brand}</p>
+              <p className="font-medium">Brand:</p>
+              <p>{selectedProduct.brand}</p>
 
-                <p className="font-medium">Material:</p>
-                <p>{selectedProduct.material}</p>
-
+              <p className="font-medium">Material:</p>
+              <p>{selectedProduct.material}</p>
             </div>
-        </div>
+          </div>
+
         </motion.div>
       </div>
-       <div className="mt-20">
-            <h2 className="text-4xl font-bold text-center">You May Also Like</h2>
-            <ProductGrid products = {similarProducts}/>
-        </div>
+
+      <div className="mt-20">
+        <h2 className="text-4xl font-bold text-center">You May Also Like</h2>
+        <ProductGrid products={similarProducts}/>
+      </div>
     </section>
   );
 };
