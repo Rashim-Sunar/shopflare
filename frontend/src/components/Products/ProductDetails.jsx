@@ -11,6 +11,8 @@ import {
   fetchSimilarProducts
 } from "../../redux/slices/productSlice";
 
+import { addToCart } from "../../redux/slices/cartSlice";
+
 const ProductDetails = ({ productId }) => {
 
   const { id: paramId } = useParams();
@@ -23,6 +25,8 @@ const ProductDetails = ({ productId }) => {
     loading,
     error,
   } = useSelector((state) => state.products);
+
+  const { user, guestId } = useSelector((state) => state.auth);
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -58,11 +62,20 @@ const ProductDetails = ({ productId }) => {
       return;
     }
 
-    setTimeout(() => {
+    dispatch(addToCart({
+      productId: productFetchId,
+      userId: user?._id,
+      guestId,
+      quantity,
+      size: selectedSize,
+      color: selectedColor,
+    })).then(() => {
+      toast.success("Product added to cart successfully.", {
+        duration: 1000,
+      })
+    }).finally(() => {
       setIsDisabled(false);
-      toast.success("Product added to cart!");
-    }, 1000);
-    return;
+    })
   };
 
   /* ---------------- LOADING ---------------- */
