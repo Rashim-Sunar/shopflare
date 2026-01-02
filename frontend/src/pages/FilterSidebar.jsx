@@ -1,18 +1,25 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setFilters } from "../redux/slices/productSlice";
 
-const FilterSidebar = ({ filters, setFilters }) => {
+const FilterSidebar = () => {
+  const dispatch = useDispatch();
+  const { filters } = useSelector((state) => state.products);
+
   const colors = [
-    "black", "white", "red", "blue", "green",
-    "yellow", "purple", "pink", "brown", "gray"
+    "Black", "White", "Red", "Blue", "Green",
+    "Yellow", "Purple", "Pink", "Brown", "Gray",
   ];
 
+  /* ✅ Redux toggle logic */
   const toggleFilter = (type, value) => {
-    setFilters((prev) => ({
-      ...prev,
-      [type]: prev[type].includes(value)
-        ? prev[type].filter((v) => v !== value)
-        : [...prev[type], value],
-    }));
+    const currentValues = filters[type] || [];
+
+    const updatedValues = currentValues.includes(value)
+      ? currentValues.filter((v) => v !== value)
+      : [...currentValues, value];
+
+    dispatch(setFilters({ [type]: updatedValues }));
   };
 
   return (
@@ -21,7 +28,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
 
       {/* CATEGORY */}
       <div>
-        <h3 className="font-semibold mb-2 text-gray-800">Category</h3>
+        <h3 className="font-semibold mb-2">Category</h3>
         {["Top Wear", "Bottom Wear"].map((item) => (
           <label key={item} className="block text-sm">
             <input
@@ -37,7 +44,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
 
       {/* GENDER */}
       <div>
-        <h3 className="font-semibold mb-2 text-gray-800">Gender</h3>
+        <h3 className="font-semibold mb-2">Gender</h3>
         {["Men", "Women"].map((item) => (
           <label key={item} className="block text-sm">
             <input
@@ -53,7 +60,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
 
       {/* COLORS */}
       <div>
-        <h3 className="font-semibold mb-2 text-gray-800">Color</h3>
+        <h3 className="font-semibold mb-2">Color</h3>
         <div className="flex flex-wrap gap-2">
           {colors.map((color) => (
             <div
@@ -61,7 +68,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
               onClick={() => toggleFilter("color", color)}
               className={`w-7 h-7 rounded-full cursor-pointer border-2
                 ${filters.color.includes(color)
-                  ? "border-black ring-1/2 ring-black"
+                  ? "border-black ring-1 ring-black"
                   : "border-gray-300"}`}
               style={{ backgroundColor: color }}
             />
@@ -69,9 +76,9 @@ const FilterSidebar = ({ filters, setFilters }) => {
         </div>
       </div>
 
-      {/* SIZE (CHECKBOXES) */}
+      {/* SIZE */}
       <div>
-        <h3 className="font-semibold mb-2 text-gray-800">Size</h3>
+        <h3 className="font-semibold mb-2">Size</h3>
         {["XS", "S", "M", "L", "XL", "XXL"].map((size) => (
           <label key={size} className="block text-sm">
             <input
@@ -87,7 +94,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
 
       {/* MATERIAL */}
       <div>
-        <h3 className="font-semibold mb-2 text-gray-800">Material</h3>
+        <h3 className="font-semibold mb-2">Material</h3>
         {["Cotton", "Wool", "Denim", "Polyester", "Silk", "Linen", "Viscose", "Fleece"].map((m) => (
           <label key={m} className="block text-sm">
             <input
@@ -103,7 +110,7 @@ const FilterSidebar = ({ filters, setFilters }) => {
 
       {/* BRAND */}
       <div>
-        <h3 className="font-semibold mb-2 text-gray-800">Brand</h3>
+        <h3 className="font-semibold mb-2">Brand</h3>
         {["Urban Threads", "Modern Fit", "Street Style", "Beach Breeze", "Fashioninsta", "Chicstyle"].map((b) => (
           <label key={b} className="block text-sm">
             <input
@@ -119,14 +126,14 @@ const FilterSidebar = ({ filters, setFilters }) => {
 
       {/* PRICE RANGE */}
       <div>
-        <h3 className="font-semibold mb-2 text-gray-800">Price Range</h3>
+        <h3 className="font-semibold mb-2">Price Range</h3>
         <input
           type="range"
           min="0"
           max="100"
           value={filters.maxPrice}
           onChange={(e) =>
-            setFilters((prev) => ({ ...prev, maxPrice: Number(e.target.value) }))
+            dispatch(setFilters({ maxPrice: Number(e.target.value) }))
           }
           className="w-full"
         />

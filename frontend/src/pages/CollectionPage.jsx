@@ -4,40 +4,30 @@ import FilterSidebar from "./FilterSidebar";
 import SortOptions from "./SortOptions";
 import ProductGrid from "../components/Products/ProductGrid";
 
+import {
+  fetchProductsByFilters,
+  setFilters,
+  clearFilters
+} from "../redux/slices/productSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 const CollectionPage = () => {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
   const [showFilters, setShowFilters] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [filters, setFilters] = useState({
-    category: [],
-    gender: [],
-    color: [],
-    size: [],
-    material: [],
-    brand: [],
-    sort: "",
-    minPrice: 0,
-    maxPrice: 100,
-  });
+  /* ================== REDUX STATE ================== */
+  const { products, filters } = useSelector((state) => state.products);
 
-  // Mock fetch
+  // Clear all the filters on the page load
   useEffect(() => {
-    setTimeout(() => {
-      setProducts([
-        {_id: 1, name: "Product 1", price: 100, image: [{ url: "https://picsum.photos/600/750?random=1" }]},
-        {_id: 2, name: "Product 2", price: 120, image: [{ url: "https://picsum.photos/600/750?random=2" }]},
-        {_id: 3, name: "Product 3", price: 80, image: [{ url: "https://picsum.photos/600/750?random=3" }]},
-        {_id: 4, name: "Product 4", price: 150, image: [{ url: "https://picsum.photos/600/750?random=4" }]},
-        {_id: 5, name: "Product 5", price: 90, image: [{ url: "https://picsum.photos/600/750?random=5" }]},
-        {_id: 6, name: "Product 6", price: 100, image: [{ url: "https://picsum.photos/600/750?random=6" }]},
-        {_id: 7, name: "Product 7", price: 120, image: [{ url: "https://picsum.photos/600/750?random=7" }]},
-        {_id: 8, name: "Product 8", price: 80, image: [{ url: "https://picsum.photos/600/750?random=8" }]},
-        {_id: 9, name: "Product 9", price: 150, image: [{ url: "https://picsum.photos/600/750?random=9" }]},
-        {_id: 10, name: "Product 10", price: 90, image: [{ url: "https://picsum.photos/600/750?random=10" }]},
-      ]);
-    }, 800);
+    dispatch(clearFilters());
   }, []);
+
+  /* ================== FETCH PRODUCTS ================== */
+  useEffect(() => {
+    dispatch(fetchProductsByFilters(filters));
+  }, [dispatch, filters]);
 
   // 🔥 SYNC FILTERS → URL PARAMS
   useEffect(() => {
@@ -64,19 +54,26 @@ const CollectionPage = () => {
         >
           ☰ Filters
         </button>
-        <SortOptions filters={filters} setFilters={setFilters} />
+        <SortOptions
+          filters={filters}
+          setFilters={(data) => dispatch(setFilters(data))}
+        />
+
       </div>
 
       <div className="flex gap-8">
         {/* FIXED SIDEBAR */}
         <div className="hidden lg:block w-[11%] shrink-0">
-            <FilterSidebar filters={filters} setFilters={setFilters} />
+            <FilterSidebar/>
         </div>
         {/* PRODUCTS */}
         <div className="flex-1">
             <h2 className="text-3xl font-semibold text-slate-900">All Collections</h2>
             <div className="hidden lg:flex justify-end mb-6">
-                <SortOptions filters={filters} setFilters={setFilters} />
+                <SortOptions
+                  filters={filters}
+                  setFilters={(data) => dispatch(setFilters(data))}
+                />
             </div>
             <ProductGrid products={products} />
         </div>
@@ -90,7 +87,7 @@ const CollectionPage = () => {
               <h3 className="text-lg font-semibold">Filters</h3>
               <button onClick={() => setShowFilters(false)}>✕</button>
             </div>
-            <FilterSidebar filters={filters} setFilters={setFilters} />
+            <FilterSidebar/>
           </div>
         </div>
       )}

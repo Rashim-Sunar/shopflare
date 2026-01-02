@@ -105,15 +105,18 @@ const initialState = {
   },
   error: null,
   filters: {
-    collection: "",
-    category: "",
-    gender: "",
-    color: "",
-    size: "",
-    material: "",
-    brand: "",
-    minPrice: "",
-    maxPrice: "",
+    // Multi-select filters → ARRAYS
+    collection: [],
+    category: [],
+    gender: [],
+    color: [],
+    size: [],
+    material: [],
+    brand: [],
+    // Range filters → NUMBERS
+    minPrice: 0,
+    maxPrice: 100,
+    // Single-value filters → STRINGS
     sort: "",
     search: "",
   },
