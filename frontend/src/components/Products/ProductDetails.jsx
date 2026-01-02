@@ -11,7 +11,7 @@ import {
   fetchSimilarProducts
 } from "../../redux/slices/productSlice";
 
-import { addToCart } from "../../redux/slices/cartSlice";
+import { addToCart, fetchCart } from "../../redux/slices/cartSlice";
 
 const ProductDetails = ({ productId }) => {
 
@@ -75,6 +75,7 @@ const ProductDetails = ({ productId }) => {
       })
     }).finally(() => {
       setIsDisabled(false);
+      dispatch(fetchCart({userid: user?._id, guestId}))
     })
   };
 

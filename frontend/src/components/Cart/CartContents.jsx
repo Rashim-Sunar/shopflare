@@ -1,9 +1,31 @@
 import React from 'react'
 import { AiOutlineDelete } from "react-icons/ai";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
+
+import { removeFromCart, fetchCart } from '../../redux/slices/cartSlice';
 
 const CartContents = () => {
     const { cart, loading, error} = useSelector((state) => state.cart);
+    const { user, guestId } = useSelector((state) => state.auth);
+
+    const dispatch = useDispatch();
+
+    const handleCartItemDelete = async(productId, size, color) => {
+      dispatch(removeFromCart({
+        productId,
+        size,
+        color,
+        userId: user?._id,
+        guestId
+      })).then(() => {
+        toast.success("Item removed from cart successfully", {
+          duration: 800
+        })
+      }).finally(() => {
+        dispatch(fetchCart({userId: user?._id, guestId}));
+      });
+    }
 
     if(loading.fetch){
         return <div>Fetching the cart items.....</div>
@@ -36,7 +58,7 @@ const CartContents = () => {
                 </div>
                 <div>
                     <p className='text-gray-700 font-medium'>${product.price}</p>
-                    <AiOutlineDelete className='h-5 w-5 text-red-700'/>
+                    <AiOutlineDelete className='h-5 w-5 text-red-700 ' onClick={() => handleCartItemDelete(product.productId, product.size, product.color)}/>
                 </div>
 
             </div>
