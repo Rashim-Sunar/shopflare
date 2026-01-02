@@ -1,59 +1,22 @@
 import React from 'react'
 import { AiOutlineDelete } from "react-icons/ai";
+import { useSelector } from 'react-redux';
 
 const CartContents = () => {
-    const cartProducts = [
-        {
-            productId: 1,
-            name: "T-shirt",
-            size: "M",
-            color: "Red",
-            quantity: 1,
-            price: 15,
-            image: "https://picsum.photos/200/300?random=1"
-        },
-         {
-            productId: 2,
-            name: "Jeans",
-            size: "M",
-            color: "Blue",
-            quantity: 1,
-            price: 10,
-            image: "https://picsum.photos/200/300?random=2"
-        },
-         {
-            productId: 3,
-            name: "T-shirt",
-            size: "L",
-            color: "Black",
-            quantity: 2,
-            price: 20,
-            image: "https://picsum.photos/200/300?random=3"
-        },
-         {
-            productId: 4,
-            name: "Shirt",
-            size: "L",
-            color: "White",
-            quantity: 1,
-            price: 30,
-            image: "https://picsum.photos/200/300?random=4"
-        },
-        {
-            productId: 5,
-            name: "Shirt",
-            size: "L",
-            color: "White",
-            quantity: 1,
-            price: 10,
-            image: "https://picsum.photos/200/300?random=5"
-        },
-    ]
+    const { cart, loading, error} = useSelector((state) => state.cart);
+
+    if(loading.fetch){
+        return <div>Fetching the cart items.....</div>
+    }
+
+    if(error){
+        return <div>Error fetching the cart items.</div>
+    }
 
   return (
     <div>
       {
-        cartProducts.map((product, index) => (
+        cart?.products?.map((product, index) => (
             <div key={index} className='flex items-start border-gray-400 border-b py-4 justify-between pr-1'>
                 <div className='flex flex-start'>
                     <img src={product.image} alt={product.name} className='w-20 h-24 object-cover mr-4 rounded'/>

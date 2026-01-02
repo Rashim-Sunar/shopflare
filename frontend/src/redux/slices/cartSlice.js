@@ -40,6 +40,7 @@ export const fetchCart = createAsyncThunk(
         `${import.meta.env.VITE_BACKEND_URL}/api/cart`,
         { params: { userId, guestId } }
       );
+      // console.log("Cart products: ",response.data?.cart.products)
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -182,7 +183,7 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.loading.fetch = false;
-        state.cart = action.payload;
+        state.cart = action.payload?.cart;
         saveCartToStorage(action.payload);
       })
       .addCase(fetchCart.rejected, (state, action) => {

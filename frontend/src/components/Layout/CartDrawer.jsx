@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { HiMiniXMark } from "react-icons/hi2";
 import CartContents from '../Cart/CartContents';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { fetchCart } from '../../redux/slices/cartSlice';
 
 const CartDrawer = ({ openDrawer, toggleOpenDrawer }) => {
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user, guestId } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if(openDrawer){
+      dispatch(fetchCart({
+        userId: user?._id,
+        guestId,
+      }));
+
+    }
+  }, [dispatch, user, guestId, openDrawer]);
 
   const handleCheckout = () => {
     toggleOpenDrawer();
