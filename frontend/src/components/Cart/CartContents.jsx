@@ -1,15 +1,18 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { AiOutlineDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
 
-import { removeFromCart, fetchCart } from '../../redux/slices/cartSlice';
+import { removeFromCart, fetchCart,updateCartItemQuantity } from '../../redux/slices/cartSlice';
 
 const CartContents = () => {
     const { cart, loading, error} = useSelector((state) => state.cart);
     const { user, guestId } = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
+
+    // Store debounce timers per cart item
+    const debounceTimers = useRef({});
 
     const handleCartItemDelete = async(productId, size, color) => {
       dispatch(removeFromCart({
@@ -27,6 +30,38 @@ const CartContents = () => {
       });
     }
 
+    /* ================= UPDATE QUANTITY (DEBOUNCED) ================= */
+    const handleQuantityChange = (
+        productId,
+        size,
+        color,
+        newQuantity,
+        key
+    ) => {
+        if (newQuantity < 1) return;
+
+        // Clear previous timer for this item
+        if (debounceTimers.current[key]) {
+          clearTimeout(debounceTimers.current[key]);
+        }
+
+        // Debounce backend update
+        debounceTimers.current[key] = setTimeout(() => {
+          dispatch(
+            updateCartItemQuantity({
+              productId,
+              size,
+              color,
+              quantity: newQuantity,
+              userId: user?._id,
+              guestId,
+            })
+          ).unwrap().catch((err) => {
+            toast.error(err?.message || "Failed to update quantity");
+          });
+        }, 300);
+    };
+
     if(loading.fetch){
         return <div>Fetching the cart items.....</div>
     }
@@ -34,12 +69,15 @@ const CartContents = () => {
     if(error){
         return <div>Error fetching the cart items.</div>
     }
-
+    
   return (
     <div>
       {
-        cart?.products?.map((product, index) => (
-            <div key={index} className='flex items-start border-gray-400 border-b py-4 justify-between pr-1'>
+        cart?.products?.map((product, index) => {
+          const itemKey = `${product.productId}-${product.size}-${product.color}`;
+
+          return (
+            <div key={itemKey} className='flex items-start border-gray-400 border-b py-4 justify-between pr-1'>
                 <div className='flex flex-start'>
                     <img src={product.image} alt={product.name} className='w-20 h-24 object-cover mr-4 rounded'/>
                      <div className='flex flex-start flex-col'>
@@ -50,9 +88,37 @@ const CartContents = () => {
 
                         {/* Increment Decrement Button */}
                         <div className='flex items-center mt-3 space-x-3'>
-                            <button className='rounded text-lg font-medium px-2 py-1 rounded bg-slate-100'> - </button>
+                            <button 
+                             onClick={() =>
+                                handleQuantityChange(
+                                  product.productId,
+                                  product.size,
+                                  product.color,
+                                  product.quantity - 1,
+                                  itemKey
+                                )
+                              }
+                             disabled={product.quantity <= 1}
+                             className='rounded text-lg font-medium px-2 py-1 rounded bg-slate-100'
+                             >
+                               - 
+                            </button>
                             <p className='text-sm'>{product.quantity}</p>
-                            <button className='rounded text-lg font-medium px-2 py-1 rounded bg-slate-100'> + </button>
+                            <button 
+                              onClick={() =>
+                                handleQuantityChange(
+                                  product.productId,
+                                  product.size,
+                                  product.color,
+                                  product.quantity + 1,
+                                  itemKey
+                                )
+                              }
+                              disabled={product.quantity > 15}
+                              className='rounded text-lg font-medium px-2 py-1 rounded bg-slate-100'
+                            > 
+                              + 
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -62,7 +128,8 @@ const CartContents = () => {
                 </div>
 
             </div>
-        ))
+        )
+       })
       }
     </div>
   )
