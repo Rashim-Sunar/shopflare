@@ -19,6 +19,11 @@ router.delete('/', cartController.deleteFromCart);
 // @access Public
 router.get('/', cartController.getCart);
 
+// @route PUT /api/cart
+// @desc Update the quantity for any product in cart for logged-in user or guest
+// @access Public
+router.put('/', cartController.updateCartQuantity);
+
 // @route POST /api/cart/merge
 // @desc Merge guest cart into logged-in user cart on login
 // @access Private (after login)

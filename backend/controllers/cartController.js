@@ -299,3 +299,70 @@ exports.mergeGuestCart = asyncErrorHandler( async(req, res, next) => {
         cart: userCart
     })
 });
+
+/* ============================================================ */
+/* ================= UPDATE CART ITEM QUANTITY ================ */
+/* ============================================================ */
+
+exports.updateCartQuantity = asyncErrorHandler(async (req, res, next) => {
+  const {
+    productId,
+    quantity,
+    size,
+    color,
+    userId,
+    guestId,
+  } = req.body;
+
+  /* ---------- VALIDATION ---------- */
+  if (!productId) {
+    return next(new customError("Product ID is required", 400));
+  }
+
+  if (quantity === undefined || quantity < 1) {
+    return next(new customError("Quantity must be at least 1", 400));
+  }
+
+  /* ---------- FIND CART ---------- */
+  let cart;
+
+  if (userId) {
+    cart = await Cart.findOne({ user: userId });
+  } else if (guestId) {
+    cart = await Cart.findOne({ guestId });
+  } else {
+    return next(new customError("Guest ID or User ID is required", 400));
+  }
+
+  if (!cart) {
+    return next(new customError("Cart not found", 404));
+  }
+
+  /* ---------- FIND PRODUCT ---------- */
+  const cartItem = cart.products.find(
+    (item) =>
+      item.productId.toString() === productId &&
+      item.size === size &&
+      item.color === color
+  );
+
+  if (!cartItem) {
+    return next(new customError("Product not found in cart", 404));
+  }
+
+  /* ---------- UPDATE QUANTITY ---------- */
+  cartItem.quantity = quantity;
+
+  /* ---------- RECALCULATE TOTAL ---------- */
+  cart.totalPrice = cart.products.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+  await cart.save();
+
+  res.status(200).json({
+    status: "success",
+    cart,
+  });
+});
