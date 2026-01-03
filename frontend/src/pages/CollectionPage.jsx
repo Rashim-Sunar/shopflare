@@ -19,11 +19,6 @@ const CollectionPage = () => {
   /* ================== REDUX STATE ================== */
   const { products, filters } = useSelector((state) => state.products);
 
-  // Clear all the filters on the page load
-  useEffect(() => {
-    dispatch(clearFilters());
-  }, []);
-
   /* ================== FETCH PRODUCTS ================== */
   useEffect(() => {
     dispatch(fetchProductsByFilters(filters));

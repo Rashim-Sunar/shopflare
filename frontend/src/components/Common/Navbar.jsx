@@ -5,10 +5,15 @@ import { HiBars3BottomRight } from "react-icons/hi2";
 import { HiMiniXMark } from "react-icons/hi2";
 import SearchBar from './SearchBar';
 import CartDrawer from '../Layout/CartDrawer';
+import { useDispatch } from 'react-redux';
+
+import { setFilters, clearFilters } from '../../redux/slices/productSlice';
 
 const Navbar = () => {
   const [ openDrawer, setOpenDrawer ] = useState(false);
   const [ navDrawer, setNavDrawer ] = useState(false);
+
+  const dispatch = useDispatch();
   
   const toggleOpenDrawer = () => {
     setOpenDrawer(!openDrawer);
@@ -29,10 +34,46 @@ const Navbar = () => {
 
         {/* Center - Navigation Links */}
         <div className='hidden sm:flex items-center justify-center space-x-6'>
-            <Link to='/collections/all' className='text-gray-700 hover:text-black text-sm font-medium uppercase'>Men</Link>
-            <Link to='#' className='text-gray-700 hover:text-black text-sm font-medium uppercase'>Women</Link>
-            <Link to='#' className='text-gray-700 hover:text-black text-sm font-medium uppercase'>Top Wear</Link>
-            <Link to='#' className='text-gray-700 hover:text-black text-sm font-medium uppercase'>Bottom Wear</Link>
+            <Link 
+              to='/collections/all' 
+              className='text-gray-700 hover:text-black text-sm font-medium uppercase'
+              onClick={ () => {
+                dispatch(clearFilters());
+                dispatch(setFilters({gender: ["Men"]}))
+              }}
+            >
+              Men
+            </Link>
+            <Link 
+              to='/collections/all' 
+              className='text-gray-700 hover:text-black text-sm font-medium uppercase'
+              onClick={ () => {
+                dispatch(clearFilters());
+                dispatch(setFilters({gender: ["Women"]}))
+              }}
+            >
+              Women
+            </Link>
+           <Link 
+              to='/collections/all' 
+              className='text-gray-700 hover:text-black text-sm font-medium uppercase'
+              onClick={ () => {
+                dispatch(clearFilters());
+                dispatch(setFilters({category: ["Top Wear"]}))
+              }}
+            >
+              Top Wear
+            </Link>
+            <Link 
+              to='/collections/all' 
+              className='text-gray-700 hover:text-black text-sm font-medium uppercase'
+              onClick={ () => {
+                dispatch(clearFilters());
+                dispatch(setFilters({category: ["Bottom Wear"]}))
+              }}
+            >
+              Bottom Wear
+            </Link>
         </div>
         {/*  Right icons */}
         <div className='flex items-center space-x-4 lg:mr-8'>
@@ -65,16 +106,44 @@ const Navbar = () => {
           <div className='p-4'>
             <h2 className='text-xl font-semibold mb-2'>Menu</h2>
             <nav className='space-y-2'>
-              <Link to='#' className='block text-md text-gray-600 hover:text-black'>
+              <Link
+                to='/collections/all' 
+                onClick={ () => {
+                  dispatch(clearFilters());
+                  dispatch(setFilters({gender: ["Men"]}))
+                }}
+                className='block text-md text-gray-600 hover:text-black'
+              >
                 Men
               </Link>
-              <Link to='#' className='block text-gray-600 hover:text-black'>
+              <Link 
+                to='/collections/all' 
+                onClick={ () => {
+                  dispatch(clearFilters());
+                  dispatch(setFilters({gender: ["Women"]}))
+                }}
+               className='block text-gray-600 hover:text-black'
+              >
                 Women
               </Link>
-              <Link to='#' className='block text-gray-600 hover:text-black'>
+              <Link 
+                to='/collections/all' 
+                onClick={ () => {
+                  dispatch(clearFilters());
+                  dispatch(setFilters({category: ["Top Wear"]}))
+                }}
+               className='block text-gray-600 hover:text-black'
+              >
                 Top Wear
               </Link>
-              <Link to='#' className='block text-gray-600 hover:text-black'>
+              <Link 
+                to='/collections/all' 
+                onClick={ () => {
+                  dispatch(clearFilters());
+                  dispatch(setFilters({category: ["Bottom Wear"]}))
+                }}
+               className='block text-gray-600 hover:text-black'
+              >
                 Bottom Wear
               </Link>
             </nav>
