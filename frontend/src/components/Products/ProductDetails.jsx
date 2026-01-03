@@ -75,7 +75,8 @@ const ProductDetails = ({ productId }) => {
       })
     }).finally(() => {
       setIsDisabled(false);
-      dispatch(fetchCart({userid: user?._id, guestId}))
+      dispatch(fetchCart({userId: user?._id, guestId}))
+      console.log("Fetching cart");
     })
   };
 

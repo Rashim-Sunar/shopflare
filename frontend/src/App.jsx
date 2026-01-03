@@ -33,7 +33,6 @@ function App() {
 
            {/* 🔐 PROTECTED USER ROUTES */}
            <Route element={<ProtectedRoute />}>
-            <Route path='/profile' element={<Profile/>}/>
             <Route path="profile" element={<Profile />} />
             <Route path="checkout" element={<Checkout />} />
             <Route path="order-confirmation" element={<OrderConfirmationPage />} />

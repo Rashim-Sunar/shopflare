@@ -1,12 +1,19 @@
 import React from "react";
 import MyOrdersPage from "./MyOrdersPage";
+import { useDispatch, useSelector } from "react-redux";
+
+import { logout } from "../redux/slices/authSlice";
+import { clearCart } from "../redux/slices/cartSlice";
 
 const Profile = () => {
-  // Mock user data
-  const user = {
-    name: "Rashim Sunar",
-    email: "rashim@example.com",
-  };
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(clearCart());
+    window.location.replace("/");
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -17,14 +24,15 @@ const Profile = () => {
 
         <div className="space-y-3">
           <p className="text-gray-700">
-            <span className="font-semibold">Name:</span> {user.name}
+            <span className="font-semibold">Name:</span> {user?.name}
           </p>
 
           <p className="text-gray-700">
-            <span className="font-semibold">Email:</span> {user.email}
+            <span className="font-semibold">Email:</span> {user?.email}
           </p>
 
           <button
+            onClick={handleLogout}
             className="mt-5 w-full bg-black text-white py-2 rounded-md hover:bg-gray-800 cursor-pointer"
           >
             Logout
