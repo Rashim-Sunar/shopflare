@@ -1,8 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { clearFilters, setFilters } from "../../redux/slices/productSlice";
+import { useDispatch } from "react-redux";
 
 const GenderCollectionSection = () => {
+  
+  const dispatch = useDispatch();
+
   return (
     <section className="w-full py-14 px-6">
       <div className=" max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -28,7 +33,11 @@ const GenderCollectionSection = () => {
           <div className="absolute left-6 bottom-6 text-white">
             <h2 className="text-2xl md:text-3xl font-bold">Women's Collection</h2>
             <Link
-              to='#'
+              to = "collections/all"
+              onClick={() => {
+                dispatch(clearFilters());
+                dispatch(setFilters({gender: ['Women']}))
+              }}
               className="inline-block mt-3 bg-white text-black px-5 py-2 rounded-md font-medium hover:bg-gray-200 transition"
             >
               Shop Now
@@ -57,7 +66,11 @@ const GenderCollectionSection = () => {
           <div className="absolute left-6 bottom-6 text-white">
             <h2 className="text-2xl md:text-3xl font-bold">Men's Collection</h2>
             <Link
-              href="/shop/men"
+              to = 'collections/all'
+              onClick={() => {
+                dispatch(clearFilters());
+                dispatch(setFilters({gender: ['Men']}));
+              }}
               className="inline-block mt-3 bg-white text-black px-5 py-2 rounded-md font-medium hover:bg-gray-200 transition"
             >
               Shop Now

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import FilterSidebar from "./FilterSidebar";
 import SortOptions from "./SortOptions";
 import ProductGrid from "../components/Products/ProductGrid";
@@ -18,6 +18,7 @@ const CollectionPage = () => {
 
   /* ================== REDUX STATE ================== */
   const { products, filters } = useSelector((state) => state.products);
+  const location = useLocation();
 
   /* ================== FETCH PRODUCTS ================== */
   useEffect(() => {
@@ -39,6 +40,15 @@ const CollectionPage = () => {
     setSearchParams(params);
   }, [filters, setSearchParams]);
 
+    useEffect(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+        duration: 900
+      });
+    }, [location.pathname]);
+  
   return (
     <div className="w-full mx-auto px-8 py-10">
       {/* MOBILE BAR */}
