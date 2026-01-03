@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { clearError, loginUser } from "../redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
+
+import { mergeCart } from "../redux/slices/cartSlice";
 
 const Login = () => {
 
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
 
+  const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { loading, error, user } = useSelector(state => state.auth);
+  const redirectPath = location.state?.from || "/";
+
+  const { loading, error, user, guestId } = useSelector(state => state.auth);
 
   useEffect(() => {
     if(error){
@@ -24,6 +30,9 @@ const Login = () => {
       setEmail("");
       setPassword("");
       toast.success("Login successful 🎉");
+      // Even if merge fails, do NOT block user
+      navigate(redirectPath, { replace: true });
+      dispatch(mergeCart({ guestId, user}));
     }
   }, [error, user]);
 
@@ -33,6 +42,7 @@ const Login = () => {
     if(loading) return; // prevents double request
 
     dispatch(loginUser({ email, password }));
+
   }
 
   return (

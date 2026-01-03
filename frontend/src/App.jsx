@@ -17,6 +17,7 @@ import UserManagement from './components/Admin/UserManagement'
 import ProductManagement from './components/Admin/ProductManagement'
 import EditProductPage from './components/Admin/EditProductPage'
 import OrderManagement from './components/Admin/OrderManagement'
+import ProtectedRoute from './components/Routes/ProtectedRoute';
 
 function App() {
   return (
@@ -27,13 +28,18 @@ function App() {
            <Route index element={<Home/>}/>
            <Route path="/login" element={<Login/>} />
            <Route path="/signup" element={<Signup/>} />
-           <Route path='/profile' element={<Profile/>}/>
            <Route path='/collections/:collection' element={<CollectionPage/>}/>
            <Route path='/product/:id' element = {<ProductDetails/>}/>
-           <Route path='/checkout' element = {<Checkout/>}/>
-           <Route path='/order-confirmation' element={<OrderConfirmationPage/>}/>
-           <Route path='/my-orders' element = {<MyOrdersPage/>} /> 
-           <Route path='order/:id' element = {<OrderDetailsPage/>} />
+
+           {/* 🔐 PROTECTED USER ROUTES */}
+           <Route element={<ProtectedRoute />}>
+            <Route path='/profile' element={<Profile/>}/>
+            <Route path="profile" element={<Profile />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="order-confirmation" element={<OrderConfirmationPage />} />
+            <Route path="my-orders" element={<MyOrdersPage />} />
+            <Route path="order/:id" element={<OrderDetailsPage />} />
+          </Route>
       </Route>
       <Route path='/admin' element = { <AdminLayout/> } >
         {/* Admin Layout */}
