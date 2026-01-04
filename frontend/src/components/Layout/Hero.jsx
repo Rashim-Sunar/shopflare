@@ -1,8 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { clearFilters } from "../../redux/slices/productSlice";
+import { useDispatch } from "react-redux";
 
 const Hero = () => {
+  const dispatch = useDispatch();
+
   return (
     <section className="relative w-full h-[70vh] md:h-[85vh] overflow-hidden">
 
@@ -32,7 +36,8 @@ const Hero = () => {
         </p>
 
         <Link
-          to='#'
+          to='/collections/all'
+          onClick={() => {dispatch(clearFilters())}}
           className="inline-block bg-white text-orange-500 font-semibold px-6 py-3 rounded-md hover:bg-gray-200 transition-all duration-300"
         >
           Shop Now

@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import { motion } from "framer-motion";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const NewArrivals = () => {
   // Reference to control react-slick slider programmatically
@@ -106,6 +107,7 @@ const NewArrivals = () => {
               className="px-2"
             >
               {/* ---------- PRODUCT CARD ---------- */}
+              <Link to = {`product/${product._id}`}>
               <div className="relative rounded-lg overflow-hidden shadow-md hover:shadow-lg transition">
 
                 {/* Product Image (Safe optional chaining) */}
@@ -126,6 +128,7 @@ const NewArrivals = () => {
                 </div>
 
               </div>
+              </Link>
             </motion.div>
           ))}
         </Slider>
