@@ -206,24 +206,24 @@ const Checkout = () => {
             >
               <h2 className="text-lg font-semibold mb-5">Order Summary</h2>
 
-             { cart?.products.map((product, index) => {
+             { cart?.products?.map((product, index) => {
                 return (
                    <div className="flex gap-4 border-b-1 border-t pt-8 border-gray-300 pb-4" key={index}>
                       <img
-                        src={product.image}
-                        alt={product.name}
+                        src={product?.image}
+                        alt={product?.name}
                         className="w-20 h-24 rounded-md object-cover"
                       />
 
                       <div className="flex-1 text-sm">
                         <p className="font-semibold">
-                          {product.name}
+                          {product?.name}
                         </p>
-                        <p className="text-gray-500">Size: {product.size}</p>
-                        <p className="text-gray-500">Color: {product.color}</p>
+                        <p className="text-gray-500">Size: {product?.size}</p>
+                        <p className="text-gray-500">Color: {product?.color}</p>
                       </div>
 
-                      <p className="font-medium">${product.price}</p>
+                      <p className="font-medium">${product?.price}</p>
                     </div>
 
                 )
@@ -232,7 +232,7 @@ const Checkout = () => {
               <div className="mt-6 space-y-4 text-sm">
                 <div className="flex justify-between">
                   <span className="font-medium">Subtotal</span>
-                  <span>${cart.totalPrice}</span>
+                  <span>${cart?.totalPrice}</span>
                 </div>
 
                 <div className="flex justify-between">
@@ -242,7 +242,7 @@ const Checkout = () => {
 
                 <div className="flex justify-between pt-4 border-t border-gray-300 font-semibold">
                   <span>Total</span>
-                  <span>${cart.totalPrice}</span>
+                  <span>${cart?.totalPrice}</span>
                 </div>
               </div>
             </motion.div>
