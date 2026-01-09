@@ -3,10 +3,13 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import PayPalButton from "./PayPalButton";
+import { useSelector } from "react-redux";
 
 const Checkout = () => {
   // Hardcoded email 
   const email = "admin@example.com";
+  const { user } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
   const navigate = useNavigate();
 
   // Form data state
@@ -95,7 +98,7 @@ const Checkout = () => {
               <div className="mb-8">
                 <h2 className="text-sm font-medium mb-2">Contact Details</h2>
                 <input
-                  value={email}
+                  value={user?.email}
                   disabled
                   className="w-full rounded-md border bg-gray-100 px-4 py-3 text-sm cursor-not-allowed"
                 />
@@ -203,28 +206,33 @@ const Checkout = () => {
             >
               <h2 className="text-lg font-semibold mb-5">Order Summary</h2>
 
-              <div className="flex gap-4 border-b-2 border-t pt-8 border-gray-300 pb-4">
-                <img
-                  src="https://picsum.photos/80/100?random=55"
-                  alt="Product"
-                  className="w-20 h-24 rounded-md object-cover"
-                />
+             { cart?.products.map((product, index) => {
+                return (
+                   <div className="flex gap-4 border-b-1 border-t pt-8 border-gray-300 pb-4" key={index}>
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-20 h-24 rounded-md object-cover"
+                      />
 
-                <div className="flex-1 text-sm">
-                  <p className="font-semibold">
-                    Classic Oxford Button-Down Shirt
-                  </p>
-                  <p className="text-gray-500">Size: M</p>
-                  <p className="text-gray-500">Color: Red</p>
-                </div>
+                      <div className="flex-1 text-sm">
+                        <p className="font-semibold">
+                          {product.name}
+                        </p>
+                        <p className="text-gray-500">Size: {product.size}</p>
+                        <p className="text-gray-500">Color: {product.color}</p>
+                      </div>
 
-                <p className="font-medium">$39.99</p>
-              </div>
+                      <p className="font-medium">${product.price}</p>
+                    </div>
+
+                )
+             })}
 
               <div className="mt-6 space-y-4 text-sm">
                 <div className="flex justify-between">
                   <span className="font-medium">Subtotal</span>
-                  <span>$39.99</span>
+                  <span>${cart.totalPrice}</span>
                 </div>
 
                 <div className="flex justify-between">
@@ -234,7 +242,7 @@ const Checkout = () => {
 
                 <div className="flex justify-between pt-4 border-t border-gray-300 font-semibold">
                   <span>Total</span>
-                  <span>$39.99</span>
+                  <span>${cart.totalPrice}</span>
                 </div>
               </div>
             </motion.div>
