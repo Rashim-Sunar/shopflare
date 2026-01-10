@@ -91,7 +91,7 @@ exports.finalizeCheckout = asyncErrorHandler( async(req, res, next) => {
     });
 
     // Clear user cart after order creation
-    await Cart.findByIdAndDelete(checkout.user);
+    await Cart.findOneAndDelete({ user: checkout.user });
 
     res.status(200).json({
         status: "success",

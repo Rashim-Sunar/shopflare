@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import PayPalButton from "./PayPalButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { createCheckout } from "../../redux/slices/checkoutSlice";
 
 const Checkout = () => {
   // Hardcoded email 
@@ -11,6 +14,8 @@ const Checkout = () => {
   const { user } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   // Form data state
   const [formData, setFormData] = useState({
@@ -38,7 +43,7 @@ const Checkout = () => {
   };
 
   // Handle checkout form submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     // Basic validation
@@ -52,25 +57,69 @@ const Checkout = () => {
       return;
     }
 
-    // Simulate backend checkout creation
-    setCheckoutId("CHK_125");
+    const checkoutPayload = {
+      checkoutItems: cart.products.map((p) => ({
+        productId: p.productId,
+        name: p.name,
+        image: p.image,
+        price: p.price,
+        quantity: p.quantity,
+      })),
+      shippingAddress: {
+        address: formData.address,
+        city: formData.city,
+        postalCode: formData.postalCode,
+        country: formData.postalCode
+      },
+      paymentMethod: "PayPal",
+      totalPrice: cart.totalPrice,
+    };
 
-    console.log({ email, ...formData });
+    const res = await dispatch(createCheckout(checkoutPayload)).unwrap();
+
+    setCheckoutId(res.checkout._id);
+    console.log(res);
   };
 
   // Handle PayPal success
-  const handlePaymentSuccess = (details) => {
-    console.log("-------------------------------")
-    console.log("-------------------------------")
-    console.log("Payment Successful", details);
-    console.log("-------------------------------")
-    console.log("-------------------------------")
+  const handlePaymentSuccess = async (details) => {
+    try {
+      setPaymentCompleted(true);
 
-    // LOCK payment UI to prevent loops
-    setPaymentCompleted(true);
+      // 1. Mark checkout as paid
+      const paymentRes = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/checkout/${checkoutId}/pay`,
+        {
+          paymentStatus: "paid",
+          paymentDetails: details,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        }
+      );
 
-    // Navigate safely (replace avoids back-navigation loop)
-    navigate("/order-confirmation", { replace: true });
+      console.log("After payment: ", paymentRes.data);
+
+      // 2. Finalize checkout → create order
+      const orderRes = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/checkout/${checkoutId}/finalize`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        }
+      );
+
+      console.log("After checkout finalization: ", orderRes.data);
+
+      navigate("/order-confirmation", { replace: true });
+    } catch (err) {
+      alert("Payment processing failed");
+      setPaymentCompleted(false);
+    }
   };
 
   return (

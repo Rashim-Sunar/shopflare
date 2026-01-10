@@ -71,7 +71,7 @@ const OrderConfirmationPage = () => {
                 {checkout.checkoutItems.map((item) => (
                     <div key={item.productId} className='flex items-center mb-4'>
                         <img 
-                          src={item.image} object-cover rounded-md mr-4
+                          src={item.image}
                           alt={item.name} 
                           className='w-16 h-16 object-cover rounded-md mr-4'
                         />
