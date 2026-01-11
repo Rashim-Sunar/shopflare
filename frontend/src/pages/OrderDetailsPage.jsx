@@ -1,51 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+
+import { fetchOrderDetails, clearOrderDetails } from "../redux/slices/orderSlice";
 
 const OrderDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [orderDetails, setOrderDetails] = useState(null);
+  const { orderDetails, loading } = useSelector((state) => state.orders);
 
   useEffect(() => {
-    const mockOrderDetails = {
-      _id: id,
-      createdAt: "07/12/2024",
-      isPaid: true,
-      isDelivered: false,
-      paymentMethod: "PayPal",
-      shippingMethod: "Standard",
-      shippingAddress: { city: "New York", country: "USA" },
-      orderItems: [
-        {
-          productId: "1",
-          name: "Slim-Fit Easy-Iron Shirt",
-          price: 34.99,
-          quantity: 1,
-          image: "https://picsum.photos/100?random=1",
-        },
-        {
-          productId: "2",
-          name: "Classic Oxford Button-Down Shirt",
-          price: 39.99,
-          quantity: 1,
-          image: "https://picsum.photos/100?random=2",
-        },
-        {
-          productId: "3",
-          name: "Chino Pants",
-          price: 55,
-          quantity: 1,
-          image: "https://picsum.photos/100?random=3",
-        },
-      ],
+    dispatch(fetchOrderDetails(id));
+
+    return () => {
+      dispatch(clearOrderDetails());
     };
+  }, [dispatch, id]);
 
-    setOrderDetails(mockOrderDetails);
-  }, [id]);
-
-  if (!orderDetails) {
+  if (loading.details || !orderDetails) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <span className="animate-pulse text-gray-500">Loading order...</span>
@@ -68,19 +43,19 @@ const OrderDetailsPage = () => {
             Order ID: {orderDetails._id}
           </p>
           <p className="text-sm text-gray-500">
-            {orderDetails.createdAt}
+            {new Date(orderDetails.createdAt).toLocaleDateString()}
           </p>
         </div>
 
         <div className="flex gap-2">
           <span className="px-3 py-1 text-sm rounded-full bg-green-100 text-green-700">
-            Approved
+            {orderDetails.isPaid ? "Paid" : "Unpaid"}
           </span>
           {!orderDetails.isDelivered && (
-            <span className="px-3 py-1 text-sm rounded-full bg-yellow-100 text-yellow-700">
-              Pending Delivery
-            </span>
-          )}
+              <span className="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700">
+                Processing
+              </span>
+            )}
         </div>
       </div>
 
@@ -95,7 +70,7 @@ const OrderDetailsPage = () => {
           <p className="text-sm text-gray-600">
             Status:{" "}
             <span className="font-medium text-green-600">
-              {orderDetails.isPaid ? "Paid" : "Unpaid"}
+              {orderDetails.paymentStatus}
             </span>
           </p>
         </div>
@@ -105,14 +80,14 @@ const OrderDetailsPage = () => {
           <p className="text-sm text-gray-600">
             Shipping Method:{" "}
             <span className="font-medium">
-              {orderDetails.shippingMethod}
+              {orderDetails.shippingMethod || "Bike"}
             </span>
           </p>
           <p className="text-sm text-gray-600">
             Address:{" "}
             <span className="font-medium">
-              {orderDetails.shippingAddress.city},{" "}
-              {orderDetails.shippingAddress.country}
+              {orderDetails?.shippingAddress?.city},{" "}
+              {orderDetails?.shippingAddress?.country}
             </span>
           </p>
         </div>
@@ -131,7 +106,7 @@ const OrderDetailsPage = () => {
             </tr>
           </thead>
           <tbody>
-            {orderDetails.orderItems.map((item) => (
+            {orderDetails?.orderedItems?.map((item) => (
               <tr
                 key={item.productId}
                 className="border-t border-gray-300 hover:bg-gray-50 transition"
