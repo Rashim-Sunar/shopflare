@@ -10,7 +10,6 @@ import { createCheckout } from "../../redux/slices/checkoutSlice";
 
 const Checkout = () => {
   // Hardcoded email 
-  const email = "admin@example.com";
   const { user } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
   const navigate = useNavigate();
@@ -69,7 +68,7 @@ const Checkout = () => {
         address: formData.address,
         city: formData.city,
         postalCode: formData.postalCode,
-        country: formData.postalCode
+        country: formData.country,
       },
       paymentMethod: "PayPal",
       totalPrice: cart.totalPrice,
@@ -78,7 +77,7 @@ const Checkout = () => {
     const res = await dispatch(createCheckout(checkoutPayload)).unwrap();
 
     setCheckoutId(res.checkout._id);
-    console.log(res);
+    // console.log(res);
   };
 
   // Handle PayPal success
@@ -100,7 +99,7 @@ const Checkout = () => {
         }
       );
 
-      console.log("After payment: ", paymentRes.data);
+      // console.log("After payment: ", paymentRes.data);
 
       // 2. Finalize checkout → create order
       const orderRes = await axios.post(
@@ -113,9 +112,10 @@ const Checkout = () => {
         }
       );
 
-      console.log("After checkout finalization: ", orderRes.data);
+      // console.log("After checkout finalization: ", orderRes.data);
 
-      navigate("/order-confirmation", { replace: true });
+      // navigate("/order-confirmation", { replace: true });
+      navigate(`/order-confirmation/${orderRes.data.order._id}`);
     } catch (err) {
       alert("Payment processing failed");
       setPaymentCompleted(false);
@@ -235,7 +235,7 @@ const Checkout = () => {
                   <div>
                     <h3 className="text-lg mb-4">Pay with PayPal</h3>
                     <PayPalButton
-                      amount="39.99"
+                      amount={cart.totalPrice}
                       onSuccess={handlePaymentSuccess}
                       onError={() =>
                         alert("Payment failed. Please try again.")

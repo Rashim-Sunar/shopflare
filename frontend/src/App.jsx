@@ -35,7 +35,7 @@ function App() {
            <Route element={<ProtectedRoute />}>
             <Route path="profile" element={<Profile />} />
             <Route path="checkout" element={<Checkout />} />
-            <Route path="order-confirmation" element={<OrderConfirmationPage />} />
+            <Route path="order-confirmation/:id" element={<OrderConfirmationPage />} />
             <Route path="my-orders" element={<MyOrdersPage />} />
             <Route path="order/:id" element={<OrderDetailsPage />} />
           </Route>
