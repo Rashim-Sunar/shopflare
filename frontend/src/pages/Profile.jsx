@@ -1,18 +1,13 @@
-import React, {useEffect} from "react";
+import React from "react";
 import MyOrdersPage from "./MyOrdersPage";
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../redux/slices/authSlice";
 import { clearCart } from "../redux/slices/cartSlice";
-import { fetchUserOrders } from '../redux/slices/orderSlice';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-
-    useEffect(() => {
-     dispatch(fetchUserOrders());
-    }, [dispatch]);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -21,7 +16,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="max-w-8xl mx-auto lg:px-12 px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div className="max-w-8xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
 
       {/* LEFT SECTION: USER INFO */}
       <div className="lg:col-span-1 bg-white shadow-md rounded-xl p-6 h-fit">

@@ -1,20 +1,27 @@
-import React from 'react'
-import { useSelector } from 'react-redux';
+import React, {useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+
+import { fetchUserOrders } from '../redux/slices/orderSlice';
 
 const MyOrdersPage = () => {
   
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { orders, loading } = useSelector((state) => state.orders);
 
     const handleRowClick = (orderId) => {
         navigate(`/order/${orderId}`);
     }
 
+    useEffect(() => {
+     dispatch(fetchUserOrders());
+    }, [dispatch]);
+
     if(loading.list) return <div> Loading orders.....</div>
 
   return (
-    <div className="lg:col-span-2 p-2">
+    <div className="lg:col-span-2 p-2 lg:px-8 lg:py-8">
         <h2 className="text-2xl font-semibold mb-6 lg:py-0 py-6">My Orders</h2>
 
         <div className="overflow-x-auto bg-white shadow-md rounded-xl ">
