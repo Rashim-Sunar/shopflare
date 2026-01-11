@@ -20,7 +20,6 @@ export const fetchUserOrders = createAsyncThunk(
           },
         }
       );
-
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -101,16 +100,9 @@ const orderSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchUserOrders.fulfilled, (state, action) => {
-        state.loading.list = false;
-
-        // Handle both array & paginated responses
-        if (Array.isArray(action.payload)) {
-          state.orders = action.payload;
-          state.totalOrders = action.payload.length;
-        } else {
-          state.orders = action.payload.orders || [];
-          state.totalOrders = action.payload.totalOrders || 0;
-        }
+        state.loading.list = false;   
+        state.orders = action.payload?.order || [];
+        state.totalOrders = action.payload?.length || 0;
       })
       .addCase(fetchUserOrders.rejected, (state, action) => {
         state.loading.list = false;

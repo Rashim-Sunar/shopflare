@@ -139,7 +139,6 @@ const adminSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-
       /* ---------- FETCH USERS ---------- */
       .addCase(fetchAllUsers.pending, (state) => {
         state.loading.fetch = true;
@@ -156,7 +155,6 @@ const adminSlice = createSlice({
           action.error?.message ||
           "Unable to load users";
       })
-
       /* ---------- CREATE USER ---------- */
       .addCase(createUser.pending, (state) => {
         state.loading.create = true;
@@ -173,7 +171,6 @@ const adminSlice = createSlice({
           action.error?.message ||
           "Unable to create user";
       })
-
       /* ---------- UPDATE USER ---------- */
       .addCase(updateUser.pending, (state) => {
         state.loading.update = true;
@@ -197,7 +194,6 @@ const adminSlice = createSlice({
           action.error?.message ||
           "Unable to update user";
       })
-
       /* ---------- DELETE USER ---------- */
       .addCase(deleteUser.pending, (state) => {
         state.loading.delete = true;
