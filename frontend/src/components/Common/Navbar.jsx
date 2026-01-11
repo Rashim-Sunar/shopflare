@@ -5,7 +5,7 @@ import { HiBars3BottomRight } from "react-icons/hi2";
 import { HiMiniXMark } from "react-icons/hi2";
 import SearchBar from './SearchBar';
 import CartDrawer from '../Layout/CartDrawer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { setFilters, clearFilters } from '../../redux/slices/productSlice';
 
@@ -13,6 +13,7 @@ const Navbar = () => {
   const [ openDrawer, setOpenDrawer ] = useState(false);
   const [ navDrawer, setNavDrawer ] = useState(false);
 
+  const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   
   const toggleOpenDrawer = () => {
@@ -83,7 +84,7 @@ const Navbar = () => {
             {/* cart icon */}
             <button className='relative' onClick={toggleOpenDrawer}>
                 <HiOutlineShoppingBag className='h-5 w-5 text-gray-700 hover:text-black'/>
-                <span className='absolute bg-red-500 -top-2 text-xs text-white rounded-full px-1.5 py-0.5'>4</span>
+                <span className='absolute bg-red-500 -top-2 text-xs text-white rounded-full px-1.5 py-0.5'>{cart?.products?.length || 0}</span>
             </button>
             {/* Search  */}
             <SearchBar/>
