@@ -1,6 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  fetchAllOrders,
+  updateOrderStatus,
+  deleteOrder,
+  clearAdminOrderError,
+} from "../../redux/slices/adminOrderSlice";
 
 /* ---------------- MOTION VARIANTS ---------------- */
 
@@ -21,55 +29,75 @@ const rowVariant = {
 /* ---------------- COMPONENT ---------------- */
 
 const OrderManagement = () => {
-  const [orders, setOrders] = useState([
-    {
-      orderId: "67540ced3376121b361a0ed0",
-      customer: { name: "Admin User" },
-      totalPrice: 199.96,
-      status: "Delivered",
-    },
-    {
-      orderId: "67540d3ca67b4a70e434e092",
-      customer: { name: "Admin User" },
-      totalPrice: 40,
-      status: "Processing",
-    },
-    {
-      orderId: "675bf2c6ca77bd83eefd7a18",
-      customer: { name: "Admin User" },
-      totalPrice: 39.99,
-      status: "Processing",
-    },
-    {
-      orderId: "675c24b09b88827304bd5cc1",
-      customer: { name: "Admin User" },
-      totalPrice: 39.99,
-      status: "Processing",
-    },
-  ]);
+
+  const dispatch = useDispatch();
+
+  const { orders, loading, error } = useSelector(
+    (state) => state.adminOrders
+  );
+
+  // Fetch orders on mount
+  useEffect(() => {
+    dispatch(fetchAllOrders());
+  }, [dispatch]);
+
+  // Handle errors
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearAdminOrderError());
+    }
+  }, [error, dispatch]);
+
 
   /* ---------------- HANDLERS ---------------- */
 
-  const updateStatus = (orderId, newStatus) => {
+  const updateStatus = async (orderId, newStatus) => {
     const confirmed = window.confirm(
       `Are you sure you want to mark this order as ${newStatus}?`
     );
 
-    if (!confirmed) {
-      toast("Action cancelled");
+    if (!confirmed) return;
+
+    try {
+      await dispatch(
+        updateOrderStatus({
+          id: orderId,
+          status: newStatus,
+        })
+      ).unwrap();
+
+      toast.success(`Order marked as ${newStatus}`);
+    } catch (err) {
+      toast.error(err.message || "Failed to update order");
+    }
+  };
+
+  const handleDelete = async (orderId, orderStatus) => {
+    if (orderStatus === "Delivered") {
+      toast.error("Delivered orders cannot be deleted");
       return;
     }
 
-    setOrders((prev) =>
-      prev.map((order) =>
-        order.orderId === orderId
-          ? { ...order, status: newStatus }
-          : order
-      )
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this order?"
     );
 
-    toast.success(`Order marked as ${newStatus}`);
+    if (!confirmed) return;
+
+    try {
+      await dispatch(deleteOrder(orderId)).unwrap();
+      toast.success("Order deleted successfully");
+    } catch (err) {
+      toast.error(err.message || "Failed to delete order");
+    }
   };
+
+  {loading.fetch && (
+    <div className="text-center text-gray-500 py-10">
+      Loading orders...
+    </div>
+  )}
 
   return (
     <motion.div
@@ -121,7 +149,7 @@ const OrderManagement = () => {
               ) : (
                 orders.map((order, i) => (
                   <motion.tr
-                    key={order.orderId}
+                    key={order?._id}
                     variants={rowVariant}
                     initial="hidden"
                     animate="visible"
@@ -129,10 +157,10 @@ const OrderManagement = () => {
                     className="border-t border-gray-100 hover:bg-gray-50"
                   >
                     <td className="px-6 py-4 font-medium text-gray-800">
-                      #{order.orderId}
+                      #{order?._id}
                     </td>
                     <td className="px-6 py-4 text-gray-600">
-                      {order.customer.name}
+                      {order.user?.name}
                     </td>
                     <td className="px-6 py-4 text-gray-800">
                       ${order.totalPrice}
@@ -141,27 +169,42 @@ const OrderManagement = () => {
                       <select
                         value={order.status}
                         onChange={(e) =>
-                          updateStatus(order.orderId, e.target.value)
+                          updateStatus(order?._id, e.target.value)
                         }
                         className="rounded-md border border-gray-300 px-3 py-1 text-sm"
                       >
                         <option>Processing</option>
-                        <option>Shipping</option>
+                        <option>Shipped</option>
                         <option>Delivered</option>
                         <option>Cancelled</option>
                       </select>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 flex gap-2">
                       {order.status !== "Delivered" && (
                         <button
+                          disabled = {loading.update}
                           onClick={() =>
-                            updateStatus(order.orderId, "Delivered")
+                            updateStatus(order?._id, "Delivered")
                           }
+
                           className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm transition"
                         >
-                          Mark as Delivered
+                          {loading.update ? "Updating..." : "Mark as Delivered"}
                         </button>
                       )}
+
+                       <button
+                        disabled={loading.delete}
+                        onClick={() => handleDelete(order._id, order.status)}
+                        className={`px-4 py-2 rounded-md text-sm transition
+                          ${loading.delete
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-red-600 hover:bg-red-700 text-white"}
+                        `}
+                      >
+                        {loading.delete ? "Deleting..." : "Delete"}
+                      </button>
+
                     </td>
                   </motion.tr>
                 ))
@@ -179,7 +222,7 @@ const OrderManagement = () => {
           ) : (
             orders.map((order, i) => (
               <motion.div
-                key={order.orderId}
+                key={order?._id}
                 variants={rowVariant}
                 initial="hidden"
                 animate="visible"
@@ -187,10 +230,10 @@ const OrderManagement = () => {
                 className="rounded-lg border border-gray-200 p-4 space-y-3"
               >
                 <p className="font-medium text-gray-800 break-all">
-                  #{order.orderId}
+                  #{order?._id}
                 </p>
                 <p className="text-sm text-gray-600">
-                  Customer: {order.customer.name}
+                  Customer: {order.user?.name}
                 </p>
                 <p className="text-sm text-gray-800">
                   Total: ${order.totalPrice}
@@ -199,7 +242,7 @@ const OrderManagement = () => {
                 <select
                   value={order.status}
                   onChange={(e) =>
-                    updateStatus(order.orderId, e.target.value)
+                    updateStatus(order?._id, e.target.value)
                   }
                   className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
                 >
@@ -211,14 +254,27 @@ const OrderManagement = () => {
 
                 {order.status !== "Delivered" && (
                   <button
+                    disabled = {loading.update}
                     onClick={() =>
-                      updateStatus(order.orderId, "Delivered")
+                      updateStatus(order?._id, "Delivered")
                     }
                     className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-md text-sm transition"
                   >
-                    Mark as Delivered
+                    { loading.update ? "Updating..." : "Mark as Delivered"}
                   </button>
                 )}
+
+                <button
+                  disabled={loading.delete}
+                  onClick={() => handleDelete(order._id, order.status)}
+                  className={`w-full py-2 rounded-md text-sm transition
+                    ${loading.delete
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-red-600 hover:bg-red-700 text-white"}
+                  `}
+                >
+                  {loading.delete ? "Deleting..." : "Delete Order"}
+                </button>
               </motion.div>
             ))
           )}
