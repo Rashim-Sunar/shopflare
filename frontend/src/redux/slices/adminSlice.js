@@ -21,7 +21,7 @@ export const fetchAllUsers = createAsyncThunk(
         }
       );
 
-      return response.data.users;
+      return response.data?.users;
     } catch (error) {
       return rejectWithValue(
         error.response?.data || { message: "Failed to fetch users" }

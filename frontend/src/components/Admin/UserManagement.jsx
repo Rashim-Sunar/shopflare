@@ -1,6 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  fetchAllUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  clearAdminError,
+} from "../../redux/slices/adminSlice";
+
 
 /* ---------------- MOTION VARIANTS ---------------- */
 
@@ -21,20 +31,30 @@ const listItemVariant = {
 /* ---------------- COMPONENT ---------------- */
 
 const UserManagement = () => {
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      name: "Admin User",
-      email: "admin@example.com",
-      role: "Admin",
-    },
-  ]);
+  const dispatch = useDispatch();
+
+  const { users, loading, error } = useSelector((state) => state.admin);
+  const { user: loggedInUser } = useSelector((state) => state.auth);
+
+  // Fetch users on page load
+  useEffect(() => {
+    dispatch(fetchAllUsers());
+  }, [dispatch]);
+
+  // Handle error globally
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+      dispatch(clearAdminError());
+    }
+  }, [error, dispatch]);
+
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    role: "Customer",
+    role: "customer",
   });
 
   /* ---------------- HANDLERS ---------------- */
@@ -43,7 +63,8 @@ const UserManagement = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleAddUser = (e) => {
+  // Handle add user
+  const handleAddUser = async (e) => {
     e.preventDefault();
 
     if (!formData.name || !formData.email || !formData.password) {
@@ -51,63 +72,65 @@ const UserManagement = () => {
       return;
     }
 
-    setUsers([
-      ...users,
-      {
-        id: Date.now(),
-        name: formData.name,
-        email: formData.email,
-        role: formData.role,
-      },
-    ]);
+    try {
+      await dispatch(createUser(formData)).unwrap();
+      toast.success("User added successfully");
 
-    toast.success("User added successfully");
-
-    setFormData({
-      name: "",
-      email: "",
-      password: "",
-      role: "Customer",
-    });
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        role: "customer",
+      });
+    } catch (err) {
+      toast.error(err.message || "Failed to create user");
+    }
   };
 
-  const handleRoleChange = (id, newRole) => {
-    const user = users.find((u) => u.id === id);
-
-    if (user.role === newRole) return;
+  const handleRoleChange = async (id, newRole) => {
+    const user = users.find((u) => u._id === id);
+    if (!user || user.role === newRole) return;
 
     const confirmed = window.confirm(
       `Are you sure you want to change ${user.name}'s role to ${newRole}?`
     );
+    if (!confirmed) return;
 
-    if (!confirmed) {
-      toast("Role change cancelled");
+    try {
+      await dispatch(
+        updateUser({
+          id,
+          userData: { role: newRole },
+        })
+      ).unwrap();
+
+      toast.success("User role updated");
+    } catch (err) {
+      toast.error(err.message || "Failed to update role");
+    }
+  };
+
+  const handleDelete = async (id) => {
+    // Prevent admin from deleting own account.
+    if(id == loggedInUser?._id){
+      toast.error("You cannot delete your own account.");
       return;
     }
 
-    setUsers(
-      users.map((u) =>
-        u.id === id ? { ...u, role: newRole } : u
-      )
-    );
-
-    toast.success("User role updated");
-  };
-
-  const handleDelete = (id) => {
-    const user = users.find((u) => u.id === id);
+    const user = users.find((u) => u._id === id);
+    if (!user) return;
 
     const confirmed = window.confirm(
       `Are you sure you want to delete ${user.name}?`
     );
+    if (!confirmed) return;
 
-    if (!confirmed) {
-      toast("Delete action cancelled");
-      return;
+    try {
+      await dispatch(deleteUser(id)).unwrap();
+      toast.success("User deleted successfully");
+    } catch (err) {
+      toast.error(err.message || "Failed to delete user");
     }
-
-    setUsers(users.filter((u) => u.id !== id));
-    toast.success("User deleted successfully");
   };
 
   return (
@@ -163,16 +186,17 @@ const UserManagement = () => {
               onChange={handleChange}
               className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option>Customer</option>
-              <option>Admin</option>
+              <option>customer</option>
+              <option>admin</option>
             </select>
           </div>
 
           <button
             type="submit"
+            disabled = { loading.create }
             className="w-fit bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md text-sm font-medium transition"
           >
-            Add User
+            { loading.create ? "Adding....." : "Add User"}
           </button>
         </form>
       </section>
@@ -193,7 +217,7 @@ const UserManagement = () => {
             <tbody>
               {users.map((user, i) => (
                 <motion.tr
-                  key={user.id}
+                  key={user?._id}
                   variants={listItemVariant}
                   initial="hidden"
                   animate="visible"
@@ -209,18 +233,19 @@ const UserManagement = () => {
                   <td className="px-6 py-4">
                     <select
                       value={user.role}
+                      disabled = { user?._id == loggedInUser?._id}
                       onChange={(e) =>
-                        handleRoleChange(user.id, e.target.value)
+                        handleRoleChange(user?._id, e.target.value)
                       }
                       className="rounded-md border border-gray-300 px-3 py-1 text-sm"
                     >
-                      <option>Admin</option>
-                      <option>Customer</option>
+                      <option>admin</option>
+                      <option>customer</option>
                     </select>
                   </td>
                   <td className="px-6 py-4">
                     <button
-                      onClick={() => handleDelete(user.id)}
+                      onClick={() => handleDelete(user?._id)}
                       className="bg-red-600 hover:bg-red-700 text-white px-4 py-1.5 rounded-md text-sm transition"
                     >
                       Delete
@@ -236,7 +261,7 @@ const UserManagement = () => {
         <div className="md:hidden space-y-4 p-4">
           {users.map((user, i) => (
             <motion.div
-              key={user.id}
+              key={user?._id}
               variants={listItemVariant}
               initial="hidden"
               animate="visible"
@@ -250,17 +275,18 @@ const UserManagement = () => {
 
               <select
                 value={user.role}
+                disabled = { user._id == loggedInUser._id }
                 onChange={(e) =>
-                  handleRoleChange(user.id, e.target.value)
+                  handleRoleChange(user?._id, e.target.value)
                 }
                 className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
               >
-                <option>Admin</option>
-                <option>Customer</option>
+                <option>admin</option>
+                <option>customer</option>
               </select>
 
               <button
-                onClick={() => handleDelete(user.id)}
+                onClick={() => handleDelete(user?._id)}
                 className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md text-sm transition"
               >
                 Delete
