@@ -1,6 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+
+import {
+  fetchAdminProducts,
+  deleteAdminProduct,
+  clearAdminProductError,
+} from "../../redux/slices/adminProductSlice";
 
 /* ---------------- MOTION VARIANTS ---------------- */
 
@@ -22,45 +29,23 @@ const listItemVariant = {
 
 const ProductManagement = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [products, setProducts] = useState([
-    {
-      id: 1,
-      name: "Blue Wool Jacket",
-      price: 199.99,
-      sku: "BW005",
-    },
-    {
-      id: 2,
-      name: "Classic Sneakers",
-      price: 89.5,
-      sku: "CS102",
-    },
-    {
-      id: 3,
-      name: "Blue Wool Jacket",
-      price: 199.99,
-      sku: "BW005",
-    },
-    {
-      id: 4,
-      name: "Classic Sneakers",
-      price: 89.5,
-      sku: "CS102",
-    },
-    {
-      id: 5,
-      name: "Blue Wool Jacket",
-      price: 199.99,
-      sku: "BW005",
-    },
-    {
-      id: 6,
-      name: "Classic Sneakers",
-      price: 89.5,
-      sku: "CS102",
-    },
-  ]);
+  const { products, loading, error } = useSelector(
+    (state) => state.adminProducts
+  );
+
+  useEffect(() => {
+    dispatch(fetchAdminProducts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) {
+      alert(error);
+      dispatch(clearAdminProductError());
+    }
+  }, [error, dispatch]);
+
 
   const handleDelete = (id) => {
     const confirmed = window.confirm(
@@ -69,13 +54,16 @@ const ProductManagement = () => {
 
     if (!confirmed) return;
 
-    setProducts(products.filter((p) => p.id !== id));
+    dispatch(deleteAdminProduct(id));
   };
 
   const handleEdit = (id) => {
-    // Placeholder for future edit modal / page
     navigate(`/admin/products/${id}/edit`);
   };
+
+  if (loading) {
+    return <p className="text-center mt-10">Loading products...</p>;
+  }
 
   return (
     <motion.div
@@ -105,7 +93,7 @@ const ProductManagement = () => {
             <tbody>
               {products.map((product, i) => (
                 <motion.tr
-                  key={product.id}
+                  key={product._id}
                   variants={listItemVariant}
                   initial="hidden"
                   animate="visible"
@@ -123,13 +111,13 @@ const ProductManagement = () => {
                   </td>
                   <td className="px-6 py-4 flex gap-3">
                     <button
-                      onClick={() => handleEdit(product.id)}
+                      onClick={() => handleEdit(product._id)}
                       className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-md text-sm transition"
                     >
                       Edit
                     </button>
                     <button
-                      onClick={() => handleDelete(product.id)}
+                      onClick={() => handleDelete(product._id)}
                       className="bg-red-600 hover:bg-red-700 text-white px-4 py-1.5 rounded-md text-sm transition"
                     >
                       Delete
@@ -145,7 +133,7 @@ const ProductManagement = () => {
         <div className="md:hidden space-y-4 p-4">
           {products.map((product, i) => (
             <motion.div
-              key={product.id}
+              key={product._id}
               variants={listItemVariant}
               initial="hidden"
               animate="visible"
@@ -164,13 +152,13 @@ const ProductManagement = () => {
 
               <div className="flex gap-3">
                 <button
-                  onClick={() => handleEdit(product.id)}
+                  onClick={() => handleEdit(product._id)}
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md text-sm transition"
                 >
                   Edit
                 </button>
                 <button
-                  onClick={() => handleDelete(product.id)}
+                  onClick={() => handleDelete(product._id)}
                   className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-md text-sm transition"
                 >
                   Delete

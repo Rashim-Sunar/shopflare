@@ -1,23 +1,24 @@
 const express = require('express');
 const productController = require('../controllers/productController')
 const protect = require('../middlewares/authMiddleware');
+const restrictTo = require('../middlewares/roleMiddleware');
 
 const router = express.Router();
 
 // @route POST /api/products
 // @desc Create a new product
 // @access Private/Admin
-router.post('/', protect, productController.createProduct);
+router.post('/', protect, restrictTo("admin"), productController.createProduct);
 
 // @ route PUT /api/products/:id
 // @ desc Update an existing product
 // @ access Private/Admin
-router.put('/:id', protect, productController.updateProduct);
+router.put('/:id', protect, restrictTo("admin"), productController.updateProduct);
 
 // @ route DELETE /api/products/:id
 // @ desc delete given product
 // @ access Private/Admin
-router.delete('/:id', protect, productController.deleteProduct);
+router.delete('/:id', protect, restrictTo("admin"), productController.deleteProduct);
 
 // @ route GET /api/products
 // @ desc get all products by oprtional query filters
