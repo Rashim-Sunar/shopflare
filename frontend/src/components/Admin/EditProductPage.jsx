@@ -1,8 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  fetchAdminProductById,
+  updateAdminProduct,
+  clearAdminSelectedProduct,
+} from "../../redux/slices/adminProductSlice";
 
 /* ---------------- MOTION VARIANTS ---------------- */
 
@@ -16,33 +23,50 @@ const pageVariant = {
 };
 
 const EditProductPage = () => {
-  const fileInputRef = useRef(null);
+  const { id } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const fileInputRef = useRef(null);
 
-  const [product, setProduct] = useState({
-    name: "Classic Oxford Button-Down Shirt",
-    description:
-      "This classic Oxford shirt is tailored for a polished yet casual look. Crafted from high-quality cotton, it features a button-down collar and a comfortable, slightly relaxed fit.",
-    price: 39.99,
-    countInStock: 20,
-    sku: "OX-SH-001",
-    sizes: ["S", "M", "L", "XL", "XXL"],
-    colors: ["Red", "Blue", "Yellow"],
-    images: [
-      { url: "https://picsum.photos/200/200?random=1" },
-      { url: "https://picsum.photos/200/200?random=2" },
-    ],
-  });
+  const [formData, setFormData] = useState(null);
+
+  const { selectedProduct: product, loading } = useSelector(
+    (state) => state.adminProducts
+  );
+
+   /* FETCH PRODUCT */
+  useEffect(() => {
+    dispatch(fetchAdminProductById(id));
+
+    return () => dispatch(clearAdminSelectedProduct());
+  }, [dispatch, id]);
+
+  /* SET FORM DATA */
+  useEffect(() => {
+    if (product) {
+      setFormData({
+        ...product,
+        sizes: product.sizes || [],
+        colors: product.colors || [],
+        images: product.images || [],
+      });
+    }
+  }, [product]);
+
+
+  if (loading || !formData) {
+    return <p className="text-center mt-10">Loading product...</p>;
+  }
 
   /* ---------------- HANDLERS ---------------- */
 
   const handleChange = (e) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleArrayChange = (key, value) => {
-    setProduct({
-      ...product,
+    setFormData({
+      ...formData,
       [key]: value.split(",").map((v) => v.trim()),
     });
   };
@@ -54,30 +78,34 @@ const EditProductPage = () => {
       url: URL.createObjectURL(file),
     }));
 
-    setProduct({
-      ...product,
-      images: [...product.images, ...newImages],
+    setFormData({
+      ...formData,
+      images: [...formData.images, ...newImages],
     });
   };
 
   const removeImage = (index) => {
-    setProduct({
-      ...product,
-      images: product.images.filter((_, i) => i !== index),
+    setFormData({
+      ...formData,
+      images: formData.images.filter((_, i) => i !== index),
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const confirmed = window.confirm("Do you really want to update the product details?");
-    if(!confirmed){
-        toast("Update cancelled.");
-        return;
-    }
-
-    toast.success("Product Updated Successfully.");
-    navigate("/admin/products");
+    dispatch(
+      updateAdminProduct({
+        productId: id,
+        productData: formData,
+      })
+    )
+      .unwrap()
+      .then(() => {
+        toast.success("Product updated successfully");
+        navigate("/admin/products");
+      })
+      .catch((err) => toast.error(err));
   };
 
   return (
@@ -98,14 +126,14 @@ const EditProductPage = () => {
         <Input
           label="Product Name"
           name="name"
-          value={product.name}
+          value={formData.name}
           onChange={handleChange}
         />
 
         <TextArea
           label="Description"
           name="description"
-          value={product.description}
+          value={formData.description}
           onChange={handleChange}
         />
 
@@ -114,14 +142,14 @@ const EditProductPage = () => {
             label="Price"
             name="price"
             type="number"
-            value={product.price}
+            value={formData.price}
             onChange={handleChange}
           />
           <Input
             label="Count in Stock"
             name="countInStock"
             type="number"
-            value={product.countInStock}
+            value={formData.countInStock}
             onChange={handleChange}
           />
         </div>
@@ -129,13 +157,13 @@ const EditProductPage = () => {
         <Input
           label="SKU"
           name="sku"
-          value={product.sku}
+          value={formData.sku}
           onChange={handleChange}
         />
 
         <Input
           label="Sizes (comma-separated)"
-          value={product.sizes.join(", ")}
+          value={formData.sizes.join(", ")}
           onChange={(e) =>
             handleArrayChange("sizes", e.target.value)
           }
@@ -143,7 +171,7 @@ const EditProductPage = () => {
 
         <Input
           label="Colors (comma-separated)"
-          value={product.colors.join(", ")}
+          value={formData.colors.join(", ")}
           onChange={(e) =>
             handleArrayChange("colors", e.target.value)
           }
@@ -174,7 +202,7 @@ const EditProductPage = () => {
 
           {/* IMAGE PREVIEW */}
           <div className="flex flex-wrap gap-4 mt-4">
-            {product.images.map((img, index) => (
+            {formData.images.map((img, index) => (
               <div
                 key={index}
                 className="relative w-24 h-24 rounded-md overflow-hidden border"

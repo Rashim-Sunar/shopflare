@@ -27,6 +27,47 @@ export const fetchAdminProducts = createAsyncThunk(
   }
 );
 
+// GET single product (Admin)
+export const fetchAdminProductById = createAsyncThunk(
+  "adminProducts/fetchById",
+  async (productId, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/products/${productId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        }
+      );
+      return data.product;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message);
+    }
+  }
+);
+
+// UPDATE product
+export const updateAdminProduct = createAsyncThunk(
+  "adminProducts/update",
+  async ({ productId, productData }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/products/${productId}`,
+        productData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+          },
+        }
+      );
+      return data.product;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message);
+    }
+  }
+);
+
 // DELETE product
 export const deleteAdminProduct = createAsyncThunk(
   "adminProducts/delete",
@@ -57,6 +98,7 @@ const adminProductSlice = createSlice({
   name: "adminProducts",
   initialState: {
     products: [],
+    selectedProduct: null,
     totalProducts: 0,
     loading: false,
     error: null,
@@ -64,6 +106,9 @@ const adminProductSlice = createSlice({
   reducers: {
     clearAdminProductError: (state) => {
       state.error = null;
+    },
+    clearAdminSelectedProduct: (state) => {
+      state.selectedProduct = null;
     },
   },
   extraReducers: (builder) => {
@@ -78,6 +123,32 @@ const adminProductSlice = createSlice({
         state.totalProducts = action.payload.totalProducts;
       })
       .addCase(fetchAdminProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // FETCH ONE
+      .addCase(fetchAdminProductById.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchAdminProductById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedProduct = action.payload;
+      })
+      .addCase(fetchAdminProductById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+        // UPDATE
+      .addCase(updateAdminProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateAdminProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedProduct = action.payload;
+      })
+      .addCase(updateAdminProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -99,5 +170,5 @@ const adminProductSlice = createSlice({
   },
 });
 
-export const { clearAdminProductError } = adminProductSlice.actions;
+export const { clearAdminProductError, clearAdminSelectedProduct } = adminProductSlice.actions;
 export default adminProductSlice.reducer;
