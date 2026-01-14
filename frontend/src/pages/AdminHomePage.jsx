@@ -1,32 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
 
-const orders = [
-  {
-    id: "67540ced3376121b361a0ed0",
-    user: "Admin User",
-    totalPrice: 199.96,
-    status: "Processing",
-  },
-  {
-    id: "67540d3ca67b4a70e434e092",
-    user: "Admin User",
-    totalPrice: 40,
-    status: "Processing",
-  },
-  {
-    id: "675bf2c6ca77bd83eefd7a18",
-    user: "Admin User",
-    totalPrice: 39.99,
-    status: "Processing",
-  },
-  {
-    id: "675c24b09b88827304bd5cc1",
-    user: "Admin User",
-    totalPrice: 39.99,
-    status: "Processing",
-  },
-];
+import { fetchAllOrders } from "../redux/slices/adminOrderSlice";
 
 /* ---------------- FRAMER MOTION VARIANTS ---------------- */
 
@@ -52,7 +28,31 @@ const statItem = {
 };
 
 const AdminHomePage = () => {
+   const dispatch = useDispatch();
+
+  const { orders, loading } = useSelector(
+    (state) => state.adminOrders
+  );
+
+  useEffect(() => {
+    dispatch(fetchAllOrders());
+  }, [dispatch]);
+
+  if (loading.fetch) {
+    return <p className="text-center mt-10">Loading dashboard...</p>;
+  }
+ 
   const revenue = orders.reduce((sum, o) => sum + o.totalPrice, 0);
+
+  // Total products sold 
+  const totalProducts = orders.reduce((total, order) => {
+    const orderQuantity = order.orderedItems.reduce(
+      (sum, item) => sum + item.quantity,
+      0
+    );
+    return total + orderQuantity;
+  }, 0);
+
 
   return (
     <motion.div
@@ -75,7 +75,7 @@ const AdminHomePage = () => {
       >
         <StatCard title="Revenue" value={`$${revenue.toFixed(2)}`} />
         <StatCard title="Total Orders" value={orders.length} />
-        <StatCard title="Total Products" value={40} />
+        <StatCard title="Total Products" value= {totalProducts} />
       </motion.div>
 
       {/* RECENT ORDERS TITLE */}
@@ -99,17 +99,17 @@ const AdminHomePage = () => {
             <tbody>
               {orders.map((order, i) => (
                 <motion.tr
-                  key={order.id}
+                  key={order._id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: i * 0.05 }}
                   className="border-t border-gray-100 hover:bg-gray-50 transition"
                 >
                   <td className="px-6 py-4 font-medium text-gray-800">
-                    {order.id}
+                    {order._id}
                   </td>
                   <td className="px-6 py-4 text-gray-600">
-                    {order.user}
+                    {order.user?._id}
                   </td>
                   <td className="px-6 py-4 text-gray-800">
                     ${order.totalPrice}
@@ -127,17 +127,17 @@ const AdminHomePage = () => {
         <div className="md:hidden space-y-4 p-3">
           {orders.map((order, i) => (
             <motion.div
-              key={order.id}
+              key={order._id}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
               className="rounded-lg border border-gray-200 p-4 space-y-2 min-w-0"
             >
               <p className="text-sm font-medium text-gray-800 break-all">
-                {order.id}
+                {order._id}
               </p>
               <p className="text-sm text-gray-600">
-                User: {order.user}
+                User: {order.user._id}
               </p>
               <p className="text-sm text-gray-800">
                 Total: ${order.totalPrice}
@@ -165,10 +165,24 @@ const StatCard = ({ title, value }) => (
   </motion.div>
 );
 
-const StatusBadge = ({ status }) => (
-  <span className="inline-flex px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-    {status}
-  </span>
-);
+const StatusBadge = ({ status }) => {
+  const statusClasses = {
+    Delivered: "bg-green-100 text-green-800",
+    Cancelled: "bg-red-100 text-red-800",
+    Shipped: "bg-blue-100 text-blue-800",
+    Processing: "bg-yellow-100 text-yellow-800",
+  };
+
+  return (
+    <span
+      className={`px-3 py-2 rounded-full text-xs font-medium ${
+        statusClasses[status] || "bg-gray-100 text-gray-800"
+      }`}
+    >
+      {status}
+    </span>
+  );
+};
+
 
 export default AdminHomePage;
