@@ -10,6 +10,7 @@ import {
   fetchProductDetails,
   fetchSimilarProducts
 } from "../../redux/slices/productSlice";
+import { getFallbackImage, getSafeImageUrl } from "../../utils/imageUrl";
 
 import { addToCart, fetchCart } from "../../redux/slices/cartSlice";
 
@@ -114,7 +115,7 @@ const ProductDetails = ({ productId }) => {
             {selectedProduct.images?.map((img, index) => (
               <motion.img
                 key={index}
-                src={img.url}
+                src={getSafeImageUrl(img.url)}
                 alt={img.altText}
                 className={`w-20 h-20 object-cover rounded-md cursor-pointer border 
                   ${
@@ -124,6 +125,9 @@ const ProductDetails = ({ productId }) => {
                   }`}
                 whileHover={{ scale: 1.05 }}
                 onClick={() => setSelectedImage(img)}
+                onError={(e) => {
+                  e.currentTarget.src = getFallbackImage();
+                }}
               />
             ))}
           </div>
@@ -132,15 +136,14 @@ const ProductDetails = ({ productId }) => {
           {selectedImage && (
             <div className="w-full md:w-[450px] flex-shrink-0 order-1 md:order-2">
               <motion.img
-                src={selectedImage.url}
+                src={getSafeImageUrl(selectedImage.url)}
                 alt={selectedImage.altText || selectedProduct.name}
                 initial={{ opacity: 0, scale: 0.7 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.7 }}
                 className="w-full h-[600px] object-cover rounded-lg"
                 onError={(e) => {
-                  e.currentTarget.src =
-                    "https://via.placeholder.com/600x750?text=No+Image";
+                  e.currentTarget.src = getFallbackImage();
                 }}
               />
             </div>

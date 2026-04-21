@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { getFallbackImage, getSafeImageUrl } from "../../utils/imageUrl";
 
 const ProductGrid = ({ products }) => {
   
@@ -22,11 +23,14 @@ const ProductGrid = ({ products }) => {
             {/* Image */}
             <div className="w-full h-80 overflow-hidden rounded-lg">
               <motion.img
-                src={product.images?.[0]?.url}
+                src={getSafeImageUrl(product.images?.[0]?.url)}
                 alt={product.name}
                 className="w-full h-full object-cover rounded-lg"
                 whileHover={{ scale: 1.03 }} // slight zoom only
                 transition={{ duration: 0.2, ease: "easeOut" }}
+                onError={(e) => {
+                  e.currentTarget.src = getFallbackImage();
+                }}
               />
             </div>
 

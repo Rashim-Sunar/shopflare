@@ -6,7 +6,7 @@ import Cart from '../models/Cart';
 import { AppError } from '../utils/AppError';
 import { asyncHandler } from '../utils/asyncHandler';
 import type { ICheckout } from '../types/checkout';
-import type { PaymentStatus, IOrderItem } from '../types/order';
+import type { PaymentStatus, IOrder, IOrderItem } from '../types/order';
 import type { AuthenticatedRequest } from '../types/http';
 
 /**
@@ -30,6 +30,12 @@ interface CheckoutResponse {
   status: 'success';
   message: string;
   checkout: ICheckout;
+}
+
+interface FinalizeCheckoutResponse {
+  status: 'success';
+  message: string;
+  order: IOrder;
 }
 
 /**
@@ -144,7 +150,11 @@ export const payCheckout = asyncHandler(
  * @returns {Promise<void>} Sends the created order response.
  */
 export const finalizeCheckout = asyncHandler(
-  async (req: AuthenticatedRequest<{ id: string }, CheckoutResponse>, res: Response<CheckoutResponse>, next: NextFunction) => {
+  async (
+    req: AuthenticatedRequest<{ id: string }, FinalizeCheckoutResponse>,
+    res: Response<FinalizeCheckoutResponse>,
+    next: NextFunction
+  ) => {
     const { id } = req.params;
 
     const checkout = await Checkout.findById(id);
@@ -196,7 +206,7 @@ export const finalizeCheckout = asyncHandler(
     res.status(200).json({
       status: 'success',
       message: 'Order finalized successfully',
-      checkout: order as any,
+      order,
     });
   }
 );

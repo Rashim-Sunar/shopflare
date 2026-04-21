@@ -5,6 +5,8 @@ import axios from "axios";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import PayPalButton from "./PayPalButton";
 import { useDispatch, useSelector } from "react-redux";
+import { getAuthHeaders } from "../../utils/authToken";
+import { getFallbackImage, getSafeImageUrl } from "../../utils/imageUrl";
 
 import { createCheckout } from "../../redux/slices/checkoutSlice";
 
@@ -84,38 +86,43 @@ const Checkout = () => {
   const handlePaymentSuccess = async (details) => {
     try {
       setPaymentCompleted(true);
+      const authHeaders = getAuthHeaders();
+
+      if (!authHeaders.Authorization) {
+        alert("Your session has expired. Please login again.");
+        setPaymentCompleted(false);
+        navigate("/login", { replace: true });
+        return;
+      }
 
       // 1. Mark checkout as paid
-      const paymentRes = await axios.put(
+      await axios.patch(
         `${import.meta.env.VITE_BACKEND_URL}/api/checkout/${checkoutId}/pay`,
         {
           paymentStatus: "paid",
           paymentDetails: details,
         },
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          },
+          headers: authHeaders,
         }
       );
-
-      // console.log("After payment: ", paymentRes.data);
 
       // 2. Finalize checkout → create order
       const orderRes = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/checkout/${checkoutId}/finalize`,
         {},
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          },
+          headers: authHeaders,
         }
       );
 
-      // console.log("After checkout finalization: ", orderRes.data);
+      const orderId = orderRes.data?.order?._id || orderRes.data?.checkout?._id;
 
-      // navigate("/order-confirmation", { replace: true });
-      navigate(`/order-confirmation/${orderRes.data.order._id}`);
+      if (!orderId) {
+        throw new Error("Order confirmation id missing");
+      }
+
+      navigate(`/order-confirmation/${orderId}`);
     } catch (err) {
       alert("Payment processing failed");
       setPaymentCompleted(false);
@@ -259,9 +266,12 @@ const Checkout = () => {
                 return (
                    <div className="flex gap-4 border-b-1 border-t pt-8 border-gray-300 pb-4" key={index}>
                       <img
-                        src={product?.image}
+                        src={getSafeImageUrl(product?.image)}
                         alt={product?.name}
                         className="w-20 h-24 rounded-md object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = getFallbackImage();
+                        }}
                       />
 
                       <div className="flex-1 text-sm">

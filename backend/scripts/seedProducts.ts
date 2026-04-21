@@ -29,7 +29,7 @@ const sampleProducts = [
     gender: 'Men',
     images: [
       {
-        url: 'https://via.placeholder.com/500x500?text=Premium+Cotton+T-Shirt',
+        url: 'https://placehold.co/500x500?text=Premium+Cotton+T-Shirt',
         altText: 'Premium Cotton T-Shirt',
       },
     ],
@@ -57,7 +57,7 @@ const sampleProducts = [
     gender: 'Men',
     images: [
       {
-        url: 'https://via.placeholder.com/500x500?text=Formal+Dress+Shirt',
+        url: 'https://placehold.co/500x500?text=Formal+Dress+Shirt',
         altText: 'Formal Dress Shirt',
       },
     ],
@@ -85,7 +85,7 @@ const sampleProducts = [
     gender: 'Unisex',
     images: [
       {
-        url: 'https://via.placeholder.com/500x500?text=Summer+Casual+Jeans',
+        url: 'https://placehold.co/500x500?text=Summer+Casual+Jeans',
         altText: 'Summer Casual Jeans',
       },
     ],
@@ -113,7 +113,7 @@ const sampleProducts = [
     gender: 'Women',
     images: [
       {
-        url: 'https://via.placeholder.com/500x500?text=Women+Designer+Saree',
+        url: 'https://placehold.co/500x500?text=Women+Designer+Saree',
         altText: 'Women Designer Saree',
       },
     ],
@@ -141,7 +141,7 @@ const sampleProducts = [
     gender: 'Men',
     images: [
       {
-        url: 'https://via.placeholder.com/500x500?text=Casual+Sports+Jacket',
+        url: 'https://placehold.co/500x500?text=Casual+Sports+Jacket',
         altText: 'Casual Sports Jacket',
       },
     ],
@@ -169,7 +169,7 @@ const sampleProducts = [
     gender: 'Women',
     images: [
       {
-        url: 'https://via.placeholder.com/500x500?text=Women+Casual+Tee',
+        url: 'https://placehold.co/500x500?text=Women+Casual+Tee',
         altText: 'Women Casual Tee',
       },
     ],
@@ -197,7 +197,7 @@ const sampleProducts = [
     gender: 'Unisex',
     images: [
       {
-        url: 'https://via.placeholder.com/500x500?text=Premium+Denim+Jacket',
+        url: 'https://placehold.co/500x500?text=Premium+Denim+Jacket',
         altText: 'Premium Denim Jacket',
       },
     ],
@@ -225,7 +225,7 @@ const sampleProducts = [
     gender: 'Women',
     images: [
       {
-        url: 'https://via.placeholder.com/500x500?text=Elegant+Sweater',
+        url: 'https://placehold.co/500x500?text=Elegant+Sweater',
         altText: 'Elegant Sweater',
       },
     ],

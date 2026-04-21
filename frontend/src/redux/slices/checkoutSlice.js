@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getAuthHeaders } from "../../utils/authToken";
 
 /* =========================================================
    ASYNC THUNK
@@ -11,14 +12,18 @@ import axios from "axios";
 export const createCheckout = createAsyncThunk(
   "checkout/createCheckout",
   async (checkoutData, { rejectWithValue }) => {
+    const authHeaders = getAuthHeaders();
+
+    if (!authHeaders.Authorization) {
+      return rejectWithValue({ message: "Please login to continue checkout" });
+    }
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/checkout`,
         checkoutData,
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          },
+          headers: authHeaders,
         }
       );
       console.log("While creating checkout: ", response.data);
