@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getAuthHeaders } from "../../utils/authToken";
 
 /* =========================================================
    ASYNC THUNKS
@@ -11,13 +12,17 @@ import axios from "axios";
 export const fetchUserOrders = createAsyncThunk(
   "orders/fetchUserOrders",
   async (_, { rejectWithValue }) => {
+    const authHeaders = getAuthHeaders();
+
+    if (!authHeaders.Authorization) {
+      return rejectWithValue({ message: "Please login to view your orders" });
+    }
+
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/orders/my-orders`,
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          },
+          headers: authHeaders,
         }
       );
       return response.data;
@@ -35,13 +40,17 @@ export const fetchUserOrders = createAsyncThunk(
 export const fetchOrderDetails = createAsyncThunk(
   "orders/fetchOrderDetails",
   async (orderId, { rejectWithValue }) => {
+    const authHeaders = getAuthHeaders();
+
+    if (!authHeaders.Authorization) {
+      return rejectWithValue({ message: "Please login to view order details" });
+    }
+
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/orders/${orderId}`,
         {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
-          },
+          headers: authHeaders,
         }
       );
 
@@ -101,8 +110,8 @@ const orderSlice = createSlice({
       })
       .addCase(fetchUserOrders.fulfilled, (state, action) => {
         state.loading.list = false;   
-        state.orders = action.payload?.order || [];
-        state.totalOrders = action.payload?.order?.length || 0;
+        state.orders = action.payload?.orders || [];
+        state.totalOrders = action.payload?.orders?.length || 0;
       })
       .addCase(fetchUserOrders.rejected, (state, action) => {
         state.loading.list = false;

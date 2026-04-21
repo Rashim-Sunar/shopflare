@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { AiOutlineDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import { getFallbackImage, getSafeImageUrl } from '../../utils/imageUrl';
 
 import { removeFromCart, fetchCart,updateCartItemQuantity } from '../../redux/slices/cartSlice';
 
@@ -79,7 +80,14 @@ const CartContents = () => {
           return (
             <div key={itemKey} className='flex items-start border-gray-400 border-b py-4 justify-between pr-1'>
                 <div className='flex flex-start'>
-                    <img src={product.image} alt={product.name} className='w-20 h-24 object-cover mr-4 rounded'/>
+                    <img
+                      src={getSafeImageUrl(product.image)}
+                      alt={product.name}
+                      className='w-20 h-24 object-cover mr-4 rounded'
+                      onError={(e) => {
+                        e.currentTarget.src = getFallbackImage();
+                      }}
+                    />
                      <div className='flex flex-start flex-col'>
                         <h2>{product.name}</h2>
                         <p className='text-sm text-gray-500'>

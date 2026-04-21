@@ -37,7 +37,24 @@ export const protect = asyncHandler(async (req: AuthenticatedRequest, _res: Resp
   }
 
   // Step 2: Verify the token with the server-side secret.
-  const decodedToken = jwt.verify(token, appEnv.secretStr) as AuthTokenPayload;
+  let decodedToken: AuthTokenPayload;
+
+  try {
+    decodedToken = jwt.verify(token, appEnv.secretStr) as AuthTokenPayload;
+  } catch (error) {
+    if (error instanceof jwt.TokenExpiredError) {
+      next(new AppError('JWT has expired. Please login again!', 401));
+      return;
+    }
+
+    if (error instanceof jwt.JsonWebTokenError) {
+      next(new AppError('Invalid token. Please login again!', 401));
+      return;
+    }
+
+    throw error;
+  }
+
   const userId = decodedToken.id ?? decodedToken._id;
 
   if (!userId) {
