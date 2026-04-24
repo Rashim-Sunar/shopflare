@@ -1,7 +1,10 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import * as fs from 'fs';
+import * as path from 'path';
 import Product from '../src/models/Product';
 import User from '../src/models/User';
+import { normalizeProductBatch, RawProductData } from '../src/utils/productNormalizer';
 
 dotenv.config();
 
@@ -12,272 +15,143 @@ if (!MONGO_URI) {
   process.exit(1);
 }
 
-const sampleProducts = [
-  {
-    name: 'Premium Cotton T-Shirt',
-    description: 'High-quality 100% cotton t-shirt perfect for everyday wear. Comfortable and breathable.',
-    price: 1500,
-    discountPrice: 1200,
-    countInStock: 50,
-    sku: 'TSH-001',
-    category: 'T-Shirts',
-    brand: 'StyleHub',
-    sizes: ['S', 'M', 'L', 'XL'],
-    colors: ['White', 'Black', 'Navy'],
-    collections: 'New Arrivals',
-    material: 'Cotton',
-    gender: 'Men',
-    images: [
-      {
-        url: 'https://placehold.co/500x500?text=Premium+Cotton+T-Shirt',
-        altText: 'Premium Cotton T-Shirt',
-      },
-    ],
-    isFeatured: true,
-    isPublished: true,
-    rating: 4.8,
-    numReviews: 45,
-    tags: ['cotton', 'casual', 'bestseller'],
-    metaTitle: 'Premium Cotton T-Shirt | StyleHub',
-    metaDescription: 'High-quality 100% cotton t-shirt for everyday wear',
-  },
-  {
-    name: 'Formal Dress Shirt',
-    description: 'Elegant formal shirt with a perfect fit. Ideal for office and special occasions.',
-    price: 2500,
-    discountPrice: 2000,
-    countInStock: 30,
-    sku: 'FSH-001',
-    category: 'Formal Shirts',
-    brand: 'ElegantWear',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['White', 'Light Blue', 'Pink'],
-    collections: 'Best Seller',
-    material: 'Cotton',
-    gender: 'Men',
-    images: [
-      {
-        url: 'https://placehold.co/500x500?text=Formal+Dress+Shirt',
-        altText: 'Formal Dress Shirt',
-      },
-    ],
-    isFeatured: true,
-    isPublished: true,
-    rating: 4.9,
-    numReviews: 78,
-    tags: ['formal', 'office', 'bestseller'],
-    metaTitle: 'Formal Dress Shirt | ElegantWear',
-    metaDescription: 'Elegant formal shirt perfect for office and special occasions',
-  },
-  {
-    name: 'Summer Casual Jeans',
-    description: 'Comfortable and stylish jeans for summer. Perfect fit with modern design.',
-    price: 2200,
-    discountPrice: 1800,
-    countInStock: 40,
-    sku: 'JNS-001',
-    category: 'Jeans',
-    brand: 'DenimPro',
-    sizes: ['28', '30', '32', '34', '36'],
-    colors: ['Light Blue', 'Dark Blue', 'Black'],
-    collections: 'New Arrivals',
-    material: 'Denim',
-    gender: 'Unisex',
-    images: [
-      {
-        url: 'https://placehold.co/500x500?text=Summer+Casual+Jeans',
-        altText: 'Summer Casual Jeans',
-      },
-    ],
-    isFeatured: true,
-    isPublished: true,
-    rating: 4.7,
-    numReviews: 92,
-    tags: ['jeans', 'casual', 'unisex'],
-    metaTitle: 'Summer Casual Jeans | DenimPro',
-    metaDescription: 'Comfortable and stylish jeans perfect for summer',
-  },
-  {
-    name: 'Women\'s Designer Saree',
-    description: 'Elegant traditional saree with modern patterns. Perfect for festivals and special occasions.',
-    price: 3500,
-    discountPrice: 2800,
-    countInStock: 20,
-    sku: 'SRE-001',
-    category: 'Sarees',
-    brand: 'TraditionalFashion',
-    sizes: ['One Size'],
-    colors: ['Red', 'Blue', 'Green', 'Purple'],
-    collections: 'Best Seller',
-    material: 'Silk',
-    gender: 'Women',
-    images: [
-      {
-        url: 'https://placehold.co/500x500?text=Women+Designer+Saree',
-        altText: 'Women Designer Saree',
-      },
-    ],
-    isFeatured: true,
-    isPublished: true,
-    rating: 4.9,
-    numReviews: 56,
-    tags: ['saree', 'traditional', 'festival'],
-    metaTitle: 'Women Designer Saree | TraditionalFashion',
-    metaDescription: 'Elegant traditional saree perfect for festivals',
-  },
-  {
-    name: 'Casual Sports Jacket',
-    description: 'Lightweight sports jacket for casual outings. Water-resistant and stylish.',
-    price: 3000,
-    discountPrice: 2400,
-    countInStock: 25,
-    sku: 'JKT-001',
-    category: 'Jackets',
-    brand: 'SportZone',
-    sizes: ['S', 'M', 'L', 'XL'],
-    colors: ['Black', 'Gray', 'Navy'],
-    collections: 'New Arrivals',
-    material: 'Polyester',
-    gender: 'Men',
-    images: [
-      {
-        url: 'https://placehold.co/500x500?text=Casual+Sports+Jacket',
-        altText: 'Casual Sports Jacket',
-      },
-    ],
-    isFeatured: false,
-    isPublished: true,
-    rating: 4.6,
-    numReviews: 34,
-    tags: ['jacket', 'sports', 'casual'],
-    metaTitle: 'Casual Sports Jacket | SportZone',
-    metaDescription: 'Lightweight sports jacket perfect for casual outings',
-  },
-  {
-    name: 'Women\'s Casual Tee',
-    description: 'Soft and comfortable casual t-shirt for women. Available in multiple colors.',
-    price: 1200,
-    discountPrice: 900,
-    countInStock: 60,
-    sku: 'WTH-001',
-    category: 'T-Shirts',
-    brand: 'FashionHub',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    colors: ['White', 'Black', 'Pink', 'Yellow'],
-    collections: 'New Arrivals',
-    material: 'Cotton',
-    gender: 'Women',
-    images: [
-      {
-        url: 'https://placehold.co/500x500?text=Women+Casual+Tee',
-        altText: 'Women Casual Tee',
-      },
-    ],
-    isFeatured: true,
-    isPublished: true,
-    rating: 4.5,
-    numReviews: 102,
-    tags: ['tshirt', 'women', 'casual'],
-    metaTitle: 'Women Casual Tee | FashionHub',
-    metaDescription: 'Soft and comfortable casual t-shirt for women',
-  },
-  {
-    name: 'Premium Denim Jacket',
-    description: 'Classic denim jacket that never goes out of style. Perfect for any season.',
-    price: 2800,
-    discountPrice: 2200,
-    countInStock: 35,
-    sku: 'DNM-JKT-001',
-    category: 'Jackets',
-    brand: 'DenimPro',
-    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-    colors: ['Light Blue', 'Dark Blue', 'Black'],
-    collections: 'Best Seller',
-    material: 'Denim',
-    gender: 'Unisex',
-    images: [
-      {
-        url: 'https://placehold.co/500x500?text=Premium+Denim+Jacket',
-        altText: 'Premium Denim Jacket',
-      },
-    ],
-    isFeatured: true,
-    isPublished: true,
-    rating: 4.8,
-    numReviews: 123,
-    tags: ['denim', 'jacket', 'classic', 'bestseller'],
-    metaTitle: 'Premium Denim Jacket | DenimPro',
-    metaDescription: 'Classic denim jacket perfect for any season',
-  },
-  {
-    name: 'Elegant Sweater',
-    description: 'Cozy and warm sweater perfect for winter. Available in multiple colors.',
-    price: 2000,
-    discountPrice: 1600,
-    countInStock: 45,
-    sku: 'SWE-001',
-    category: 'Sweaters',
-    brand: 'CozyWear',
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    colors: ['Gray', 'Black', 'Cream', 'Navy'],
-    collections: 'New Arrivals',
-    material: 'Wool',
-    gender: 'Women',
-    images: [
-      {
-        url: 'https://placehold.co/500x500?text=Elegant+Sweater',
-        altText: 'Elegant Sweater',
-      },
-    ],
-    isFeatured: false,
-    isPublished: true,
-    rating: 4.7,
-    numReviews: 67,
-    tags: ['sweater', 'winter', 'women', 'cozy'],
-    metaTitle: 'Elegant Sweater | CozyWear',
-    metaDescription: 'Cozy and warm sweater perfect for winter',
-  },
-];
-
-async function seedDatabase() {
+/**
+ * Get or create an admin user
+ */
+async function getOrCreateAdminUser() {
   try {
-    await mongoose.connect(MONGO_URI);
-    console.log('✅ Connected to MongoDB');
-
-    // Get the first user (admin or any available user)
-    const adminUser = await User.findOne();
+    let adminUser = await User.findOne({ role: 'admin' });
 
     if (!adminUser) {
-      console.error('❌ No user found in database. Please create a user first.');
-      process.exit(1);
+      console.log('📝 Admin user not found, creating...');
+      adminUser = await User.create({
+        name: 'Admin User',
+        email: 'admin@ecommerce.com',
+        password: 'admin@12345',
+        role: 'admin',
+      });
+      console.log(`✅ Created admin user: ${adminUser._id}`);
+    } else {
+      console.log(`📦 Using existing admin user: ${adminUser._id}`);
     }
 
-    console.log(`📦 Using user: ${adminUser._id}`);
+    return adminUser;
+  } catch (error) {
+    throw new Error(`Failed to get/create admin user: ${(error as Error).message}`);
+  }
+}
 
-    // Add user ID to each product
-    const productsWithUser = sampleProducts.map((product) => ({
-      ...product,
-      user: adminUser._id,
-    }));
+/**
+ * Load raw products from JSON file
+ */
+function loadProductsFromJson(filePath: string): RawProductData[] {
+  try {
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`File not found: ${filePath}`);
+    }
 
-    // Clear existing products (optional - comment out if you want to keep them)
-    // await Product.deleteMany({});
-    // console.log('🗑️  Cleared existing products');
+    const rawData = fs.readFileSync(filePath, 'utf-8');
+    const products = JSON.parse(rawData);
 
-    // Insert new products
-    const result = await Product.insertMany(productsWithUser);
-    console.log(`✅ Successfully seeded ${result.length} products!`);
+    if (!Array.isArray(products)) {
+      throw new Error('Expected products JSON to be an array');
+    }
 
-    // Display summary
-    const published = await Product.countDocuments({ isPublished: true });
-    const featured = await Product.countDocuments({ isFeatured: true });
-    console.log(`📊 Published products: ${published}`);
-    console.log(`⭐ Featured products: ${featured}`);
+    console.log(`📖 Loaded ${products.length} raw products from ${filePath}`);
+    return products;
+  } catch (error) {
+    throw new Error(`Failed to load products JSON: ${(error as Error).message}`);
+  }
+}
 
+/**
+ * Calculate statistics from normalized products
+ */
+function calculateStatistics(products: any[]) {
+  const stats: Record<string, Record<string, number>> = {};
+
+  products.forEach((product) => {
+    const gender = product.gender || 'Unknown';
+    const type = product.type || 'Unknown';
+
+    if (!stats[gender]) {
+      stats[gender] = {};
+    }
+
+    stats[gender][type] = (stats[gender][type] || 0) + 1;
+  });
+
+  return stats;
+}
+
+/**
+ * Main seed function
+ */
+async function seedDatabase() {
+  let connection: any = null;
+
+  try {
+    // Connect to MongoDB
+    connection = await mongoose.connect(MONGO_URI);
+    console.log('✅ Connected to MongoDB');
+
+    // Get or create admin user
+    const adminUser = await getOrCreateAdminUser();
+
+    // Load raw products from JSON
+    const jsonPath = path.join(__dirname, '../../data/products.json');
+    const rawProducts = loadProductsFromJson(jsonPath);
+
+    // Normalize products
+    const normalizedProducts = normalizeProductBatch(rawProducts, String(adminUser._id));
+
+    if (normalizedProducts.length === 0) {
+      console.warn('⚠️  No valid products after normalization. Exiting.');
+      process.exit(0);
+    }
+
+    console.log(`✅ Normalized ${normalizedProducts.length} products (skipped ${rawProducts.length - normalizedProducts.length})`);
+
+    // Clear existing products
+    const deletedCount = await Product.deleteMany({});
+    console.log(`🗑️  Cleared ${deletedCount.deletedCount} existing products`);
+
+    // Batch insert normalized products
+    const insertedProducts = await Product.insertMany(normalizedProducts, { ordered: false });
+    console.log(`✅ Successfully inserted ${insertedProducts.length} products into database`);
+
+    // Calculate and display statistics
+    const stats = calculateStatistics(insertedProducts);
+    console.log('\n📊 ===== SEEDING STATISTICS =====');
+    Object.entries(stats).forEach(([gender, types]) => {
+      console.log(`\n👥 ${gender}:`);
+      Object.entries(types).forEach(([type, count]) => {
+        console.log(`   📦 ${type}: ${count} products`);
+      });
+    });
+
+    // Display additional metrics
+    const publishedCount = await Product.countDocuments({ isPublished: true });
+    const featuredCount = await Product.countDocuments({ isFeatured: true });
+    const avgRating = await Product.aggregate([{ $group: { _id: null, avgRating: { $avg: '$rating' } } }]);
+
+    console.log('\n📈 ===== ADDITIONAL METRICS =====');
+    console.log(`📊 Total products: ${insertedProducts.length}`);
+    console.log(`✅ Published: ${publishedCount}`);
+    console.log(`⭐ Featured: ${featuredCount}`);
+    if (avgRating.length > 0) {
+      console.log(`⭐ Average rating: ${avgRating[0].avgRating.toFixed(2)}`);
+    }
+
+    console.log('\n✨ ===== SEEDING COMPLETED SUCCESSFULLY =====\n');
     process.exit(0);
   } catch (error) {
-    console.error('❌ Error seeding database:', error);
+    console.error('❌ Error during seeding:', error);
     process.exit(1);
+  } finally {
+    if (connection) {
+      await mongoose.disconnect();
+    }
   }
 }
 

@@ -22,3 +22,6 @@ dist/
 
 # Optional: coverage
 coverage/
+
+# Scraping scripts (excluded for compliance and safety)
+scripts/scrapers/

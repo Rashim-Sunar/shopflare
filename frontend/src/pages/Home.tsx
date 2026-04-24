@@ -24,7 +24,10 @@ const Home = () => {
 
   useEffect(()=>{
     const filters = {
-      category: "Women Top Wear",
+      category: "Top Wear",
+      gender: "Women",
+      minPrice: 0,
+      maxPrice: 10000,
       sort: "newest",
       limit: 8,
     }

@@ -7,6 +7,7 @@ import adminReducer from './slices/adminSlice'
 import orderReducer from './slices/orderSlice'
 import adminOrderReducer from "./slices/adminOrderSlice";
 import adminProductReducer from "./slices/adminProductSlice";
+import aiChatReducer from './slices/aiChatSlice';
 
 const store = configureStore({
     reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
         admin: adminReducer,
         adminOrders: adminOrderReducer,
         adminProducts: adminProductReducer,
+        aiChat: aiChatReducer,
     },
 });
 

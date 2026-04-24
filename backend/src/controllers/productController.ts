@@ -176,6 +176,8 @@ export const getAllProducts = asyncHandler(
       {
         collection?: string;
         category?: string;
+        subCategory?: string;
+        type?: string;
         gender?: string;
         color?: string;
         size?: string;
@@ -208,6 +210,12 @@ export const getAllProducts = asyncHandler(
     }
     if (gender) {
       query.gender = { $in: String(gender).split(',') };
+       if (req.query.subCategory) {
+         query.subCategory = { $in: String(req.query.subCategory).split(',') };
+       }
+       if (req.query.type) {
+         query.type = { $in: String(req.query.type).split(',') };
+       }
     }
     if (color) {
       query.colors = { $in: String(color).split(',') };
@@ -397,3 +405,61 @@ export const getSimilarProducts = asyncHandler(
     });
   }
 );
+
+/**
+ * @function getFilterOptions
+ * @description Retrieves all available filter options from the product catalog.
+ *
+ * @steps
+ * 1. Query distinct values for each filter field (gender, subCategory, type, brand, size).
+ * 2. Calculate min/max price range from published products.
+ * 3. Return all filter metadata for dynamic UI population.
+ *
+ * @param {Request} req - The Express request object.
+ * @param {Response} res - The Express response object.
+ * @param {NextFunction} next - The next middleware function.
+ * @returns {Promise<void>} Sends the filter options response.
+ */
+export const getFilterOptions = asyncHandler(async (_req: AuthenticatedRequest, res: Response, _next: NextFunction) => {
+  const publishedProducts = { isPublished: true };
+
+  // Fetch distinct values for each filter
+  const genders = (await Product.distinct('gender', publishedProducts)) as string[];
+  const subCategories = (await Product.distinct('subCategory', publishedProducts)) as string[];
+  const types = (await Product.distinct('type', publishedProducts)) as string[];
+  const brands = (await Product.distinct('brand', publishedProducts)) as string[];
+
+  // Flatten and deduplicate sizes
+  const allSizes = await Product.find(publishedProducts).select('sizes').lean();
+  const sizeSet = new Set<string>();
+  allSizes.forEach((product) => {
+    if (product.sizes && Array.isArray(product.sizes)) {
+      product.sizes.forEach((size) => sizeSet.add(size));
+    }
+  });
+  const sizes = Array.from(sizeSet).sort();
+
+  // Build gender -> subCategory map for smarter frontend filtering.
+  const subCategoriesByGender: Record<string, string[]> = {};
+  for (const gender of genders) {
+    const scopedSubCategories = (await Product.distinct('subCategory', { ...publishedProducts, gender })) as string[];
+    subCategoriesByGender[gender] = scopedSubCategories.sort();
+  }
+
+  // Calculate price range
+  const priceStats = await Product.aggregate([{ $match: publishedProducts }, { $group: { _id: null, minPrice: { $min: '$price' }, maxPrice: { $max: '$price' } } }]);
+  const priceRange = priceStats.length > 0 ? { min: priceStats[0].minPrice, max: priceStats[0].maxPrice } : { min: 0, max: 10000 };
+
+  res.status(200).json({
+    status: 'success',
+    filters: {
+      genders: genders.sort(),
+      subCategories: subCategories.sort(),
+      subCategoriesByGender,
+      types: types.sort(),
+      brands: brands.sort(),
+      sizes,
+      priceRange,
+    },
+  });
+});

@@ -194,6 +194,8 @@ PAYPAL_CLIENT_SECRET=your_paypal_client_secret
 PAYPAL_MODE=sandbox
 
 CLIENT_URL=http://localhost:5173
+
+OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
 Notes:

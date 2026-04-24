@@ -115,10 +115,12 @@ const initialState = {
     brand: [],
     // Range filters → NUMBERS
     minPrice: 0,
-    maxPrice: 100,
+    maxPrice: 10000,
     // Single-value filters → STRINGS
     sort: "",
     search: "",
+    subCategory: [],
+    type: [],
   },
 };
 
