@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllProducts, getProductById, getBestSeller, getNewArrivals, getSimilarProducts } from '../controllers/productController';
+import { getAllProducts, getProductById, getBestSeller, getNewArrivals, getSimilarProducts, getFilterOptions } from '../controllers/productController';
 
 /**
  * @fileoverview Public product listing and search routes.
@@ -27,6 +27,13 @@ router.get('/new-arrivals', getNewArrivals);
  * @access Public
  */
 router.get('/similar/:id', getSimilarProducts);
+
+/**
+ * @route GET /api/products/filters
+ * @description Retrieves all available filter options (genders, subCategories, types, brands, sizes, priceRange).
+ * @access Public
+ */
+router.get('/filters', getFilterOptions);
 
 /**
  * @route GET /api/products/:id

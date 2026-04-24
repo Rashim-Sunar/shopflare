@@ -14,6 +14,7 @@ import adminRoutes from './routes/adminRoutes';
 import adminOrderRoutes from './routes/adminOrderRoutes';
 import uploadRoutes from './routes/uploadRoutes';
 import subscribeRoutes from './routes/subscribeRoute';
+import aiRoutes from './routes/aiRoutes';
 
 /**
  * @fileoverview TypeScript entrypoint that bootstraps the Express server, routes, and database connection.
@@ -63,6 +64,7 @@ function registerRoutes(): void {
   app.use('/api/admin/orders', adminOrderRoutes);
   app.use('/api/upload', uploadRoutes);
   app.use('/api/subscribe', subscribeRoutes);
+  app.use('/api/ai', aiRoutes);
 
   app.all('*path', (req: Request, _res: Response, next: NextFunction) => {
     next(new AppError(`Can't find ${req.originalUrl} on the server`, 404));

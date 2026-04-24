@@ -1,0 +1,2858 @@
+[
+  {
+    "name": "Abominable Hoodie",
+    "description": "Abominable Hoodie from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men hoodies shoppers.",
+    "price": 6210,
+    "category": "Top Wear",
+    "brand": "Abominable",
+    "gender": "Men",
+    "subCategory": "Hoodies",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.5,
+    "countInStock": 67,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh09-blue_main.jpg",
+        "altText": "Abominable Hoodie - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh09-blue_alt1.jpg",
+        "altText": "Abominable Hoodie - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh09-blue_back.jpg",
+        "altText": "Abominable Hoodie - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MH09"
+  },
+  {
+    "name": "Adrienne Trek Jacket",
+    "description": "Adrienne Trek Jacket from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 5130,
+    "category": "Top Wear",
+    "brand": "Adrienne",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.7,
+    "countInStock": 29,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj08-gray_main.jpg",
+        "altText": "Adrienne Trek Jacket - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj08-gray_alt1.jpg",
+        "altText": "Adrienne Trek Jacket - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj08-gray_alternate.jpg",
+        "altText": "Adrienne Trek Jacket - image 3"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj08-gray_back.jpg",
+        "altText": "Adrienne Trek Jacket - image 4"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WJ08"
+  },
+  {
+    "name": "Aeon Capri",
+    "description": "Aeon Capri from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 4320,
+    "category": "Bottom Wear",
+    "brand": "Aeon",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.2,
+    "countInStock": 31,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp07-black_main.jpg",
+        "altText": "Aeon Capri - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp07-black_alt1.jpg",
+        "altText": "Aeon Capri - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp07-black_back.jpg",
+        "altText": "Aeon Capri - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WP07"
+  },
+  {
+    "name": "Aero Daily Fitness Tee",
+    "description": "Aero Daily Fitness Tee from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men sportswear shoppers.",
+    "price": 2160,
+    "category": "Top Wear",
+    "brand": "Aero",
+    "gender": "Men",
+    "subCategory": "Sportswear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.6,
+    "countInStock": 32,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms01-blue_main.jpg",
+        "altText": "Aero Daily Fitness Tee - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms01-blue_back.jpg",
+        "altText": "Aero Daily Fitness Tee - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MS01"
+  },
+  {
+    "name": "Aether Gym Pant",
+    "description": "Aether Gym Pant from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men sportswear shoppers.",
+    "price": 6660,
+    "category": "Top Wear",
+    "brand": "Aether",
+    "gender": "Men",
+    "subCategory": "Sportswear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.9,
+    "countInStock": 72,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mp11-brown_main.jpg",
+        "altText": "Aether Gym Pant - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mp11-brown_alt1.jpg",
+        "altText": "Aether Gym Pant - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mp11-brown_back.jpg",
+        "altText": "Aether Gym Pant - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MP11"
+  },
+  {
+    "name": "Ajax Full-Zip Sweatshirt",
+    "description": "Ajax Full-Zip Sweatshirt from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men hoodies shoppers.",
+    "price": 6210,
+    "category": "Top Wear",
+    "brand": "Ajax",
+    "gender": "Men",
+    "subCategory": "Hoodies",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.1,
+    "countInStock": 45,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh12-green_main.jpg",
+        "altText": "Ajax Full-Zip Sweatshirt - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh12-green_alt1.jpg",
+        "altText": "Ajax Full-Zip Sweatshirt - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh12-green_back.jpg",
+        "altText": "Ajax Full-Zip Sweatshirt - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MH12"
+  },
+  {
+    "name": "Ana Running Short",
+    "description": "Ana Running Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women activewear shoppers.",
+    "price": 3600,
+    "category": "Top Wear",
+    "brand": "Ana",
+    "gender": "Women",
+    "subCategory": "Activewear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.5,
+    "countInStock": 44,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh10-black_main.jpg",
+        "altText": "Ana Running Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh10-black_alt1.jpg",
+        "altText": "Ana Running Short - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh10-black_back.jpg",
+        "altText": "Ana Running Short - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WSH10"
+  },
+  {
+    "name": "Angel Light Running Short",
+    "description": "Angel Light Running Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women activewear shoppers.",
+    "price": 3780,
+    "category": "Top Wear",
+    "brand": "Angel",
+    "gender": "Women",
+    "subCategory": "Activewear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.8,
+    "countInStock": 48,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh06-gray_main.jpg",
+        "altText": "Angel Light Running Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh06-gray_alt1.jpg",
+        "altText": "Angel Light Running Short - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh06-gray_back.jpg",
+        "altText": "Angel Light Running Short - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WSH06"
+  },
+  {
+    "name": "Antonia Racer Tank",
+    "description": "Antonia Racer Tank from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 3060,
+    "category": "Top Wear",
+    "brand": "Antonia",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4,
+    "countInStock": 55,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wt08-black_main.jpg",
+        "altText": "Antonia Racer Tank - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wt08-black_alt1.jpg",
+        "altText": "Antonia Racer Tank - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wt08-black_back.jpg",
+        "altText": "Antonia Racer Tank - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WT08"
+  },
+  {
+    "name": "Apollo Running Short",
+    "description": "Apollo Running Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men sportswear shoppers.",
+    "price": 2925,
+    "category": "Top Wear",
+    "brand": "Apollo",
+    "gender": "Men",
+    "subCategory": "Sportswear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.8,
+    "countInStock": 60,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/msh02-black_main.jpg",
+        "altText": "Apollo Running Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/msh02-black_alt1.jpg",
+        "altText": "Apollo Running Short - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/msh02-black_back.jpg",
+        "altText": "Apollo Running Short - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MSH02"
+  },
+  {
+    "name": "Arcadio Gym Short",
+    "description": "Arcadio Gym Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men sportswear shoppers.",
+    "price": 1800,
+    "category": "Top Wear",
+    "brand": "Arcadio",
+    "gender": "Men",
+    "subCategory": "Sportswear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.3,
+    "countInStock": 53,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/msh11-blue_main.jpg",
+        "altText": "Arcadio Gym Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/msh11-blue_back.jpg",
+        "altText": "Arcadio Gym Short - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MSH11"
+  },
+  {
+    "name": "Argus All-Weather Tank",
+    "description": "Argus All-Weather Tank from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men t-shirts shoppers.",
+    "price": 1980,
+    "category": "Top Wear",
+    "brand": "Argus",
+    "gender": "Men",
+    "subCategory": "T-Shirts",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.8,
+    "countInStock": 39,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt07-gray_main.jpg",
+        "altText": "Argus All-Weather Tank - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt07-gray_back.jpg",
+        "altText": "Argus All-Weather Tank - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MT07"
+  },
+  {
+    "name": "Ariel Roll Sleeve Sweatshirt",
+    "description": "Ariel Roll Sleeve Sweatshirt from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 3510,
+    "category": "Top Wear",
+    "brand": "Ariel",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.8,
+    "countInStock": 64,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh09-purple_main.jpg",
+        "altText": "Ariel Roll Sleeve Sweatshirt - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh09-purple_alt1.jpg",
+        "altText": "Ariel Roll Sleeve Sweatshirt - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh09-purple_back.jpg",
+        "altText": "Ariel Roll Sleeve Sweatshirt - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WH09"
+  },
+  {
+    "name": "Artemis Running Short",
+    "description": "Artemis Running Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women activewear shoppers.",
+    "price": 4050,
+    "category": "Top Wear",
+    "brand": "Artemis",
+    "gender": "Women",
+    "subCategory": "Activewear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.5,
+    "countInStock": 32,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh04-black_main.jpg",
+        "altText": "Artemis Running Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh04-black_alt1.jpg",
+        "altText": "Artemis Running Short - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh04-black_back.jpg",
+        "altText": "Artemis Running Short - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WSH04"
+  },
+  {
+    "name": "Atlas Fitness Tank",
+    "description": "Atlas Fitness Tank from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men sportswear shoppers.",
+    "price": 1620,
+    "category": "Top Wear",
+    "brand": "Atlas",
+    "gender": "Men",
+    "subCategory": "Sportswear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.6,
+    "countInStock": 45,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt11-blue_main.jpg",
+        "altText": "Atlas Fitness Tank - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt11-blue_back.jpg",
+        "altText": "Atlas Fitness Tank - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MT11"
+  },
+  {
+    "name": "Atomic Endurance Running Tee (Crew-Neck)",
+    "description": "Atomic Endurance Running Tee (Crew-Neck) from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men sportswear shoppers.",
+    "price": 2610,
+    "category": "Top Wear",
+    "brand": "Atomic",
+    "gender": "Men",
+    "subCategory": "Sportswear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.2,
+    "countInStock": 22,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms12-red_main.jpg",
+        "altText": "Atomic Endurance Running Tee (Crew-Neck) - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms12-red_alt1.jpg",
+        "altText": "Atomic Endurance Running Tee (Crew-Neck) - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms12-red_back.jpg",
+        "altText": "Atomic Endurance Running Tee (Crew-Neck) - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MS12"
+  },
+  {
+    "name": "Atomic Endurance Running Tee (V-neck)",
+    "description": "Atomic Endurance Running Tee (V-neck) from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men sportswear shoppers.",
+    "price": 2520,
+    "category": "Top Wear",
+    "brand": "Atomic",
+    "gender": "Men",
+    "subCategory": "Sportswear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.5,
+    "countInStock": 64,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms11-green_main.jpg",
+        "altText": "Atomic Endurance Running Tee (V-neck) - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms11-green_back.jpg",
+        "altText": "Atomic Endurance Running Tee (V-neck) - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MS11"
+  },
+  {
+    "name": "Augusta Pullover Jacket",
+    "description": "Augusta Pullover Jacket from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 5130,
+    "category": "Top Wear",
+    "brand": "Augusta",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.4,
+    "countInStock": 22,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj03-red_main.jpg",
+        "altText": "Augusta Pullover Jacket - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj03-red_alt1.jpg",
+        "altText": "Augusta Pullover Jacket - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj03-red_back.jpg",
+        "altText": "Augusta Pullover Jacket - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WJ03"
+  },
+  {
+    "name": "Autumn Pullie",
+    "description": "Autumn Pullie from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 5130,
+    "category": "Top Wear",
+    "brand": "Autumn",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.6,
+    "countInStock": 74,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh03-red_main.jpg",
+        "altText": "Autumn Pullie - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh03-red_alt1.jpg",
+        "altText": "Autumn Pullie - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh03-red_back.jpg",
+        "altText": "Autumn Pullie - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WH03"
+  },
+  {
+    "name": "Balboa Persistence Tee",
+    "description": "Balboa Persistence Tee from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men t-shirts shoppers.",
+    "price": 2610,
+    "category": "Top Wear",
+    "brand": "Balboa",
+    "gender": "Men",
+    "subCategory": "T-Shirts",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.3,
+    "countInStock": 67,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms03-black_main.jpg",
+        "altText": "Balboa Persistence Tee - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms03-black_back.jpg",
+        "altText": "Balboa Persistence Tee - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MS03"
+  },
+  {
+    "name": "Bardot Capri",
+    "description": "Bardot Capri from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 4320,
+    "category": "Bottom Wear",
+    "brand": "Bardot",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.1,
+    "countInStock": 35,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp08-black_main.jpg",
+        "altText": "Bardot Capri - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp08-black_back.jpg",
+        "altText": "Bardot Capri - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WP08"
+  },
+  {
+    "name": "Beaumont Summit Kit",
+    "description": "Beaumont Summit Kit from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men jackets shoppers.",
+    "price": 3780,
+    "category": "Top Wear",
+    "brand": "Beaumont",
+    "gender": "Men",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.1,
+    "countInStock": 42,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mj01-yellow_main.jpg",
+        "altText": "Beaumont Summit Kit - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mj01-yellow_alt1.jpg",
+        "altText": "Beaumont Summit Kit - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mj01-yellow_back.jpg",
+        "altText": "Beaumont Summit Kit - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MJ01"
+  },
+  {
+    "name": "Bella Tank",
+    "description": "Bella Tank from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 2610,
+    "category": "Top Wear",
+    "brand": "Bella",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.3,
+    "countInStock": 44,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wt01-blue_main.jpg",
+        "altText": "Bella Tank - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wt01-blue_back.jpg",
+        "altText": "Bella Tank - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WT01"
+  },
+  {
+    "name": "Bess Yoga Short",
+    "description": "Bess Yoga Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 2520,
+    "category": "Bottom Wear",
+    "brand": "Bess",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4,
+    "countInStock": 70,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh05-blue_main.jpg",
+        "altText": "Bess Yoga Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh05-blue_back.jpg",
+        "altText": "Bess Yoga Short - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WSH05"
+  },
+  {
+    "name": "Breathe-Easy Tank",
+    "description": "Breathe-Easy Tank from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 3060,
+    "category": "Top Wear",
+    "brand": "Breathe-Easy",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.8,
+    "countInStock": 67,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wt09-white_main.jpg",
+        "altText": "Breathe-Easy Tank - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wt09-white_back.jpg",
+        "altText": "Breathe-Easy Tank - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WT09"
+  },
+  {
+    "name": "Bruno Compete Hoodie",
+    "description": "Bruno Compete Hoodie from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men hoodies shoppers.",
+    "price": 5670,
+    "category": "Top Wear",
+    "brand": "Bruno",
+    "gender": "Men",
+    "subCategory": "Hoodies",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.9,
+    "countInStock": 72,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh03-black_main.jpg",
+        "altText": "Bruno Compete Hoodie - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh03-black_alt1.jpg",
+        "altText": "Bruno Compete Hoodie - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh03-black_back.jpg",
+        "altText": "Bruno Compete Hoodie - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MH03"
+  },
+  {
+    "name": "Caesar Warm-Up Pant",
+    "description": "Caesar Warm-Up Pant from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men trousers shoppers.",
+    "price": 3150,
+    "category": "Bottom Wear",
+    "brand": "Caesar",
+    "gender": "Men",
+    "subCategory": "Trousers",
+    "type": "Formal",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.7,
+    "countInStock": 60,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mp01-gray_main.jpg",
+        "altText": "Caesar Warm-Up Pant - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mp01-gray_back.jpg",
+        "altText": "Caesar Warm-Up Pant - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MP01"
+  },
+  {
+    "name": "Carina Basic Capri",
+    "description": "Carina Basic Capri from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 4590,
+    "category": "Bottom Wear",
+    "brand": "Carina",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.5,
+    "countInStock": 63,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp09-black_main.jpg",
+        "altText": "Carina Basic Capri - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp09-black_alt1.jpg",
+        "altText": "Carina Basic Capri - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp09-black_back.jpg",
+        "altText": "Carina Basic Capri - image 3"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp09-black_outfit.jpg",
+        "altText": "Carina Basic Capri - image 4"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WP09"
+  },
+  {
+    "name": "Cassia Funnel Sweatshirt",
+    "description": "Cassia Funnel Sweatshirt from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 4320,
+    "category": "Top Wear",
+    "brand": "Cassia",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.2,
+    "countInStock": 45,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh08-white_main.jpg",
+        "altText": "Cassia Funnel Sweatshirt - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh08-white_alt1.jpg",
+        "altText": "Cassia Funnel Sweatshirt - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh08-white_alternate.jpg",
+        "altText": "Cassia Funnel Sweatshirt - image 3"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh08-white_back.jpg",
+        "altText": "Cassia Funnel Sweatshirt - image 4"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WH08"
+  },
+  {
+    "name": "Cassius Sparring Tank",
+    "description": "Cassius Sparring Tank from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men t-shirts shoppers.",
+    "price": 1620,
+    "category": "Top Wear",
+    "brand": "Cassius",
+    "gender": "Men",
+    "subCategory": "T-Shirts",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.4,
+    "countInStock": 37,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt12-blue_main.jpg",
+        "altText": "Cassius Sparring Tank - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt12-blue_back.jpg",
+        "altText": "Cassius Sparring Tank - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MT12"
+  },
+  {
+    "name": "Celeste Sports Bra",
+    "description": "Celeste Sports Bra from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 3510,
+    "category": "Top Wear",
+    "brand": "Celeste",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.6,
+    "countInStock": 26,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wb03-green_main.jpg",
+        "altText": "Celeste Sports Bra - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wb03-green_alt1.jpg",
+        "altText": "Celeste Sports Bra - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wb03-green_back.jpg",
+        "altText": "Celeste Sports Bra - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WB03"
+  },
+  {
+    "name": "Chaz Kangeroo Hoodie",
+    "description": "Chaz Kangeroo Hoodie from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men hoodies shoppers.",
+    "price": 4680,
+    "category": "Top Wear",
+    "brand": "Chaz",
+    "gender": "Men",
+    "subCategory": "Hoodies",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.3,
+    "countInStock": 66,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh01-gray_main.jpg",
+        "altText": "Chaz Kangeroo Hoodie - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh01-gray_alt1.jpg",
+        "altText": "Chaz Kangeroo Hoodie - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh01-gray_back.jpg",
+        "altText": "Chaz Kangeroo Hoodie - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MH01"
+  },
+  {
+    "name": "Chloe Compete Tank",
+    "description": "Chloe Compete Tank from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 3510,
+    "category": "Top Wear",
+    "brand": "Chloe",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.5,
+    "countInStock": 31,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wt06-blue_main.jpg",
+        "altText": "Chloe Compete Tank - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wt06-blue_back.jpg",
+        "altText": "Chloe Compete Tank - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WT06"
+  },
+  {
+    "name": "Circe Hooded Ice Fleece",
+    "description": "Circe Hooded Ice Fleece from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 6120,
+    "category": "Top Wear",
+    "brand": "Circe",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.1,
+    "countInStock": 51,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh12-gray_main.jpg",
+        "altText": "Circe Hooded Ice Fleece - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh12-gray_back.jpg",
+        "altText": "Circe Hooded Ice Fleece - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WH12"
+  },
+  {
+    "name": "Cobalt CoolTech™ Fitness Short",
+    "description": "Cobalt CoolTech™ Fitness Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men sportswear shoppers.",
+    "price": 3960,
+    "category": "Top Wear",
+    "brand": "Cobalt",
+    "gender": "Men",
+    "subCategory": "Sportswear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.8,
+    "countInStock": 51,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/msh01-blue_main.jpg",
+        "altText": "Cobalt CoolTech™ Fitness Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/msh01-blue_back.jpg",
+        "altText": "Cobalt CoolTech™ Fitness Short - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MSH01"
+  },
+  {
+    "name": "Cora Parachute Pant",
+    "description": "Cora Parachute Pant from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 6750,
+    "category": "Bottom Wear",
+    "brand": "Cora",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.3,
+    "countInStock": 35,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp04-blue_main.jpg",
+        "altText": "Cora Parachute Pant - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp04-blue_alt1.jpg",
+        "altText": "Cora Parachute Pant - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp04-blue_alternate.jpg",
+        "altText": "Cora Parachute Pant - image 3"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp04-blue_back.jpg",
+        "altText": "Cora Parachute Pant - image 4"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WP04"
+  },
+  {
+    "name": "Cronus Yoga Pant",
+    "description": "Cronus Yoga Pant from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men trousers shoppers.",
+    "price": 4320,
+    "category": "Bottom Wear",
+    "brand": "Cronus",
+    "gender": "Men",
+    "subCategory": "Trousers",
+    "type": "Formal",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.4,
+    "countInStock": 41,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mp12-black_main.jpg",
+        "altText": "Cronus Yoga Pant - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mp12-black_back.jpg",
+        "altText": "Cronus Yoga Pant - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MP12"
+  },
+  {
+    "name": "Daphne Full-Zip Hoodie",
+    "description": "Daphne Full-Zip Hoodie from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 5310,
+    "category": "Top Wear",
+    "brand": "Daphne",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.2,
+    "countInStock": 32,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh06-purple_main.jpg",
+        "altText": "Daphne Full-Zip Hoodie - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh06-purple_alt1.jpg",
+        "altText": "Daphne Full-Zip Hoodie - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh06-purple_back.jpg",
+        "altText": "Daphne Full-Zip Hoodie - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WH06"
+  },
+  {
+    "name": "Daria Bikram Pant",
+    "description": "Daria Bikram Pant from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 4590,
+    "category": "Bottom Wear",
+    "brand": "Daria",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.4,
+    "countInStock": 47,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp10-gray_main.jpg",
+        "altText": "Daria Bikram Pant - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp10-gray_alt1.jpg",
+        "altText": "Daria Bikram Pant - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp10-gray_back.jpg",
+        "altText": "Daria Bikram Pant - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WP10"
+  },
+  {
+    "name": "Deion Long-Sleeve EverCool™ Tee",
+    "description": "Deion Long-Sleeve EverCool™ Tee from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men t-shirts shoppers.",
+    "price": 3510,
+    "category": "Top Wear",
+    "brand": "Deion",
+    "gender": "Men",
+    "subCategory": "T-Shirts",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.1,
+    "countInStock": 63,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms07-green_main.jpg",
+        "altText": "Deion Long-Sleeve EverCool™ Tee - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms07-green_alt1.jpg",
+        "altText": "Deion Long-Sleeve EverCool™ Tee - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms07-green_back.jpg",
+        "altText": "Deion Long-Sleeve EverCool™ Tee - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MS07"
+  },
+  {
+    "name": "Deirdre Relaxed-Fit Capri",
+    "description": "Deirdre Relaxed-Fit Capri from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 5670,
+    "category": "Bottom Wear",
+    "brand": "Deirdre",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.2,
+    "countInStock": 44,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp12-gray_main.jpg",
+        "altText": "Deirdre Relaxed-Fit Capri - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp12-gray_back.jpg",
+        "altText": "Deirdre Relaxed-Fit Capri - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WP12"
+  },
+  {
+    "name": "Desiree Fitness Tee",
+    "description": "Desiree Fitness Tee from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women activewear shoppers.",
+    "price": 2160,
+    "category": "Top Wear",
+    "brand": "Desiree",
+    "gender": "Women",
+    "subCategory": "Activewear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.7,
+    "countInStock": 35,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws05-black_main.jpg",
+        "altText": "Desiree Fitness Tee - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws05-black_alt1.jpg",
+        "altText": "Desiree Fitness Tee - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws05-black_back.jpg",
+        "altText": "Desiree Fitness Tee - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WS05"
+  },
+  {
+    "name": "Diana Tights",
+    "description": "Diana Tights from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 5310,
+    "category": "Bottom Wear",
+    "brand": "Diana",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.6,
+    "countInStock": 54,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp06-black_main.jpg",
+        "altText": "Diana Tights - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp06-black_alt1.jpg",
+        "altText": "Diana Tights - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp06-black_back.jpg",
+        "altText": "Diana Tights - image 3"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp06-black_outfit.jpg",
+        "altText": "Diana Tights - image 4"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WP06"
+  },
+  {
+    "name": "Diva Gym Tee",
+    "description": "Diva Gym Tee from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women activewear shoppers.",
+    "price": 2880,
+    "category": "Top Wear",
+    "brand": "Diva",
+    "gender": "Women",
+    "subCategory": "Activewear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.7,
+    "countInStock": 35,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws11-yellow_main.jpg",
+        "altText": "Diva Gym Tee - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws11-yellow_back.jpg",
+        "altText": "Diva Gym Tee - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WS11"
+  },
+  {
+    "name": "Echo Fit Compression Short",
+    "description": "Echo Fit Compression Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 2160,
+    "category": "Bottom Wear",
+    "brand": "Echo",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.6,
+    "countInStock": 24,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh07-black_main.jpg",
+        "altText": "Echo Fit Compression Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh07-black_back.jpg",
+        "altText": "Echo Fit Compression Short - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WSH07"
+  },
+  {
+    "name": "Electra Bra Top",
+    "description": "Electra Bra Top from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 3510,
+    "category": "Top Wear",
+    "brand": "Electra",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.2,
+    "countInStock": 18,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wb01-gray_main.jpg",
+        "altText": "Electra Bra Top - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wb01-gray_alt1.jpg",
+        "altText": "Electra Bra Top - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wb01-gray_back.jpg",
+        "altText": "Electra Bra Top - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WB01"
+  },
+  {
+    "name": "Elisa EverCool™ Tee",
+    "description": "Elisa EverCool™ Tee from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 2610,
+    "category": "Top Wear",
+    "brand": "Elisa",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.4,
+    "countInStock": 39,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws06-purple_main.jpg",
+        "altText": "Elisa EverCool™ Tee - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws06-purple_back.jpg",
+        "altText": "Elisa EverCool™ Tee - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WS06"
+  },
+  {
+    "name": "Eos V-Neck Hoodie",
+    "description": "Eos V-Neck Hoodie from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 4860,
+    "category": "Top Wear",
+    "brand": "Eos",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4,
+    "countInStock": 34,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh11-blue_main.jpg",
+        "altText": "Eos V-Neck Hoodie - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh11-blue_back.jpg",
+        "altText": "Eos V-Neck Hoodie - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WH11"
+  },
+  {
+    "name": "Erica Evercool Sports Bra",
+    "description": "Erica Evercool Sports Bra from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 3510,
+    "category": "Top Wear",
+    "brand": "Erica",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4,
+    "countInStock": 57,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wb02-blue_main.jpg",
+        "altText": "Erica Evercool Sports Bra - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wb02-blue_alt1.jpg",
+        "altText": "Erica Evercool Sports Bra - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wb02-blue_back.jpg",
+        "altText": "Erica Evercool Sports Bra - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WB02"
+  },
+  {
+    "name": "Erika Running Short",
+    "description": "Erika Running Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women activewear shoppers.",
+    "price": 4050,
+    "category": "Top Wear",
+    "brand": "Erika",
+    "gender": "Women",
+    "subCategory": "Activewear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.5,
+    "countInStock": 35,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh12-green_main.jpg",
+        "altText": "Erika Running Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh12-green_alt1.jpg",
+        "altText": "Erika Running Short - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh12-green_back.jpg",
+        "altText": "Erika Running Short - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WSH12"
+  },
+  {
+    "name": "Erikssen CoolTech™ Fitness Tank",
+    "description": "Erikssen CoolTech™ Fitness Tank from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men sportswear shoppers.",
+    "price": 2610,
+    "category": "Top Wear",
+    "brand": "Erikssen",
+    "gender": "Men",
+    "subCategory": "Sportswear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.2,
+    "countInStock": 15,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt01-red_main.jpg",
+        "altText": "Erikssen CoolTech™ Fitness Tank - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt01-red_alt1.jpg",
+        "altText": "Erikssen CoolTech™ Fitness Tank - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt01-red_back.jpg",
+        "altText": "Erikssen CoolTech™ Fitness Tank - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MT01"
+  },
+  {
+    "name": "Fiona Fitness Short",
+    "description": "Fiona Fitness Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women activewear shoppers.",
+    "price": 2610,
+    "category": "Top Wear",
+    "brand": "Fiona",
+    "gender": "Women",
+    "subCategory": "Activewear",
+    "type": "Sportswear",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4,
+    "countInStock": 27,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh01-black_main.jpg",
+        "altText": "Fiona Fitness Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh01-black_back.jpg",
+        "altText": "Fiona Fitness Short - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WSH01"
+  },
+  {
+    "name": "Frankie  Sweatshirt",
+    "description": "Frankie  Sweatshirt from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men hoodies shoppers.",
+    "price": 5400,
+    "category": "Top Wear",
+    "brand": "Frankie",
+    "gender": "Men",
+    "subCategory": "Hoodies",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.6,
+    "countInStock": 63,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh04-green_main.jpg",
+        "altText": "Frankie  Sweatshirt - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh04-green_alt1.jpg",
+        "altText": "Frankie  Sweatshirt - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh04-green_back.jpg",
+        "altText": "Frankie  Sweatshirt - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MH04"
+  },
+  {
+    "name": "Gabrielle Micro Sleeve Top",
+    "description": "Gabrielle Micro Sleeve Top from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 2520,
+    "category": "Top Wear",
+    "brand": "Gabrielle",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.9,
+    "countInStock": 42,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws02-green_main.jpg",
+        "altText": "Gabrielle Micro Sleeve Top - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws02-green_back.jpg",
+        "altText": "Gabrielle Micro Sleeve Top - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WS02"
+  },
+  {
+    "name": "Geo Insulated Jogging Pant",
+    "description": "Geo Insulated Jogging Pant from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men trousers shoppers.",
+    "price": 4590,
+    "category": "Bottom Wear",
+    "brand": "Geo",
+    "gender": "Men",
+    "subCategory": "Trousers",
+    "type": "Formal",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.1,
+    "countInStock": 22,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mp03-black_main.jpg",
+        "altText": "Geo Insulated Jogging Pant - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mp03-black_alt1.jpg",
+        "altText": "Geo Insulated Jogging Pant - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mp03-black_back.jpg",
+        "altText": "Geo Insulated Jogging Pant - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MP03"
+  },
+  {
+    "name": "Gobi HeatTec® Tee",
+    "description": "Gobi HeatTec® Tee from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men t-shirts shoppers.",
+    "price": 2610,
+    "category": "Top Wear",
+    "brand": "Gobi",
+    "gender": "Men",
+    "subCategory": "T-Shirts",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.9,
+    "countInStock": 21,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms04-orange_main.jpg",
+        "altText": "Gobi HeatTec® Tee - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms04-orange_back.jpg",
+        "altText": "Gobi HeatTec® Tee - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MS04"
+  },
+  {
+    "name": "Grayson Crewneck Sweatshirt",
+    "description": "Grayson Crewneck Sweatshirt from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men hoodies shoppers.",
+    "price": 5760,
+    "category": "Top Wear",
+    "brand": "Grayson",
+    "gender": "Men",
+    "subCategory": "Hoodies",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Gray"
+    ],
+    "rating": 3.3,
+    "countInStock": 29,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh11-white_main.jpg",
+        "altText": "Grayson Crewneck Sweatshirt - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh11-white_alt1.jpg",
+        "altText": "Grayson Crewneck Sweatshirt - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh11-white_back.jpg",
+        "altText": "Grayson Crewneck Sweatshirt - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MH11"
+  },
+  {
+    "name": "Gwen Drawstring Bike Short",
+    "description": "Gwen Drawstring Bike Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 4500,
+    "category": "Bottom Wear",
+    "brand": "Gwen",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.5,
+    "countInStock": 58,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh03-gray_main.jpg",
+        "altText": "Gwen Drawstring Bike Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh03-gray_alt1.jpg",
+        "altText": "Gwen Drawstring Bike Short - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh03-gray_back.jpg",
+        "altText": "Gwen Drawstring Bike Short - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WSH03"
+  },
+  {
+    "name": "Gwyn Endurance Tee",
+    "description": "Gwyn Endurance Tee from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 2160,
+    "category": "Top Wear",
+    "brand": "Gwyn",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.7,
+    "countInStock": 18,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws01-black_main.jpg",
+        "altText": "Gwyn Endurance Tee - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws01-black_back.jpg",
+        "altText": "Gwyn Endurance Tee - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WS01"
+  },
+  {
+    "name": "Hawkeye Yoga Short",
+    "description": "Hawkeye Yoga Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men trousers shoppers.",
+    "price": 2610,
+    "category": "Bottom Wear",
+    "brand": "Hawkeye",
+    "gender": "Men",
+    "subCategory": "Trousers",
+    "type": "Formal",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.3,
+    "countInStock": 46,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/msh05-gray_main.jpg",
+        "altText": "Hawkeye Yoga Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/msh05-gray_alt1.jpg",
+        "altText": "Hawkeye Yoga Short - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/msh05-gray_back.jpg",
+        "altText": "Hawkeye Yoga Short - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MSH05"
+  },
+  {
+    "name": "Helena Hooded Fleece",
+    "description": "Helena Hooded Fleece from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 4950,
+    "category": "Top Wear",
+    "brand": "Helena",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.7,
+    "countInStock": 71,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh10-gray_main.jpg",
+        "altText": "Helena Hooded Fleece - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh10-gray_alt1.jpg",
+        "altText": "Helena Hooded Fleece - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh10-gray_back.jpg",
+        "altText": "Helena Hooded Fleece - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WH10"
+  },
+  {
+    "name": "Helios Endurance Tank",
+    "description": "Helios Endurance Tank from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men t-shirts shoppers.",
+    "price": 2880,
+    "category": "Top Wear",
+    "brand": "Helios",
+    "gender": "Men",
+    "subCategory": "T-Shirts",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.4,
+    "countInStock": 45,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt04-blue_main.jpg",
+        "altText": "Helios Endurance Tank - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt04-blue_alt1.jpg",
+        "altText": "Helios Endurance Tank - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mt04-blue_back.jpg",
+        "altText": "Helios Endurance Tank - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MT04"
+  },
+  {
+    "name": "Helios EverCool™ Tee",
+    "description": "Helios EverCool™ Tee from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men t-shirts shoppers.",
+    "price": 2160,
+    "category": "Top Wear",
+    "brand": "Helios",
+    "gender": "Men",
+    "subCategory": "T-Shirts",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.5,
+    "countInStock": 35,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms05-blue_main.jpg",
+        "altText": "Helios EverCool™ Tee - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ms05-blue_back.jpg",
+        "altText": "Helios EverCool™ Tee - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MS05"
+  },
+  {
+    "name": "Hera Pullover Hoodie",
+    "description": "Hera Pullover Hoodie from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 4320,
+    "category": "Top Wear",
+    "brand": "Hera",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4,
+    "countInStock": 23,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh02-blue_main.jpg",
+        "altText": "Hera Pullover Hoodie - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh02-blue_alt1.jpg",
+        "altText": "Hera Pullover Hoodie - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wh02-blue_back.jpg",
+        "altText": "Hera Pullover Hoodie - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WH02"
+  },
+  {
+    "name": "Hero Hoodie",
+    "description": "Hero Hoodie from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men hoodies shoppers.",
+    "price": 4860,
+    "category": "Top Wear",
+    "brand": "Hero",
+    "gender": "Men",
+    "subCategory": "Hoodies",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.7,
+    "countInStock": 16,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh07-gray_main.jpg",
+        "altText": "Hero Hoodie - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh07-gray_alt1.jpg",
+        "altText": "Hero Hoodie - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh07-gray_back.jpg",
+        "altText": "Hero Hoodie - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MH07"
+  },
+  {
+    "name": "Hollister Backyard Sweatshirt",
+    "description": "Hollister Backyard Sweatshirt from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men hoodies shoppers.",
+    "price": 4680,
+    "category": "Top Wear",
+    "brand": "Hollister",
+    "gender": "Men",
+    "subCategory": "Hoodies",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.3,
+    "countInStock": 24,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh05-white_main.jpg",
+        "altText": "Hollister Backyard Sweatshirt - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh05-white_alt1.jpg",
+        "altText": "Hollister Backyard Sweatshirt - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mh05-white_back.jpg",
+        "altText": "Hollister Backyard Sweatshirt - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MH05"
+  },
+  {
+    "name": "Hyperion Elements Jacket",
+    "description": "Hyperion Elements Jacket from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men jackets shoppers.",
+    "price": 4590,
+    "category": "Top Wear",
+    "brand": "Hyperion",
+    "gender": "Men",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.3,
+    "countInStock": 70,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mj02-green_main.jpg",
+        "altText": "Hyperion Elements Jacket - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mj02-green_alt1.jpg",
+        "altText": "Hyperion Elements Jacket - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mj02-green_back.jpg",
+        "altText": "Hyperion Elements Jacket - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MJ02"
+  },
+  {
+    "name": "Ida Workout Parachute Pant",
+    "description": "Ida Workout Parachute Pant from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 4320,
+    "category": "Bottom Wear",
+    "brand": "Ida",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.3,
+    "countInStock": 63,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp03-blue_main.jpg",
+        "altText": "Ida Workout Parachute Pant - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp03-blue_alt1.jpg",
+        "altText": "Ida Workout Parachute Pant - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wp03-blue_back.jpg",
+        "altText": "Ida Workout Parachute Pant - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WP03"
+  },
+  {
+    "name": "Ina Compression Short",
+    "description": "Ina Compression Short from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women leggings shoppers.",
+    "price": 4410,
+    "category": "Bottom Wear",
+    "brand": "Ina",
+    "gender": "Women",
+    "subCategory": "Leggings",
+    "type": "Casual",
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.7,
+    "countInStock": 28,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh11-blue_main.jpg",
+        "altText": "Ina Compression Short - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wsh11-blue_back.jpg",
+        "altText": "Ina Compression Short - image 2"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WSH11"
+  },
+  {
+    "name": "Ingrid Running Jacket",
+    "description": "Ingrid Running Jacket from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 7560,
+    "category": "Top Wear",
+    "brand": "Ingrid",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.3,
+    "countInStock": 21,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj04-white_main.jpg",
+        "altText": "Ingrid Running Jacket - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj04-white_alt1.jpg",
+        "altText": "Ingrid Running Jacket - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj04-white_alternate.jpg",
+        "altText": "Ingrid Running Jacket - image 3"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj04-white_back.jpg",
+        "altText": "Ingrid Running Jacket - image 4"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WJ04"
+  },
+  {
+    "name": "Iris Workout Top",
+    "description": "Iris Workout Top from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 2610,
+    "category": "Top Wear",
+    "brand": "Iris",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.5,
+    "countInStock": 15,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws03-red_main.jpg",
+        "altText": "Iris Workout Top - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws03-red_alt1.jpg",
+        "altText": "Iris Workout Top - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws03-red_back.jpg",
+        "altText": "Iris Workout Top - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WS03"
+  },
+  {
+    "name": "Jade Yoga Jacket",
+    "description": "Jade Yoga Jacket from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 2880,
+    "category": "Top Wear",
+    "brand": "Jade",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.3,
+    "countInStock": 37,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj09-green_main.jpg",
+        "altText": "Jade Yoga Jacket - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj09-green_alt1.jpg",
+        "altText": "Jade Yoga Jacket - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj09-green_back.jpg",
+        "altText": "Jade Yoga Jacket - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WJ09"
+  },
+  {
+    "name": "Josie Yoga Jacket",
+    "description": "Josie Yoga Jacket from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women jackets shoppers.",
+    "price": 5063,
+    "category": "Top Wear",
+    "brand": "Josie",
+    "gender": "Women",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.5,
+    "countInStock": 45,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj02-gray_main.jpg",
+        "altText": "Josie Yoga Jacket - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj02-gray_alt1.jpg",
+        "altText": "Josie Yoga Jacket - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/wj02-gray_back.jpg",
+        "altText": "Josie Yoga Jacket - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WJ02"
+  },
+  {
+    "name": "Juliana Short-Sleeve Tee",
+    "description": "Juliana Short-Sleeve Tee from https://www.scrapingcourse.com/ecommerce catalog. Curated for Women tops shoppers.",
+    "price": 3780,
+    "category": "Top Wear",
+    "brand": "Juliana",
+    "gender": "Women",
+    "subCategory": "Tops",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 3.7,
+    "countInStock": 67,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws07-black_main.jpg",
+        "altText": "Juliana Short-Sleeve Tee - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws07-black_alt1.jpg",
+        "altText": "Juliana Short-Sleeve Tee - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/ws07-black_back.jpg",
+        "altText": "Juliana Short-Sleeve Tee - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "WS07"
+  },
+  {
+    "name": "Jupiter All-Weather Trainer",
+    "description": "Jupiter All-Weather Trainer from https://www.scrapingcourse.com/ecommerce catalog. Curated for Men jackets shoppers.",
+    "price": 5129,
+    "category": "Top Wear",
+    "brand": "Jupiter",
+    "gender": "Men",
+    "subCategory": "Jackets",
+    "type": "Casual",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "rating": 4.5,
+    "countInStock": 43,
+    "material": "Cotton",
+    "images": [
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mj06-blue_main.jpg",
+        "altText": "Jupiter All-Weather Trainer - image 1"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mj06-blue_alt1.jpg",
+        "altText": "Jupiter All-Weather Trainer - image 2"
+      },
+      {
+        "url": "https://www.scrapingcourse.com/ecommerce/wp-content/uploads/2024/03/mj06-blue_back.jpg",
+        "altText": "Jupiter All-Weather Trainer - image 3"
+      }
+    ],
+    "collections": "New Arrivals",
+    "sku": "MJ06"
+  }
+]

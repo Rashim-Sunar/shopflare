@@ -12,9 +12,10 @@ export interface AppEnv {
   mongoUri: string;
   secretStr: string;
   expiringDay: string;
+  openRouterApiKey: string;
 }
 
-function readRequiredEnv(key: 'MONGO_URI' | 'SECRET_STR' | 'EXPIRING_DAY'): string {
+function readRequiredEnv(key: 'MONGO_URI' | 'SECRET_STR' | 'EXPIRING_DAY' | 'OPENROUTER_API_KEY'): string {
   const value = process.env[key];
 
   if (!value) {
@@ -45,6 +46,7 @@ export function getAppEnv(): AppEnv {
     mongoUri: readRequiredEnv('MONGO_URI'),
     secretStr: readRequiredEnv('SECRET_STR'),
     expiringDay: readRequiredEnv('EXPIRING_DAY'),
+    openRouterApiKey: readRequiredEnv('OPENROUTER_API_KEY'),
   };
 }
 

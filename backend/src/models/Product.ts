@@ -37,6 +37,26 @@ const productSchema = new Schema<IProduct, ProductModel>(
       type: String,
       required: true,
     },
+    // New structured category fields for multi-level filtering
+    // Avoids flat "Men > Shirts" structure; enables scalable filtering
+    mainCategory: {
+      type: String,
+      default: 'Clothing',
+      comment: 'Top-level category for product classification',
+    },
+    // Subcategory enables fine-grained filtering and AI understanding
+    // Examples: "Shirt", "Kurti", "Saree", "Jeans", "Dress"
+    subCategory: {
+      type: String,
+      comment: 'Product type for multi-level filtering (e.g., Kurti, Saree for ethnic wear)',
+    },
+    // Type field captures product nature beyond category
+    // Examples: "Casual", "Ethnic", "Formal", "Partywear", "Sportswear"
+    type: {
+      type: String,
+      enum: ['Casual', 'Formal', 'Ethnic', 'Partywear', 'Sportswear'],
+      comment: 'Product type/style classification for dynamic filtering',
+    },
     brand: {
       type: String,
     },
@@ -112,6 +132,13 @@ const productSchema = new Schema<IProduct, ProductModel>(
     timestamps: true,
   }
 );
+
+// Add indexes for multi-level filtering and search performance
+// Composite index enables efficient filtering by gender, subCategory, and price range
+productSchema.index({ gender: 1, subCategory: 1, price: 1 });
+// Additional indexes for common filter patterns
+productSchema.index({ isPublished: 1, type: 1 });
+productSchema.index({ brand: 1, price: 1 });
 
 const Product = mongoose.model<IProduct, ProductModel>('Product', productSchema);
 

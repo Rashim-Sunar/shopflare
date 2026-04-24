@@ -23,6 +23,9 @@ export interface IProduct {
   countInStock: number;
   sku: string;
   category: string;
+  mainCategory?: string; // e.g., "Clothing"
+  subCategory?: string; // e.g., "Kurti", "Shirt", "Saree" - enables multi-level filtering
+  type?: string; // e.g., "Casual", "Ethnic", "Formal", "Partywear", "Sportswear"
   brand?: string;
   sizes: string[];
   colors: string[];
