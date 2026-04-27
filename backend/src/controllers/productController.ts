@@ -5,6 +5,7 @@ import { AppError } from '../utils/AppError';
 import { asyncHandler } from '../utils/asyncHandler';
 import type { IProduct } from '../types/product';
 import type { AuthenticatedRequest } from '../types/http';
+import { publishProductUpdate } from '../queue/producer';
 
 /**
  * @fileoverview Product controller for catalog management: CRUD and filtered search operations.
@@ -61,6 +62,19 @@ export const createProduct = asyncHandler(
 
     const createdProduct = await Product.create(productData);
 
+    void publishProductUpdate({
+      id: String(createdProduct._id),
+      name: createdProduct.name,
+      description: createdProduct.description,
+      price: createdProduct.price,
+      stock: createdProduct.countInStock,
+      category: createdProduct.category,
+      brand: createdProduct.brand,
+      updatedAt: createdProduct.updatedAt?.toISOString(),
+    }).catch((error: unknown) => {
+      console.error(`[QUEUE] Failed to publish create event for productId=${String(createdProduct._id)}`, error);
+    });
+
     res.status(201).json({
       status: 'success',
       createdProduct,
@@ -102,6 +116,19 @@ export const updateProduct = asyncHandler(
     Object.assign(product, req.body);
 
     const updatedProduct = await product.save();
+
+    void publishProductUpdate({
+      id: String(updatedProduct._id),
+      name: updatedProduct.name,
+      description: updatedProduct.description,
+      price: updatedProduct.price,
+      stock: updatedProduct.countInStock,
+      category: updatedProduct.category,
+      brand: updatedProduct.brand,
+      updatedAt: updatedProduct.updatedAt?.toISOString(),
+    }).catch((error: unknown) => {
+      console.error(`[QUEUE] Failed to publish update event for productId=${String(updatedProduct._id)}`, error);
+    });
 
     res.status(200).json({
       status: 'success',

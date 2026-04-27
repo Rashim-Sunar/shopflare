@@ -1,7 +1,7 @@
 import { Annotation, END, START, StateGraph } from '@langchain/langgraph';
 import { callLLM } from './llm';
-import { getIntentParserSystemPrompt, getSupervisorSystemPrompt } from './prompt';
-import { checkProductAvailability, searchProducts } from '../tools/productTools';
+import { getIntentParserSystemPrompt, getSupervisorSystemPrompt, getResponseGeneratorSystemPrompt } from './prompt';
+import { checkProductAvailability, hybridSearchProducts } from '../tools/productTools';
 import type { CatalogSearchFilters } from '../services/catalogSearchService';
 
 /**
@@ -37,7 +37,9 @@ interface ToolExecutionResult {
   message: string;
 }
 
-const CATEGORY_VALUES = ['T-Shirts', 'Formal Shirts', 'Jeans', 'Sarees', 'Jackets', 'Sweaters', 'Shoes', 'Phones'];
+const CATEGORY_VALUES = ['Top Wear', 'Bottom Wear'];
+const SUBCATEGORY_VALUES = ['Activewear', 'Hoodies', 'Jackets', 'Leggings', 'Sportswear', 'T-Shirts', 'Tops', 'Trousers'];
+const TYPE_VALUES = ['Casual', 'Formal', 'Sportswear'];
 const COLLECTION_VALUES = ['New Arrivals', 'Best Seller'];
 const GENDER_VALUES = ['Men', 'Women', 'Unisex'];
 const COLOR_VALUES = ['Black', 'White', 'Red', 'Blue', 'Green', 'Yellow', 'Purple', 'Pink', 'Brown', 'Gray', 'Light Blue', 'Dark Blue', 'Navy', 'Cream'];
@@ -78,6 +80,15 @@ const SORT_ALIASES: Record<string, 'low-high' | 'high-low' | 'popularity'> = {
 };
 
 const CATEGORY_ALIASES: Record<string, string> = {
+  top: 'Top Wear',
+  tops: 'Top Wear',
+  'top wear': 'Top Wear',
+  bottom: 'Bottom Wear',
+  bottoms: 'Bottom Wear',
+  'bottom wear': 'Bottom Wear',
+};
+
+const SUBCATEGORY_ALIASES: Record<string, string> = {
   tshirt: 'T-Shirts',
   tshirts: 'T-Shirts',
   't shirt': 'T-Shirts',
@@ -86,42 +97,23 @@ const CATEGORY_ALIASES: Record<string, string> = {
   't-shirts': 'T-Shirts',
   tee: 'T-Shirts',
   tees: 'T-Shirts',
-  top: 'T-Shirts',
-  tops: 'T-Shirts',
-  'top wear': 'T-Shirts',
-  'formal shirt': 'Formal Shirts',
-  'formal shirts': 'Formal Shirts',
-  'formal wear': 'Formal Shirts',
-  shirt: 'Formal Shirts',
-  shirts: 'Formal Shirts',
-  'dress shirt': 'Formal Shirts',
-  'dress shirts': 'Formal Shirts',
-  'office shirt': 'Formal Shirts',
-  jean: 'Jeans',
-  jeans: 'Jeans',
-  denim: 'Jeans',
-  saree: 'Sarees',
-  sarees: 'Sarees',
-  sari: 'Sarees',
+  top: 'Tops',
+  tops: 'Tops',
+  hoodie: 'Hoodies',
+  hoodies: 'Hoodies',
+  sweatshirt: 'Hoodies',
+  sweatshirts: 'Hoodies',
   jacket: 'Jackets',
   jackets: 'Jackets',
-  outerwear: 'Jackets',
-  sweater: 'Sweaters',
-  sweaters: 'Sweaters',
-  pullover: 'Sweaters',
-  pullovers: 'Sweaters',
-  shoe: 'Shoes',
-  shoes: 'Shoes',
-  sneaker: 'Shoes',
-  sneakers: 'Shoes',
-  trainer: 'Shoes',
-  trainers: 'Shoes',
-  phone: 'Phones',
-  phones: 'Phones',
-  mobile: 'Phones',
-  mobiles: 'Phones',
-  smartphone: 'Phones',
-  smartphones: 'Phones',
+  trouser: 'Trousers',
+  trousers: 'Trousers',
+  pants: 'Trousers',
+  pant: 'Trousers',
+  legging: 'Leggings',
+  leggings: 'Leggings',
+  activewear: 'Activewear',
+  sportswear: 'Sportswear',
+  sports: 'Sportswear',
 };
 
 const ChatbotState = Annotation.Root({
@@ -140,6 +132,8 @@ function normalizeUserMessage(userMessage: string): string {
   return userMessage
     .replace(/[’']/g, "'")
     .replace(/\bcloths\b/gi, 'clothes')
+    .replace(/\bwomen\s*war\b/gi, "women's wear")
+    .replace(/\bwomen['’]?s\s+war\b/gi, "women's wear")
     .replace(/\bmen['’]?s\b/gi, "men's")
     .replace(/\bwomen['’]?s\b/gi, "women's")
     .replace(/\bmens\b/gi, "men's")
@@ -242,6 +236,34 @@ function inferCategoryFromMessage(userMessage: string): string | undefined {
   return categories.length > 0 ? Array.from(new Set(categories)).join(',') : undefined;
 }
 
+function inferSubCategoryFromMessage(userMessage: string): string | undefined {
+  const lower = userMessage.toLowerCase();
+  const subCategories: string[] = [];
+
+  for (const [alias, value] of Object.entries(SUBCATEGORY_ALIASES)) {
+    const escapedAlias = alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    if (new RegExp(`\\b${escapedAlias}\\b`, 'i').test(lower)) {
+      subCategories.push(value);
+    }
+  }
+
+  return subCategories.length > 0 ? Array.from(new Set(subCategories)).join(',') : undefined;
+}
+
+function inferExplicitWearCategory(userMessage: string): string | undefined {
+  const lower = userMessage.toLowerCase();
+
+  if (/\btop\s*wear\b/i.test(lower)) {
+    return 'Top Wear';
+  }
+
+  if (/\bbottom\s*wear\b/i.test(lower)) {
+    return 'Bottom Wear';
+  }
+
+  return undefined;
+}
+
 function sanitizeSearchText(rawSearch: string | undefined): string | undefined {
   if (!rawSearch) {
     return undefined;
@@ -260,6 +282,8 @@ function sanitizeSearchText(rawSearch: string | undefined): string | undefined {
     'search',
     'product',
     'products',
+    'brand',
+    'branded',
     'for',
     'please',
     'do',
@@ -368,6 +392,8 @@ function inferPriceBoundsFromMessage(userMessage: string): Pick<CatalogSearchFil
 function enrichParsedIntentWithMessage(parsed: ParsedIntent, userMessage: string): ParsedIntent {
   const inferredGender = inferGenderFromMessage(userMessage);
   const inferredCategory = inferCategoryFromMessage(userMessage);
+  const inferredSubCategory = inferSubCategoryFromMessage(userMessage);
+  const explicitWearCategory = inferExplicitWearCategory(userMessage);
   const inferredSearch = sanitizeSearchText(userMessage);
   const inferredPrice = inferPriceBoundsFromMessage(userMessage);
   const inferredLimit = inferLimitFromMessage(userMessage);
@@ -387,7 +413,8 @@ function enrichParsedIntentWithMessage(parsed: ParsedIntent, userMessage: string
     filters: {
       ...parsed.filters,
       gender: parsed.filters.gender || inferredGender,
-      category: parsed.filters.category || inferredCategory,
+      category: explicitWearCategory || parsed.filters.category || inferredCategory,
+      subCategory: parsed.filters.subCategory || inferredSubCategory,
       minPrice: parsed.filters.minPrice ?? inferredPrice.minPrice,
       maxPrice: parsed.filters.maxPrice ?? inferredPrice.maxPrice,
       search: sanitizedSearch || inferredSearch,
@@ -425,6 +452,8 @@ function sanitizeParsedIntent(parsed: Partial<ParsedIntent>): ParsedIntent {
   const intent: IntentType = parsed.intent === 'availability' || parsed.intent === 'search' ? parsed.intent : 'unknown';
 
   const category = toCanonicalCsv(parsed.filters?.category, CATEGORY_VALUES, CATEGORY_ALIASES);
+  const subCategory = toCanonicalCsv(parsed.filters?.subCategory, SUBCATEGORY_VALUES, SUBCATEGORY_ALIASES);
+  const type = toCanonicalCsv(parsed.filters?.type, TYPE_VALUES);
   const collection = toCanonicalCsv(parsed.filters?.collection, COLLECTION_VALUES);
   const gender = toCanonicalCsv(parsed.filters?.gender, GENDER_VALUES);
   const color = toCanonicalCsv(parsed.filters?.color, COLOR_VALUES);
@@ -452,6 +481,8 @@ function sanitizeParsedIntent(parsed: Partial<ParsedIntent>): ParsedIntent {
     filters: {
       collection,
       category,
+      subCategory,
+      type,
       brand,
       gender,
       color,
@@ -489,17 +520,20 @@ function parseSupervisorHeuristically(userMessage: string): SupervisorDecision {
 function parseIntentHeuristicFallback(userMessage: string): ParsedIntent {
   const lower = userMessage.toLowerCase();
   const availabilityHint = /(is|are|do you have|available|in stock)/i.test(lower);
-  const looksSpecific = /(iphone|samsung|sku|model|\b\d{2,}\b)/i.test(lower);
 
-  if (availabilityHint && looksSpecific) {
+  if (availabilityHint) {
+    const productName = userMessage.replace(/^(is|are|do you have)\s+/i, '').replace(/\s+(available|in stock)\??$/i, '').trim();
+
+    if (productName && !/^(it|this|that)$/i.test(productName)) {
     return {
       intent: 'availability',
-      productName: userMessage.replace(/^(is|are|do you have)\s+/i, '').replace(/\s+(available|in stock)\??$/i, '').trim(),
+        productName,
       filters: {
         page: 1,
         limit: 5,
       },
     };
+    }
   }
 
   return {
@@ -508,6 +542,7 @@ function parseIntentHeuristicFallback(userMessage: string): ParsedIntent {
     filters: {
       gender: inferGenderFromMessage(userMessage),
       category: inferCategoryFromMessage(userMessage),
+      subCategory: inferSubCategoryFromMessage(userMessage),
       ...inferPriceBoundsFromMessage(userMessage),
       search: sanitizeSearchText(userMessage),
       keyword: sanitizeSearchText(userMessage),
@@ -529,9 +564,10 @@ async function supervisorNode(state: ChatbotStateType): Promise<Partial<ChatbotS
 
     const extractedJson = extractJsonObject(raw);
     const parsed = JSON.parse(extractedJson ?? raw) as Record<string, unknown>;
+    const decision = sanitizeSupervisorDecision(parsed);
 
     return {
-      supervisor: sanitizeSupervisorDecision(parsed),
+      supervisor: decision.agent === 'unknown' ? parseSupervisorHeuristically(normalizedMessage) : decision,
     };
   } catch {
     return {
@@ -601,6 +637,33 @@ function formatGroundedResponse(toolPayload: Record<string, unknown>): string {
   return [header, ...lines].join('\n');
 }
 
+async function generateHelpfulFallback(userMessage: string, filters: CatalogSearchFilters & { keyword?: string }): Promise<string> {
+  const systemPrompt = getResponseGeneratorSystemPrompt();
+  const contextMessage = `User query: "${userMessage}"
+
+Applied filters:
+${JSON.stringify(filters, null, 2)}
+
+No products were found matching these criteria. Provide a helpful fallback response that:
+1. Acknowledges the search didn't return results.
+2. Suggests alternative categories or subcategories relevant to what they asked for.
+3. Offers to adjust filters (price, gender, brand, etc.).
+4. Uses clarifying questions to help narrow down what they're looking for.
+
+Keep the response concise and friendly.`;
+
+  try {
+    const response = await callLLM([
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: contextMessage },
+    ]);
+    return response.trim() || 'No products found';
+  } catch (error: unknown) {
+    console.error('[AI CHAT] Failed to generate helpful fallback', error);
+    return 'No products found';
+  }
+}
+
 function toolRouterNode(state: ChatbotStateType): Partial<ChatbotStateType> {
   if (state.supervisor.agent !== 'product_discovery') {
     return { route: 'fallback', selectedTool: 'none' };
@@ -613,7 +676,7 @@ function toolRouterNode(state: ChatbotStateType): Partial<ChatbotStateType> {
   }
 
   if (intent === 'search') {
-    return { route: 'tool', selectedTool: 'searchProducts' };
+    return { route: 'tool', selectedTool: 'hybridSearch' };
   }
 
   return { route: 'fallback', selectedTool: 'none' };
@@ -633,24 +696,39 @@ async function toolExecutorNode(state: ChatbotStateType): Promise<Partial<Chatbo
     };
   }
 
-  if (state.selectedTool === 'searchProducts') {
-    const search = await searchProducts(state.parsedIntent.filters ?? {});
-    console.log('[AI CHAT] agent=product_discovery tool=searchProducts intent=search');
-
-    return {
-      toolResult: {
-        type: 'search',
-        payload: search as unknown as Record<string, unknown>,
-        message: search.message,
-      },
-    };
-  }
-
   return {
     toolResult: {
       type: 'fallback',
       payload: {},
       message: 'Unsupported request for current agent configuration.',
+    },
+  };
+}
+
+/**
+ * Function: hybridSearchNode
+ * ----------------------------------------
+ * Purpose:
+ *   Combines semantic search (Qdrant) with structured filtering (MongoDB).
+ *
+ * Steps:
+ *   1. Convert user query to embedding.
+ *   2. Query Qdrant for top matches.
+ *   3. Extract product IDs.
+ *   4. Query MongoDB for full product details.
+ *   5. Apply filters (price, category).
+ *   6. Return enriched results.
+ */
+async function hybridSearchNode(state: ChatbotStateType): Promise<Partial<ChatbotStateType>> {
+  const query = state.userMessage;
+  const search = await hybridSearchProducts(query, state.parsedIntent.filters ?? {});
+  console.log('[AI CHAT] agent=product_discovery tool=hybridSearch intent=search');
+
+  return {
+    toolResult: {
+      type: 'search',
+      payload: search as unknown as Record<string, unknown>,
+      message: search.message,
     },
   };
 }
@@ -679,8 +757,9 @@ async function responseGeneratorNode(state: ChatbotStateType): Promise<Partial<C
   const products = Array.isArray(toolPayload.products) ? toolPayload.products : [];
 
   if (matchCount === 0 || products.length === 0) {
+    const fallbackResponse = await generateHelpfulFallback(state.userMessage, state.parsedIntent.filters);
     return {
-      finalResponse: 'No products found',
+      finalResponse: fallbackResponse,
     };
   }
 
@@ -694,15 +773,32 @@ const chatbotGraph = new StateGraph(ChatbotState)
   .addNode('intentParser', parseIntentNode)
   .addNode('toolRouter', toolRouterNode)
   .addNode('toolExecutor', toolExecutorNode)
+  .addNode('hybridSearch', hybridSearchNode)
   .addNode('responseGenerator', responseGeneratorNode)
   .addEdge(START, 'supervisorRouter')
   .addEdge('supervisorRouter', 'intentParser')
   .addEdge('intentParser', 'toolRouter')
-  .addConditionalEdges('toolRouter', (state) => (state.route === 'tool' ? 'toolExecutor' : 'responseGenerator'), {
-    toolExecutor: 'toolExecutor',
-    responseGenerator: 'responseGenerator',
-  })
+  .addConditionalEdges(
+    'toolRouter',
+    (state) => {
+      if (state.route !== 'tool') {
+        return 'responseGenerator';
+      }
+
+      if (state.selectedTool === 'hybridSearch') {
+        return 'hybridSearch';
+      }
+
+      return 'toolExecutor';
+    },
+    {
+      toolExecutor: 'toolExecutor',
+      hybridSearch: 'hybridSearch',
+      responseGenerator: 'responseGenerator',
+    }
+  )
   .addEdge('toolExecutor', 'responseGenerator')
+  .addEdge('hybridSearch', 'responseGenerator')
   .addEdge('responseGenerator', END)
   .compile();
 

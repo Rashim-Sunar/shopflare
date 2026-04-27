@@ -15,6 +15,7 @@ import adminOrderRoutes from './routes/adminOrderRoutes';
 import uploadRoutes from './routes/uploadRoutes';
 import subscribeRoutes from './routes/subscribeRoute';
 import aiRoutes from './routes/aiRoutes';
+import { startProductChangeStreamWatcher } from './queue/changeStreamWatcher';
 
 /**
  * @fileoverview TypeScript entrypoint that bootstraps the Express server, routes, and database connection.
@@ -89,6 +90,7 @@ async function bootstrapServer(): Promise<void> {
   registerRoutes();
 
   await connectDB();
+  startProductChangeStreamWatcher();
 
   app.listen(appEnv.port, () => {
     console.log(`Server listening on port: ${appEnv.port}`);
