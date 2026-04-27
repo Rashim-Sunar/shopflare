@@ -7,6 +7,8 @@ import Product from '../models/Product';
 export interface CatalogSearchFilters {
   collection?: string;
   category?: string;
+  subCategory?: string;
+  type?: string;
   gender?: string;
   color?: string;
   size?: string;
@@ -90,6 +92,18 @@ function toCaseInsensitiveInFilter(rawValue: string): RegExp[] | undefined {
  *   - RegExp or undefined when no useful tokens exist.
  */
 function toFlexibleTextSearchRegex(rawSearch: string): RegExp | undefined {
+  const toSingular = (token: string): string => {
+    if (token.endsWith('ies') && token.length > 4) {
+      return `${token.slice(0, -3)}y`;
+    }
+
+    if (token.endsWith('s') && token.length > 3) {
+      return token.slice(0, -1);
+    }
+
+    return token;
+  };
+
   const tokens = rawSearch
     .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, ' ')
@@ -98,7 +112,17 @@ function toFlexibleTextSearchRegex(rawSearch: string): RegExp | undefined {
     .split(/\s+/)
     .filter((token) => token.length > 0)
     .slice(0, 8)
-    .map((token) => token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    .map((token) => {
+      const escapedOriginal = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const singular = toSingular(token);
+      const escapedSingular = singular.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+      if (escapedOriginal === escapedSingular) {
+        return escapedOriginal;
+      }
+
+      return `(?:${escapedOriginal}|${escapedSingular})`;
+    });
 
   if (tokens.length === 0) {
     return undefined;
@@ -159,6 +183,18 @@ export function buildCatalogQuery(filters: CatalogSearchFilters): Record<string,
     const categoryRegex = toCaseInsensitiveInFilter(filters.category);
     if (categoryRegex) {
       query.category = { $in: categoryRegex };
+    }
+  }
+  if (filters.subCategory) {
+    const subCategoryRegex = toCaseInsensitiveInFilter(filters.subCategory);
+    if (subCategoryRegex) {
+      query.subCategory = { $in: subCategoryRegex };
+    }
+  }
+  if (filters.type) {
+    const typeRegex = toCaseInsensitiveInFilter(filters.type);
+    if (typeRegex) {
+      query.type = { $in: typeRegex };
     }
   }
   if (filters.gender) {

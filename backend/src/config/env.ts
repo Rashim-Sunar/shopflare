@@ -13,6 +13,16 @@ export interface AppEnv {
   secretStr: string;
   expiringDay: string;
   openRouterApiKey: string;
+  openAiApiKey?: string;
+  rabbitMqUrl: string;
+  rabbitMqQueueName: string;
+  rabbitMqDlqName: string;
+  qdrantUrl: string;
+  qdrantCollectionName: string;
+  embeddingProvider: 'openrouter' | 'openai';
+  embeddingModel: string;
+  embeddingVectorSize: number;
+  enableProductChangeStream: boolean;
 }
 
 function readRequiredEnv(key: 'MONGO_URI' | 'SECRET_STR' | 'EXPIRING_DAY' | 'OPENROUTER_API_KEY'): string {
@@ -23,6 +33,11 @@ function readRequiredEnv(key: 'MONGO_URI' | 'SECRET_STR' | 'EXPIRING_DAY' | 'OPE
   }
 
   return value;
+}
+
+function readOptionalEnv(key: string): string | undefined {
+  const value = process.env[key];
+  return value && value.trim() ? value.trim() : undefined;
 }
 
 /**
@@ -39,6 +54,9 @@ function readRequiredEnv(key: 'MONGO_URI' | 'SECRET_STR' | 'EXPIRING_DAY' | 'OPE
 export function getAppEnv(): AppEnv {
   const rawPort = process.env.PORT ?? '3000';
   const parsedPort = Number.parseInt(rawPort, 10);
+  const embeddingProviderRaw = (process.env.EMBEDDING_PROVIDER ?? 'openrouter').toLowerCase();
+  const embeddingProvider: AppEnv['embeddingProvider'] = embeddingProviderRaw === 'openai' ? 'openai' : 'openrouter';
+  const parsedEmbeddingVectorSize = Number.parseInt(process.env.EMBEDDING_VECTOR_SIZE ?? '1536', 10);
 
   return {
     nodeEnv: (process.env.NODE_ENV ?? 'development') as AppEnv['nodeEnv'],
@@ -47,6 +65,16 @@ export function getAppEnv(): AppEnv {
     secretStr: readRequiredEnv('SECRET_STR'),
     expiringDay: readRequiredEnv('EXPIRING_DAY'),
     openRouterApiKey: readRequiredEnv('OPENROUTER_API_KEY'),
+    openAiApiKey: readOptionalEnv('OPENAI_API_KEY'),
+    rabbitMqUrl: process.env.RABBITMQ_URL ?? 'amqp://localhost:5672',
+    rabbitMqQueueName: process.env.RABBITMQ_QUEUE_NAME ?? 'product_updates',
+    rabbitMqDlqName: process.env.RABBITMQ_DLQ_NAME ?? 'product_updates_dlq',
+    qdrantUrl: process.env.QDRANT_URL ?? 'http://localhost:6333',
+    qdrantCollectionName: process.env.QDRANT_COLLECTION_NAME ?? 'products',
+    embeddingProvider,
+    embeddingModel: process.env.EMBEDDING_MODEL ?? 'text-embedding-3-small',
+    embeddingVectorSize: Number.isNaN(parsedEmbeddingVectorSize) ? 1536 : parsedEmbeddingVectorSize,
+    enableProductChangeStream: (process.env.ENABLE_PRODUCT_CHANGE_STREAM ?? 'false').toLowerCase() === 'true',
   };
 }
 
