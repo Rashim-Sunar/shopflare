@@ -1,6 +1,6 @@
 # Shopflare
 
-Shopflare is a full-stack e-commerce platform built with the MERN stack (MongoDB, Express, React, Node.js) and PayPal payment integration. It is designed for real-world online retail use cases such as product catalog management, secure checkout, and order tracking across desktop and mobile devices.
+Shopflare is a production-oriented, full-stack e-commerce platform built with the MERN stack (MongoDB, Express, React, Node.js). It combines a robust catalog, admin tools, secure checkout, and an integrated AI Shopping Assistant to provide a modern retail experience for customers and store operators.
 
 ## Project Overview
 
@@ -12,9 +12,13 @@ Key capabilities:
 - Cart and checkout lifecycle management
 - Secure PayPal payment processing
 - Order creation and order history tracking
-- Admin-oriented product and order operations
+- Admin product and order management
+- AI-driven product discovery and conversational shopping
 
 ## Architecture Overview
+## AI & Search
+
+Shopflare includes a purpose-built AI agent and hybrid search stack that enhance product discovery and enable a conversational shopping experience:
 
 Shopflare uses a client-server architecture with clear separation of concerns.
 
@@ -32,6 +36,13 @@ Shopflare uses a client-server architecture with clear separation of concerns.
 - Payment Gateway (PayPal):
 	- Handles secure payment authorization and capture
 	- Integrates with checkout flow for production-grade transaction handling
+- Conversational AI Agent: integrated assistant available as a floating chat widget and a dedicated AI page. Users can ask product availability or discovery questions in natural language.
+- Embeddings & Vector Store: product embeddings are generated and stored for semantic search. The repository contains ingestion scripts and a worker for creating and updating embeddings.
+- Hybrid Search: combines vector similarity (semantic) and traditional attribute/keyword filters for more relevant search results.
+- Vector DB Client: utilities and clients (e.g., Qdrant) are included for vector storage and nearest-neighbor queries.
+- Background Worker & Queue: background processes handle embedding ingestion, change-stream watching, and asynchronous tasks to keep the index in sync with product data.
+
+This AI stack allows features like "Show women top wear under 5000" or conversational follow-ups and is extensible to other LLM providers via the backend AI integration.
 
 ## Features
 
@@ -64,6 +75,18 @@ Shopflare uses a client-server architecture with clear separation of concerns.
 - Mobile-friendly and desktop-friendly layouts
 - Reusable UI components for consistency
 - Product discovery and conversion-focused page structure
+### AI Shopping Assistant
+
+- Floating assistant widget and dedicated AI chat page with conversational support.
+- Optimistic chat UI: user messages display instantly and assistant shows a "thinking" placeholder while generating replies.
+- Backend grounding: assistant queries the product catalog and returns contextual, product-focused answers.
+- Admin-friendly ingestion: scripts to scrape, normalize, and ingest product data and embeddings (`scripts/seedProducts.ts`, `scripts/ingestProductEmbeddings.ts`).
+
+### Developer Tools & Utilities
+
+- Scrapers: utilities for scraping product data from sources to bootstrap the catalog.
+- Product normalization utilities to standardize varied product schemas.
+- Realtime watchers to publish catalog updates to the vector index and search services.
 
 ## Tech Stack
 
@@ -82,13 +105,14 @@ Shopflare uses a client-server architecture with clear separation of concerns.
 
 ### Database
 - MongoDB
-- Mongoose
 
 ### Services & Tools
 - PayPal (payments)
 - ESLint
 - npm
 - Git/GitHub
+
+Additional services used by the AI/search stack may include a vector database (Qdrant), an embeddings provider, and background workers.
 
 ## Folder Structure
 
@@ -134,8 +158,24 @@ Shopflare/
 │   │   └── main.jsx
 │   ├── index.html
 │   └── package.json
+├── worker/
+│   ├── config.ts
+│   ├── consumer.ts
+│   ├── embeddings.ts
+│   ├── Dockerfile
+│   ├── package.json
+│   └── tsconfig.json
+├── data/
+│   └── products.json
+├── docker-compose.yaml
 └── README.md
 ```
+- `backend/src/ai/` — embeddings, LLM prompts, and AI orchestration code.
+- `frontend/src/pages/AiChatPage.tsx` — dedicated AI chat page.
+- `frontend/src/components/Common/FloatingAiAssistant.tsx` — floating assistant widget used across the storefront.
+- `frontend/src/redux/slices/aiChatSlice.ts` — Redux slice that handles optimistic chat UI and assistant responses.
+- `worker/` — worker processes for embedding generation and asynchronous indexing.
+- `scripts/` — ingestion and scraping helpers for populating `data/products.json`.
 
 ## Installation & Setup
 
@@ -154,6 +194,9 @@ npm install
 
 cd ../frontend
 npm install
+
+cd ../worker
+npm install
 ```
 
 ### 3. Configure environment variables
@@ -168,13 +211,28 @@ cd backend
 npm run dev
 ```
 
-Frontend:
+Frontend (in a separate terminal):
 ```bash
 cd frontend
 npm run dev
 ```
 
-The frontend will run on Vite's default port, and backend will run on the configured API port.
+Worker (optional, for AI embeddings—in another terminal):
+```bash
+cd worker
+npm run dev
+```
+
+The frontend will run on Vite's default port, backend on the configured API port, and the worker processes embeddings in the background.
+
+### 5. AI Features Setup (Optional)
+
+To enable the full AI Shopping Assistant experience:
+
+- Ensure you have an embeddings/LLM provider API key in `backend/.env` (e.g., OpenRouter or OpenAI-compatible key).
+- Run the worker process (see step 4) to ingest embeddings and keep the vector store synchronized with product data.
+- Seed your product catalog using `scripts/seedProducts.ts` or import from `data/products.json`.
+- Use `scripts/ingestProductEmbeddings.ts` to generate and index product embeddings.
 
 ## Environment Variables
 
@@ -202,6 +260,8 @@ Notes:
 - Use strong, unique secrets in production.
 - Switch PayPal mode and credentials appropriately for production deployments.
 - Do not commit `.env` files to version control.
+- For the AI agent to work, ensure `OPENROUTER_API_KEY` or equivalent LLM provider key is set.
+- Configure vector store credentials in the worker if using a remote Qdrant instance.
 
 ## Future Improvements
 
