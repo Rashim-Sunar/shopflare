@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearAiChat, clearAiChatError, sendAiMessage } from '../../redux/slices/aiChatSlice';
+import AiProductCard from '../AI/AiProductCard';
 
 const QUICK_PROMPTS = ['Show women top wear under 5000', 'Find branded hoodies', 'Is Ajax sweatshirt available?'];
 
@@ -89,14 +90,41 @@ const FloatingAiAssistant = () => {
               ) : (
                 <div className='space-y-3'>
                   {messages.map((message: any) => (
-                    <div
-                      key={message.timestamp}
-                      className={`max-w-[88%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${message.role === 'user'
-                          ? 'ml-auto bg-slate-900 text-white shadow-sm'
-                          : 'bg-white text-slate-800 shadow-[0_8px_20px_-12px_rgba(15,23,42,0.35)]'
-                        }`}
-                    >
-                      {message.content}
+                    <div key={message.timestamp} className='space-y-2'>
+                      {/* User message or assistant text (hide text if products exist) */}
+                      {!(message.role === 'assistant' && message.products && message.products.length > 0) && (
+                        <div
+                          className={`max-w-[88%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                            message.role === 'user'
+                              ? 'ml-auto bg-slate-900 text-white shadow-sm'
+                              : 'bg-white text-slate-800 shadow-[0_8px_20px_-12px_rgba(15,23,42,0.35)]'
+                          }`}
+                        >
+                          {message.content}
+                        </div>
+                      )}
+
+                      {/* Product cards for assistant responses with products */}
+                      {message.role === 'assistant' && message.products && message.products.length > 0 && (
+                        <div className='max-w-[88%] mr-auto'>
+                          <div className='flex gap-3 overflow-x-auto py-2 -mx-4 px-4'>
+                            {message.products.slice(0, 5).map((product: any) => (
+                              <div key={product.id} className='flex-none w-56'>
+                                <AiProductCard
+                                  id={product.id}
+                                  name={product.name}
+                                  price={product.price}
+                                  brand={product.brand}
+                                  category={product.category}
+                                  countInStock={product.countInStock}
+                                  image={product.image}
+                                    onViewProduct={() => setIsOpen(false)}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

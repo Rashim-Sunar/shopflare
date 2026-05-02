@@ -25,6 +25,7 @@ export const sendAiMessage = createAsyncThunk('aiChat/sendAiMessage', async (mes
     return {
       userMessage: trimmedMessage,
       assistantMessage: response.data?.response || 'No products found',
+      products: response.data?.products || [],
     };
   } catch (error) {
     return rejectWithValue(error.response?.data || { message: 'Failed to get AI response' });
@@ -87,6 +88,7 @@ const aiChatSlice = createSlice({
               role: 'assistant',
               content: action.payload.assistantMessage,
               timestamp: Date.now(),
+              products: action.payload.products || [],
             };
             break;
           }

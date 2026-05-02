@@ -17,6 +17,7 @@ export interface HybridSearchProduct {
   brand: string | null;
   category: string;
   countInStock: number;
+  image?: string;
 }
 
 export interface HybridSearchResult {
@@ -38,6 +39,7 @@ function toHybridSearchProduct(product: any): HybridSearchProduct {
     brand: product.brand ? String(product.brand) : null,
     category: String(product.category),
     countInStock: Number(product.countInStock),
+    image: Array.isArray(product.images) && product.images.length > 0 ? String(product.images[0].url) : undefined,
   };
 }
 
@@ -130,7 +132,7 @@ export async function hybridSearch(query: string, filters: CatalogSearchFilters)
   const mongoQuery = buildCatalogQuery(baseFilters);
   (mongoQuery as Record<string, unknown>)._id = { $in: candidateIds.map((id) => new mongoose.Types.ObjectId(id)) };
 
-  const products = await Product.find(mongoQuery).select('_id name price brand category countInStock').lean();
+  const products = await Product.find(mongoQuery).select('_id name price brand category countInStock images').lean();
 
   if (products.length === 0) {
     return {
