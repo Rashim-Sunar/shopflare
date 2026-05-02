@@ -30,12 +30,14 @@ const FloatingAiAssistant = () => {
     }
 
     dispatch(clearAiChatError());
-    await dispatch(sendAiMessage(input.trim()) as any);
+    const trimmed = input.trim();
     setInput('');
+    await dispatch(sendAiMessage(trimmed) as any);
   };
 
   const handleQuickPrompt = async (prompt: string) => {
     dispatch(clearAiChatError());
+    setInput('');
     await dispatch(sendAiMessage(prompt) as any);
   };
 
@@ -99,8 +101,7 @@ const FloatingAiAssistant = () => {
                   ))}
                 </div>
               )}
-
-              {loading && <p className='mt-2 text-xs text-slate-500'>Assistant is thinking...</p>}
+              
               <div ref={chatEndRef} />
             </div>
 

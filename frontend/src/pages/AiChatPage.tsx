@@ -30,8 +30,10 @@ const AiChatPage = () => {
     }
 
     dispatch(clearAiChatError());
-    await dispatch(sendAiMessage(input.trim()));
+    // Clear input immediately for better UX and optimistic display
+    const trimmed = input.trim();
     setInput('');
+    await dispatch(sendAiMessage(trimmed));
   };
 
   /**
@@ -43,6 +45,7 @@ const AiChatPage = () => {
    */
   const handleQuickPrompt = async (prompt) => {
     dispatch(clearAiChatError());
+    setInput('');
     await dispatch(sendAiMessage(prompt));
   };
 
@@ -99,7 +102,7 @@ const AiChatPage = () => {
               ))}
             </div>
           )}
-          {loading && <p className='mt-3 text-sm text-gray-500'>Assistant is thinking...</p>}
+          
         </div>
 
         <div className='border-t border-gray-200 px-5 py-4'>

@@ -54,18 +54,61 @@ const aiChatSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(sendAiMessage.pending, (state) => {
+      .addCase(sendAiMessage.pending, (state, action) => {
         state.loading = true;
         state.error = null;
+
+        // Optimistically show the user's message right away
+        const userMsg = {
+          role: 'user',
+          content: typeof action.meta.arg === 'string' ? action.meta.arg : '',
+          timestamp: Date.now(),
+        };
+
+        // Add a placeholder assistant message while the real response is fetched
+        const placeholder = {
+          role: 'assistant',
+          content: 'Assistant is thinking...',
+          timestamp: Date.now() + 1,
+          isPlaceholder: true,
+        };
+
+        state.messages.push(userMsg);
+        state.messages.push(placeholder);
       })
       .addCase(sendAiMessage.fulfilled, (state, action) => {
         state.loading = false;
-        state.messages.push({ role: 'user', content: action.payload.userMessage, timestamp: Date.now() });
-        state.messages.push({ role: 'assistant', content: action.payload.assistantMessage, timestamp: Date.now() + 1 });
+
+        // Replace the last assistant placeholder with the real assistant response
+        for (let i = state.messages.length - 1; i >= 0; i--) {
+          const msg = state.messages[i];
+          if (msg.role === 'assistant' && msg.isPlaceholder) {
+            state.messages[i] = {
+              role: 'assistant',
+              content: action.payload.assistantMessage,
+              timestamp: Date.now(),
+            };
+            break;
+          }
+        }
       })
       .addCase(sendAiMessage.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || action.error?.message || 'Something went wrong';
+        const errorMessage = action.payload?.message || action.error?.message || 'Something went wrong';
+        state.error = errorMessage;
+
+        // Replace placeholder with an error message so user sees failure inline
+        for (let i = state.messages.length - 1; i >= 0; i--) {
+          const msg = state.messages[i];
+          if (msg.role === 'assistant' && msg.isPlaceholder) {
+            state.messages[i] = {
+              role: 'assistant',
+              content: `Error: ${errorMessage}`,
+              timestamp: Date.now(),
+            };
+            break;
+          }
+        }
       });
   },
 });
