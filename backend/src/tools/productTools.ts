@@ -13,6 +13,7 @@ interface SafeProduct {
   brand: string | null;
   category: string;
   countInStock: number;
+  image?: string;
 }
 
 interface AvailabilityResult {
@@ -79,6 +80,8 @@ function toSafeProduct(product: any): SafeProduct {
     brand: product.brand ? String(product.brand) : null,
     category: String(product.category),
     countInStock: Number(product.countInStock),
+    // Provide a primary image URL when available to support rich UI rendering
+    image: Array.isArray(product.images) && product.images.length > 0 ? String(product.images[0].url) : '',
   };
 }
 
@@ -134,7 +137,7 @@ export async function checkProductAvailability(productName: string): Promise<Ava
     name: { $regex: flexibleNameRegex ?? new RegExp(trimmedName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i') },
     isPublished: true,
   })
-    .select('_id name price brand category countInStock')
+    .select('_id name price brand category countInStock images')
     .limit(10)
     .lean();
 
@@ -216,6 +219,7 @@ export async function searchProducts(filters: SearchFilters): Promise<SearchResu
       brand: product.brand,
       category: product.category,
       countInStock: product.countInStock,
+      image: product.image,
     })),
     message: 'Search results found',
   };
@@ -305,6 +309,7 @@ export async function hybridSearchProducts(query: string, filters: SearchFilters
         brand: product.brand,
         category: product.category,
         countInStock: product.countInStock,
+        image: product.image,
       })),
       message: result.message,
     };

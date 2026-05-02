@@ -18,6 +18,29 @@ type AgentType = 'product_discovery' | 'customer_rights' | 'admin_ops' | 'unknow
 type IntentType = 'availability' | 'search' | 'unknown';
 type RouteType = 'tool' | 'fallback';
 
+/**
+ * Interface: AiGraphResponse
+ * -----------------------------------
+ * Purpose:
+ *   Represents the structured response from the AI chat graph.
+ *
+ * Fields:
+ *   - response (string): Human-readable text response.
+ *   - products (array): Array of product objects for UI rendering.
+ */
+interface AiGraphResponse {
+  response: string;
+  products?: Array<{
+    id: string;
+    name: string;
+    price: number;
+    brand: string | null;
+    category: string;
+    countInStock: number;
+    image?: string;
+  }>;
+}
+
 interface SupervisorDecision {
   agent: AgentType;
   reason: string;
@@ -802,7 +825,7 @@ const chatbotGraph = new StateGraph(ChatbotState)
   .addEdge('responseGenerator', END)
   .compile();
 
-export async function runAiChatGraph(userMessage: string): Promise<string> {
+export async function runAiChatGraph(userMessage: string): Promise<AiGraphResponse> {
   console.log(`[AI CHAT] query=${userMessage}`);
 
   const result = await chatbotGraph.invoke({
@@ -830,5 +853,12 @@ export async function runAiChatGraph(userMessage: string): Promise<string> {
     `[AI CHAT] agent=${result.supervisor.agent} intent=${result.parsedIntent.intent} filters=${JSON.stringify(result.parsedIntent.filters)} tool=${result.selectedTool}`
   );
 
-  return result.finalResponse || 'No products found';
+  // Extract products from tool result payload if available for frontend rendering
+  const toolPayload = result.toolResult?.payload as Record<string, unknown> | undefined;
+  const products = Array.isArray(toolPayload?.products) ? (toolPayload.products as any[]) : [];
+
+  return {
+    response: result.finalResponse || 'No products found',
+    products: products.slice(0, 10), // Limit to 10 products for UI display
+  };
 }

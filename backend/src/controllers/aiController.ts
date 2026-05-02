@@ -12,9 +12,22 @@ interface AiChatRequestBody {
   message?: string;
 }
 
-interface AiChatResponse {
+
+interface Product {
+  id: string;
+  name: string;
+  price: number;
+  brand: string | null;
+  category: string;
+  countInStock: number;
+  image?: string;
+}
+
+interface AiChatStructuredResponse {
   status: 'success';
   response: string;
+  products?: Product[];
+  hasProducts: boolean;
 }
 
 /**
@@ -35,7 +48,7 @@ interface AiChatResponse {
  *   3. Return standardized success payload.
  */
 export const chatWithAi = asyncHandler(
-  async (req: AuthenticatedRequest<never, AiChatResponse, AiChatRequestBody>, res: Response<AiChatResponse>, next: NextFunction) => {
+  async (req: AuthenticatedRequest<never, AiChatStructuredResponse, AiChatRequestBody>, res: Response<AiChatStructuredResponse>, next: NextFunction) => {
     const message = req.body.message?.trim();
 
     if (!message) {
@@ -47,7 +60,9 @@ export const chatWithAi = asyncHandler(
 
     res.status(200).json({
       status: 'success',
-      response,
+        response: response.response,
+      products: response.products || [],
+      hasProducts: (response.products?.length ?? 0) > 0,
     });
   }
 );

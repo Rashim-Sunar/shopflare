@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearAiChat, clearAiChatError, sendAiMessage } from '../redux/slices/aiChatSlice';
+import AiProductCard from '../components/AI/AiProductCard';
 
 const QUICK_PROMPTS = [
   'Is iPhone 13 available?',
@@ -91,13 +92,38 @@ const AiChatPage = () => {
           ) : (
             <div className='space-y-3'>
               {messages.map((message) => (
-                <div
-                  key={message.timestamp}
-                  className={`max-w-[85%] rounded-xl px-4 py-3 text-sm ${
-                    message.role === 'user' ? 'ml-auto bg-black text-white' : 'bg-gray-100 text-gray-900'
-                  }`}
-                >
-                  {message.content}
+                <div key={message.timestamp} className='space-y-2'>
+                  {/* User message or assistant text (hide text if products exist) */}
+                  {!(message.role === 'assistant' && message.products && message.products.length > 0) && (
+                    <div
+                      className={`max-w-[85%] rounded-xl px-4 py-3 text-sm ${
+                        message.role === 'user' ? 'ml-auto bg-black text-white' : 'bg-gray-100 text-gray-900'
+                      }`}
+                    >
+                      {message.content}
+                    </div>
+                  )}
+
+                  {/* Product cards for assistant responses with products */}
+                  {message.role === 'assistant' && message.products && message.products.length > 0 && (
+                    <div className='max-w-[85%] mr-auto'>
+                      <div className='flex gap-3 overflow-x-auto py-2 -mx-4 px-4'>
+                        {message.products.map((product) => (
+                          <div key={product.id} className='flex-none w-64'>
+                            <AiProductCard
+                              id={product.id}
+                              name={product.name}
+                              price={product.price}
+                              brand={product.brand}
+                              category={product.category}
+                              countInStock={product.countInStock}
+                              image={product.image}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

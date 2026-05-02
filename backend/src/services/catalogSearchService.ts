@@ -35,6 +35,7 @@ export interface CatalogSearchProduct {
   collections: string;
   material: string | null;
   countInStock: number;
+  image?: string;
 }
 
 export interface CatalogSearchResult {
@@ -156,6 +157,7 @@ function toCatalogSearchProduct(product: any): CatalogSearchProduct {
     collections: String(product.collections),
     material: product.material ? String(product.material) : null,
     countInStock: Number(product.countInStock),
+    image: Array.isArray(product.images) && product.images.length > 0 ? String(product.images[0].url) : undefined,
   };
 }
 
@@ -274,7 +276,12 @@ export async function searchCatalogProducts(filters: CatalogSearchFilters): Prom
     sortOption = { rating: -1 };
   }
 
-  const products = await Product.find(query).sort(sortOption).skip(skip).limit(limit).lean();
+  const products = await Product.find(query)
+    .select('_id name price discountPrice category brand gender colors sizes collections material countInStock images')
+    .sort(sortOption)
+    .skip(skip)
+    .limit(limit)
+    .lean();
   const totalProducts = await Product.countDocuments(query);
 
   return {
