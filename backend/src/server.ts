@@ -12,6 +12,7 @@ import productRoutes from './routes/productRoutes';
 import productAdminRoutes from './routes/productAdminRoutes';
 import adminRoutes from './routes/adminRoutes';
 import adminOrderRoutes from './routes/adminOrderRoutes';
+import customerRightsRoutes from './routes/customerRightsRoutes';
 import uploadRoutes from './routes/uploadRoutes';
 import subscribeRoutes from './routes/subscribeRoute';
 import aiRoutes from './routes/aiRoutes';
@@ -63,6 +64,7 @@ function registerRoutes(): void {
   app.use('/api/admin/products', productAdminRoutes);
   app.use('/api/admin', adminRoutes);
   app.use('/api/admin/orders', adminOrderRoutes);
+  app.use('/api/admin/customer-rights', customerRightsRoutes);
   app.use('/api/upload', uploadRoutes);
   app.use('/api/subscribe', subscribeRoutes);
   app.use('/api/ai', aiRoutes);

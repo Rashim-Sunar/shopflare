@@ -17,6 +17,7 @@ import UserManagement from './components/Admin/UserManagement'
 import ProductManagement from './components/Admin/ProductManagement'
 import EditProductPage from './components/Admin/EditProductPage'
 import OrderManagement from './components/Admin/OrderManagement'
+import CustomerRightsManagement from './components/Admin/CustomerRightsManagement'
 import ProtectedRoute from './components/Routes/ProtectedRoute';
 import AdminRoute from './components/Routes/AdminRoute'
 
@@ -55,6 +56,7 @@ function App() {
         <Route path='products' element = {<ProductManagement/>} />
         <Route path='products/:id/edit' element = {<EditProductPage/>}/>
         <Route path='orders' element = {<OrderManagement/>}/>
+        <Route path='customer-rights' element = {<CustomerRightsManagement/>}/>
       </Route>
    </Routes>
    </BrowserRouter>

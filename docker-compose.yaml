@@ -44,8 +44,13 @@ services:
       RABBITMQ_URL: amqp://${RABBITMQ_USER:-guest}:${RABBITMQ_PASS:-guest}@rabbitmq:5672
       RABBITMQ_QUEUE_NAME: ${RABBITMQ_QUEUE_NAME:-product_updates}
       RABBITMQ_DLQ_NAME: ${RABBITMQ_DLQ_NAME:-product_updates_dlq}
+      POLICY_RABBITMQ_QUEUE_NAME: ${POLICY_RABBITMQ_QUEUE_NAME:-policy_ingestion}
+      POLICY_RABBITMQ_DLQ_NAME: ${POLICY_RABBITMQ_DLQ_NAME:-policy_ingestion_dlq}
+      BACKEND_URL: ${BACKEND_URL:-http://host.docker.internal:9000}
+      INTERNAL_API_TOKEN: ${INTERNAL_API_TOKEN:-shopflare-internal-token}
       QDRANT_URL: http://qdrant:6333
       QDRANT_COLLECTION_NAME: ${QDRANT_COLLECTION_NAME:-products}
+      POLICY_QDRANT_COLLECTION_NAME: ${POLICY_QDRANT_COLLECTION_NAME:-customer_rights}
       EMBEDDING_PROVIDER: ${EMBEDDING_PROVIDER:-openrouter}
       EMBEDDING_MODEL: ${EMBEDDING_MODEL:-text-embedding-3-small}
       EMBEDDING_VECTOR_SIZE: ${EMBEDDING_VECTOR_SIZE:-1536}
