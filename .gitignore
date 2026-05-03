@@ -52,3 +52,5 @@ data/*.tmp
 
 # Backend-specific generated content
 backend/scripts/scrapers/
+backend/uploads/customer-rights/
+backend/uploads/
