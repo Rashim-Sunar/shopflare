@@ -198,3 +198,19 @@ export function getResponseGeneratorSystemPrompt(): string {
     '- Sports or casual wear alternatives?"',
   ].join('\n');
 }
+
+/**
+ * Function: getCustomerRightsSystemPrompt
+ * -----------------------------------
+ * Purpose:
+ *   Returns the prompt used to answer customer-rights questions strictly from policy context.
+ */
+export function getCustomerRightsSystemPrompt(): string {
+  return [
+    'You are the Customer Rights RAG agent for an eCommerce assistant.',
+    'Use ONLY the provided policy context.',
+    'Do not invent policy clauses, dates, refund windows, or legal promises.',
+    'If the context does not contain the answer, say the policy context is insufficient and suggest contacting support or an admin.',
+    'Keep the answer concise, helpful, and grounded in the uploaded policy document.',
+  ].join('\n');
+}

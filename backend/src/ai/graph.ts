@@ -1,8 +1,9 @@
 import { Annotation, END, START, StateGraph } from '@langchain/langgraph';
 import { callLLM } from './llm';
-import { getIntentParserSystemPrompt, getSupervisorSystemPrompt, getResponseGeneratorSystemPrompt } from './prompt';
+import { getIntentParserSystemPrompt, getSupervisorSystemPrompt, getResponseGeneratorSystemPrompt, getCustomerRightsSystemPrompt } from './prompt';
 import { checkProductAvailability, hybridSearchProducts } from '../tools/productTools';
 import type { CatalogSearchFilters } from '../services/catalogSearchService';
+import { searchPolicyContext } from '../services/policySearchService';
 
 /**
  * @fileoverview LangGraph workflow with supervisor-ready routing and Product Discovery specialization.
@@ -15,7 +16,7 @@ import type { CatalogSearchFilters } from '../services/catalogSearchService';
  */
 
 type AgentType = 'product_discovery' | 'customer_rights' | 'admin_ops' | 'unknown';
-type IntentType = 'availability' | 'search' | 'unknown';
+type IntentType = 'availability' | 'search' | 'policy_query' | 'unknown';
 type RouteType = 'tool' | 'fallback';
 
 /**
@@ -58,6 +59,16 @@ interface ToolExecutionResult {
   type: 'availability' | 'search' | 'fallback';
   payload: Record<string, unknown>;
   message: string;
+}
+
+interface PolicyContextChunk {
+  documentId: string;
+  documentName: string;
+  version: string;
+  chunkIndex: number;
+  text: string;
+  score: number;
+  isActive: boolean;
 }
 
 const CATEGORY_VALUES = ['Top Wear', 'Bottom Wear'];
@@ -472,7 +483,8 @@ function sanitizeSupervisorDecision(raw: Record<string, unknown>): SupervisorDec
 }
 
 function sanitizeParsedIntent(parsed: Partial<ParsedIntent>): ParsedIntent {
-  const intent: IntentType = parsed.intent === 'availability' || parsed.intent === 'search' ? parsed.intent : 'unknown';
+  const intent: IntentType =
+    parsed.intent === 'availability' || parsed.intent === 'search' || parsed.intent === 'policy_query' ? parsed.intent : 'unknown';
 
   const category = toCanonicalCsv(parsed.filters?.category, CATEGORY_VALUES, CATEGORY_ALIASES);
   const subCategory = toCanonicalCsv(parsed.filters?.subCategory, SUBCATEGORY_VALUES, SUBCATEGORY_ALIASES);
@@ -559,6 +571,19 @@ function parseIntentHeuristicFallback(userMessage: string): ParsedIntent {
     }
   }
 
+  if (/(refund|return policy|returns|cancel order|cancellation|warranty|privacy policy|terms|customer rights)/i.test(lower)) {
+    return {
+      intent: 'policy_query',
+      productName: '',
+      filters: {
+        page: 1,
+        limit: 5,
+        search: sanitizeSearchText(userMessage),
+        keyword: sanitizeSearchText(userMessage),
+      },
+    };
+  }
+
   return {
     intent: 'search',
     productName: '',
@@ -601,6 +626,21 @@ async function supervisorNode(state: ChatbotStateType): Promise<Partial<ChatbotS
 
 async function parseIntentNode(state: ChatbotStateType): Promise<Partial<ChatbotStateType>> {
   if (state.supervisor.agent !== 'product_discovery') {
+    if (state.supervisor.agent === 'customer_rights') {
+      return {
+        parsedIntent: {
+          intent: 'policy_query',
+          productName: '',
+          filters: {
+            page: 1,
+            limit: 5,
+            search: sanitizeSearchText(state.userMessage),
+            keyword: sanitizeSearchText(state.userMessage),
+          },
+        },
+      };
+    }
+
     return {
       parsedIntent: {
         intent: 'unknown',
@@ -688,6 +728,10 @@ Keep the response concise and friendly.`;
 }
 
 function toolRouterNode(state: ChatbotStateType): Partial<ChatbotStateType> {
+  if (state.supervisor.agent === 'customer_rights') {
+    return { route: 'tool', selectedTool: 'policyRag' };
+  }
+
   if (state.supervisor.agent !== 'product_discovery') {
     return { route: 'fallback', selectedTool: 'none' };
   }
@@ -700,6 +744,10 @@ function toolRouterNode(state: ChatbotStateType): Partial<ChatbotStateType> {
 
   if (intent === 'search') {
     return { route: 'tool', selectedTool: 'hybridSearch' };
+  }
+
+  if (intent === 'policy_query') {
+    return { route: 'tool', selectedTool: 'policyRag' };
   }
 
   return { route: 'fallback', selectedTool: 'none' };
@@ -756,6 +804,57 @@ async function hybridSearchNode(state: ChatbotStateType): Promise<Partial<Chatbo
   };
 }
 
+/**
+ * Function: customerRightsRagNode
+ * ----------------------------------------
+ * Purpose:
+ *   Retrieves policy context from Qdrant and generates a grounded customer-rights answer.
+ */
+async function customerRightsRagNode(state: ChatbotStateType): Promise<Partial<ChatbotStateType>> {
+  const chunks = await searchPolicyContext(state.userMessage, 4);
+
+  if (chunks.length === 0) {
+    return {
+      finalResponse:
+        'I could not find a currently active policy document that answers that question. Please ask an admin to upload or activate the relevant Customer Rights policy.',
+    };
+  }
+
+  const systemPrompt = getCustomerRightsSystemPrompt();
+  const policyContext = chunks
+    .map((chunk: PolicyContextChunk, index: number) => {
+      return [
+        `Context ${index + 1}:`,
+        `Policy: ${chunk.documentName}`,
+        `Version: ${chunk.version}`,
+        `Chunk: ${chunk.chunkIndex + 1}`,
+        chunk.text,
+      ].join('\n');
+    })
+    .join('\n\n');
+
+  const prompt = `User question: ${state.userMessage}\n\nPolicy context:\n${policyContext}\n\nAnswer strictly from the policy context. If the context is not enough, say so clearly.`;
+
+  try {
+    const response = await callLLM([
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: prompt },
+    ]);
+
+    return {
+      finalResponse:
+        response.trim() ||
+        'I could not generate a grounded answer from the current policy context. Please contact support or an admin.',
+    };
+  } catch (error: unknown) {
+    console.error('[AI CHAT] Failed to generate customer-rights response', error);
+    return {
+      finalResponse:
+        'I could not generate a grounded answer from the current policy context. Please contact support or an admin.',
+    };
+  }
+}
+
 async function responseGeneratorNode(state: ChatbotStateType): Promise<Partial<ChatbotStateType>> {
   if (state.route === 'fallback' || state.toolResult.type === 'fallback') {
     if (state.supervisor.agent === 'customer_rights') {
@@ -797,6 +896,7 @@ const chatbotGraph = new StateGraph(ChatbotState)
   .addNode('toolRouter', toolRouterNode)
   .addNode('toolExecutor', toolExecutorNode)
   .addNode('hybridSearch', hybridSearchNode)
+  .addNode('customerRightsRag', customerRightsRagNode)
   .addNode('responseGenerator', responseGeneratorNode)
   .addEdge(START, 'supervisorRouter')
   .addEdge('supervisorRouter', 'intentParser')
@@ -812,16 +912,22 @@ const chatbotGraph = new StateGraph(ChatbotState)
         return 'hybridSearch';
       }
 
+      if (state.selectedTool === 'policyRag') {
+        return 'customerRightsRag';
+      }
+
       return 'toolExecutor';
     },
     {
       toolExecutor: 'toolExecutor',
       hybridSearch: 'hybridSearch',
+      customerRightsRag: 'customerRightsRag',
       responseGenerator: 'responseGenerator',
     }
   )
   .addEdge('toolExecutor', 'responseGenerator')
   .addEdge('hybridSearch', 'responseGenerator')
+  .addEdge('customerRightsRag', END)
   .addEdge('responseGenerator', END)
   .compile();
 

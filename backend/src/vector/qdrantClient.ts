@@ -12,6 +12,15 @@ export interface ProductVectorPayload {
   description: string;
 }
 
+export interface PolicyVectorPayload {
+  documentId: string;
+  documentName: string;
+  version: string;
+  chunkIndex: number;
+  text: string;
+  isActive: boolean;
+}
+
 let qdrantClient: any;
 
 let collectionReady = false;
@@ -73,6 +82,56 @@ export async function upsertProductVector(id: string, vector: number[], payload:
   await ensureProductCollection();
 
   await client.upsert(appEnv.qdrantCollectionName, {
+    wait: true,
+    points: [
+      {
+        id,
+        vector,
+        payload: payload as unknown as Record<string, unknown>,
+      },
+    ],
+  });
+}
+
+/**
+ * Function: ensurePolicyCollection
+ * ----------------------------------------
+ * Purpose:
+ *   Ensures the policy Qdrant collection exists before search or write operations.
+ */
+export async function ensurePolicyCollection(): Promise<void> {
+  const client = await getQdrantClient();
+
+  if (collectionReady) {
+    return;
+  }
+
+  try {
+    await client.getCollection(appEnv.policyQdrantCollectionName);
+    collectionReady = true;
+    return;
+  } catch {
+    await client.createCollection(appEnv.policyQdrantCollectionName, {
+      vectors: {
+        size: appEnv.embeddingVectorSize,
+        distance: 'Cosine',
+      },
+    });
+    collectionReady = true;
+  }
+}
+
+/**
+ * Function: upsertPolicyVector
+ * ----------------------------------------
+ * Purpose:
+ *   Stores or updates policy chunk embeddings in Qdrant.
+ */
+export async function upsertPolicyVector(id: string, vector: number[], payload: PolicyVectorPayload): Promise<void> {
+  const client = await getQdrantClient();
+  await ensurePolicyCollection();
+
+  await client.upsert(appEnv.policyQdrantCollectionName, {
     wait: true,
     points: [
       {

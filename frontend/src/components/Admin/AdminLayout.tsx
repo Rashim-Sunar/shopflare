@@ -15,7 +15,7 @@ const AdminLayout = () => {
       />
 
       {/* Main Content */}
-      <div className="flex-1 lg:ml-64 transition-all duration-300">
+      <div className="flex-1 lg:ml-[280px] transition-all duration-300 min-h-screen">
         {/* Mobile Top Bar */}
         <div className="lg:hidden sticky top-0 z-30 bg-white shadow px-4 py-3 flex items-center">
           <button
