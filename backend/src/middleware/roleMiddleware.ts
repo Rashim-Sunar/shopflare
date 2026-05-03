@@ -11,7 +11,6 @@ import type { UserRole } from '../types/auth';
  * @function restrictTo
  * @description Creates a role-based authorization guard for protected routes.
  *
- * @steps
  * 1. Receive the list of roles allowed to access the route.
  * 2. Ensure authentication already populated req.user.
  * 3. Block requests whose role does not match the allowed list.
@@ -30,7 +29,10 @@ export function restrictTo(allowedRoles: ReadonlyArray<UserRole>) {
     }
 
     // Step 2: Compare the current role with the allowed set.
-    if (!allowedRoles.includes(req.user.role)) {
+    const normalizedAllowedRoles = allowedRoles.map((role) => String(role).trim().toLowerCase());
+    const currentRole = String(req.user.role).trim().toLowerCase();
+
+    if (!normalizedAllowedRoles.includes(currentRole)) {
       next(new AppError('You do not have permission to perform this action', 403));
       return;
     }

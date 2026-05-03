@@ -21,18 +21,16 @@ interface ProfileResponse {
   user: NonNullable<AuthenticatedRequest['user']>;
 }
 
+function normalizeRole(role: string): UserRole {
+  return String(role).trim().toLowerCase() as UserRole;
+}
+
 /**
  * @function signToken
  * @description Builds a signed JWT for an authenticated user session.
- *
- * @steps
  * 1. Accept the user's id and role as the token payload.
  * 2. Sign the payload with the validated application secret.
  * 3. Apply the configured expiration window so sessions stay bounded.
- *
- * @param {string} id - The user identifier to place in the token.
- * @param {UserRole} role - The user's role for downstream authorization.
- * @returns {string} Signed JWT string.
  */
 function signToken(id: string, role: UserRole): string {
   const signOptions: jwt.SignOptions = {
@@ -45,37 +43,29 @@ function signToken(id: string, role: UserRole): string {
 /**
  * @function buildAuthResponse
  * @description Maps a user document into the public authentication response contract.
- *
  * @steps
  * 1. Convert the database identifier into a serializable string.
  * 2. Copy only the fields the client should see.
  * 3. Return a response object that is stable and easy to test.
- *
- * @param {{ _id: string; name: string; email: string; role: UserRole }} user - Public user projection.
- * @param {string} token - Signed session token.
- * @returns {AuthResponse} Typed authentication response payload.
  */
 function buildAuthResponse(user: { _id: string; name: string; email: string; role: UserRole }, token: string): AuthResponse {
   return {
     status: 'success',
     token,
-    user,
+    user: {
+      ...user,
+      role: normalizeRole(user.role),
+    },
   };
 }
 
 /**
  * @function signup
  * @description Registers a new user account and returns a signed session token.
- *
  * @steps
  * 1. Validate the incoming registration payload.
  * 2. Check whether the email already exists before writing anything.
  * 3. Persist the new user, sign a token, and return a minimal public profile.
- *
- * @param {Request} req - The incoming registration request.
- * @param {Response<AuthResponse>} res - The Express response object.
- * @param {NextFunction} next - The next middleware function.
- * @returns {Promise<void>} Sends the created account response.
  */
 export const signup = asyncHandler(async (req: AuthenticatedRequest<never, AuthResponse, SignupRequestBody>, res, next) => {
   const { name, email, password } = req.body;
@@ -93,7 +83,8 @@ export const signup = asyncHandler(async (req: AuthenticatedRequest<never, AuthR
   }
 
   const createdUser = await User.create({ name, email, password });
-  const token = signToken(createdUser._id.toString(), createdUser.role);
+  const normalizedRole = normalizeRole(createdUser.role);
+  const token = signToken(createdUser._id.toString(), normalizedRole);
 
   res.status(201).json(
     buildAuthResponse(
@@ -101,7 +92,7 @@ export const signup = asyncHandler(async (req: AuthenticatedRequest<never, AuthR
         _id: createdUser._id.toString(),
         name: createdUser.name,
         email: createdUser.email,
-        role: createdUser.role,
+        role: normalizedRole,
       },
       token
     )
@@ -111,16 +102,10 @@ export const signup = asyncHandler(async (req: AuthenticatedRequest<never, AuthR
 /**
  * @function login
  * @description Authenticates an existing user and returns a signed session token.
- *
  * @steps
  * 1. Validate the login credentials and reject missing values early.
  * 2. Load the stored password hash so bcrypt can compare it safely.
  * 3. Issue a new JWT when the credentials are valid and return the public profile.
- *
- * @param {Request} req - The incoming login request.
- * @param {Response<AuthResponse>} res - The Express response object.
- * @param {NextFunction} next - The next middleware function.
- * @returns {Promise<void>} Sends the authenticated session response.
  */
 export const login = asyncHandler(async (req: AuthenticatedRequest<never, AuthResponse, LoginRequestBody>, res, next) => {
   const { email, password } = req.body;
@@ -144,7 +129,8 @@ export const login = asyncHandler(async (req: AuthenticatedRequest<never, AuthRe
     return;
   }
 
-  const token = signToken(user._id.toString(), user.role);
+  const normalizedRole = normalizeRole(user.role);
+  const token = signToken(user._id.toString(), normalizedRole);
 
   res.status(200).json(
     buildAuthResponse(
@@ -152,7 +138,7 @@ export const login = asyncHandler(async (req: AuthenticatedRequest<never, AuthRe
         _id: user._id.toString(),
         name: user.name,
         email: user.email,
-        role: user.role,
+        role: normalizedRole,
       },
       token
     )
@@ -162,16 +148,10 @@ export const login = asyncHandler(async (req: AuthenticatedRequest<never, AuthRe
 /**
  * @function getProfile
  * @description Returns the authenticated user payload that protect middleware attached.
- *
  * @steps
  * 1. Verify that the auth middleware already populated req.user.
  * 2. Reject unauthenticated requests with a typed operational error.
  * 3. Return the safe user projection without exposing internal account fields.
- *
- * @param {Request} req - The authenticated request.
- * @param {Response<ProfileResponse>} res - The Express response object.
- * @param {NextFunction} next - The next middleware function.
- * @returns {Promise<void>} Sends the current user profile.
  */
 export const getProfile = asyncHandler(async (req: AuthenticatedRequest, res: Response<ProfileResponse>, next: NextFunction) => {
   if (!req.user) {
