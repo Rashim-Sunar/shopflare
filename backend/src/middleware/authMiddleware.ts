@@ -14,16 +14,6 @@ import type { AuthenticatedRequest } from '../types/http';
 /**
  * @function protect
  * @description Verifies the bearer token, loads the user, and attaches a safe user payload to the request.
- *
- * @steps
- * 1. Read and validate the Authorization header.
- * 2. Verify the JWT and locate the referenced user record.
- * 3. Reject stale or invalid tokens and attach a typed user object for downstream handlers.
- *
- * @param {AuthenticatedRequest} req - The incoming authenticated request.
- * @param {Response} res - The Express response object.
- * @param {NextFunction} next - The next middleware function.
- * @returns {Promise<void>} Resolves after user context is attached or an error is forwarded.
  */
 export const protect = asyncHandler(async (req: AuthenticatedRequest, _res: Response, next: NextFunction) => {
 
@@ -63,12 +53,28 @@ export const protect = asyncHandler(async (req: AuthenticatedRequest, _res: Resp
   }
 
   // Step 3: Load the current user and reject missing or stale sessions.
-  const user = await User.findById(userId).select('+password passwordChangedAt');
+  const user = await User.findById(userId).select('+password passwordChangedAt role');
 
   if (!user) {
     next(new AppError('The user with the given token does not exist.', 401));
     return;
   }
+
+  console.log('🔐 Debug - User from DB:', {
+    userId: user._id,
+    hasEmail: !!user.email,
+    hasRole: !!user.role,
+    roleValue: user.role,
+    roleType: typeof user.role,
+  });
+
+  console.log('🔐 Debug - User from DB:', {
+    userId: user._id,
+    hasEmail: !!user.email,
+    hasRole: !!user.role,
+    roleValue: user.role,
+    roleType: typeof user.role,
+  });
 
   const tokenIssuedAt = decodedToken.iat ?? 0;
   const passwordChanged = await user.isPasswordChanged(tokenIssuedAt);
@@ -79,11 +85,14 @@ export const protect = asyncHandler(async (req: AuthenticatedRequest, _res: Resp
   }
 
   // Step 4: Expose only the minimal safe user profile to downstream handlers.
+  const userRole = user.role || 'customer';
+  const normalizedRole = String(userRole).trim().toLowerCase();
+
   const authenticatedUser: AuthenticatedUser = {
     _id: user._id,
     name: user.name,
     email: user.email,
-    role: user.role,
+    role: normalizedRole as AuthenticatedUser['role'],
   };
 
   req.user = authenticatedUser;

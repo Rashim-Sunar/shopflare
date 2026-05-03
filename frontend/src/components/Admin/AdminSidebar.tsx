@@ -1,5 +1,6 @@
 import React from "react";
-import { Link, useLocation, NavLink } from "react-router-dom";
+import { Link, useLocation, NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   FaUsers,
   FaBoxOpen,
@@ -9,9 +10,12 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { logout } from "../../redux/slices/authSlice";
 
 const AdminSidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const navItems = [
     {
@@ -40,6 +44,11 @@ const AdminSidebar = ({ isOpen, onClose }) => {
       path: "/",
     },
   ];
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   return (
     <>
@@ -98,15 +107,15 @@ const AdminSidebar = ({ isOpen, onClose }) => {
 
         {/* Logout */}
         <div className="absolute bottom-6 left-0 w-full px-4">
-          <Link
-            to="/"
-            className="flex items-center justify-center gap-2
+          <button
+            onClick={handleLogout}
+            className="flex items-center justify-center gap-2 w-full
             bg-red-600 hover:bg-red-700 text-white
             py-3 rounded-md font-medium transition"
           >
             <FaSignOutAlt />
             Logout
-          </Link>
+          </button>
         </div>
       </aside>
     </>

@@ -31,7 +31,6 @@ export const loginUser = createAsyncThunk(
             localStorage.setItem("userInfo", JSON.stringify(response.data.user));
             localStorage.setItem("userToken", response.data.token);
 
-            // console.log("Response: ", response.data);
             return response.data.user;
         } catch (error) {
             // console.log("LOGIN ERROR:", error.response?.data);

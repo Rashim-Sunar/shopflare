@@ -42,10 +42,10 @@ const AdminHomePage = () => {
     return <p className="text-center mt-10">Loading dashboard...</p>;
   }
  
-  const revenue = orders.reduce((sum, o) => sum + o.totalPrice, 0);
+  const revenue = (orders || []).reduce((sum, o) => sum + o.totalPrice, 0);
 
   // Total products sold 
-  const totalProducts = orders.reduce((total, order) => {
+  const totalProducts = (orders || []).reduce((total, order) => {
     const orderQuantity = order.orderedItems.reduce(
       (sum, item) => sum + item.quantity,
       0

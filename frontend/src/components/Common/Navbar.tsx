@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { HiOutlineUser, HiOutlineShoppingBag} from "react-icons/hi";
 import { HiBars3BottomRight } from "react-icons/hi2";
 import { HiMiniXMark } from "react-icons/hi2";
@@ -12,9 +12,14 @@ import { setFilters, clearFilters } from '../../redux/slices/productSlice';
 const Navbar = () => {
   const [ openDrawer, setOpenDrawer ] = useState(false);
   const [ navDrawer, setNavDrawer ] = useState(false);
+  const navigate = useNavigate();
 
   const { cart } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  
+  const userRole = String(user?.role || "").trim().toLowerCase();
+  const isAdmin = userRole === "admin";
   
   const toggleOpenDrawer = () => {
     setOpenDrawer(!openDrawer);
@@ -78,6 +83,15 @@ const Navbar = () => {
         </div>
         {/*  Right icons */}
         <div className='flex items-center space-x-4 lg:mr-8'>
+            {/* Admin Button */}
+            {isAdmin && (
+              <button
+                onClick={() => navigate('/admin')}
+                className='text-xs font-semibold rounded-3xl px-3 py-1 bg-yellow-600 text-white rounded hover:bg-yellow-500 transition-colors'
+              >
+                Admin
+              </button>
+            )}
             <Link to='/profile'>
                 <HiOutlineUser className='h-5 w-5 text-gray-700 hover:text-black'/>
             </Link>

@@ -53,7 +53,7 @@ export const updateAdminProduct = createAsyncThunk(
   async ({ productId, productData }, { rejectWithValue }) => {
     try {
       const { data } = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/products/${productId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/products/${productId}`,
         productData,
         {
           headers: {
@@ -61,7 +61,7 @@ export const updateAdminProduct = createAsyncThunk(
           },
         }
       );
-      return data.product;
+      return data.updatedProduct;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message);
     }
@@ -73,8 +73,7 @@ export const deleteAdminProduct = createAsyncThunk(
   "adminProducts/delete",
   async (productId, { rejectWithValue }) => {
     try {
-      await axios.delete(`
-        ${import.meta.env.VITE_BACKEND_URL}/api/products/${productId}`,
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/admin/products/${productId}`,
          {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("userToken")}`,
